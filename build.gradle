@@ -57,7 +57,7 @@ minecraft {
 jar {
     manifest {
         attributes([
-                "Specification-Title": "TheHallows",
+                "Specification-Title": "TheHallow",
                 "Specification-Vendor": "Pugz",
                 "Specification-Version": "1",
                 "Implementation-Title": project.name,

@@ -50,7 +50,8 @@ public class Hallows {
         MinecraftForge.EVENT_BUS.addListener(HallowsBiomes::onBiomeLoading);
         MinecraftForge.EVENT_BUS.addListener(HallowsStructures::onWorldLoad);
         MinecraftForge.EVENT_BUS.addListener(NecrofireBlock::onRightClickBlock);
-        MinecraftForge.EVENT_BUS.addListener(Events::onPlayerTick);
+        MinecraftForge.EVENT_BUS.addListener(Events.Charge::onItemTooltip);
+        MinecraftForge.EVENT_BUS.addListener(Events.Charge::onLivingHurt);
 
         eventBus.addListener(EventPriority.NORMAL, this::commonSetup);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {

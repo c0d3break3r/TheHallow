@@ -42,7 +42,6 @@ public class HallowsBiomes {
             gen.withFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, HallowsFeatures.Configured.VERTICAL_PILLAR);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.PATCH_NECROFIRE);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.IGNIS_CRYSTAL);
-            //gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.IGNIS_GEODE);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.OPAL_ORE);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_STYGIAN_RUIN);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_BLACKSTONE);
@@ -53,8 +52,8 @@ public class HallowsBiomes {
             gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.FLOWER_POPPIES);
             gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT);
             gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_DENSE);
+            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_WATER);
             gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_PUMPKIN_COMMON);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.SPECTER_KELP);
 
             if (name.getPath().equals("pumpkin_valley")) {
                 gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.GIANT_PUMPKIN);
@@ -67,7 +66,6 @@ public class HallowsBiomes {
             gen.withFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, HallowsFeatures.Configured.VERTICAL_PILLAR);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.PATCH_NECROFIRE);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.IGNIS_CRYSTAL);
-            //gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.IGNIS_GEODE);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.OPAL_ORE);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.HALLSTONE_EMERALD_ORE);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_STYGIAN_RUIN);
@@ -76,14 +74,13 @@ public class HallowsBiomes {
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_GILDED_TENEBRITE);
             gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT);
             gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_DENSE);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.SPECTER_KELP);
+            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_WATER);
         }
 
         if (name.getPath().equals("hanging_woods")) {
             gen.withCarver(GenerationStage.Carving.AIR, HallowsCarvers.Configured.HALLOWS_CAVE);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.PATCH_NECROFIRE);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.IGNIS_CRYSTAL);
-            //gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.IGNIS_GEODE);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.OPAL_ORE);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_STYGIAN_RUIN);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_BLACKSTONE);
@@ -93,7 +90,7 @@ public class HallowsBiomes {
             gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.TREES_BLOOD_EBONY);
             gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT);
             gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_DENSE);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.SPECTER_KELP);
+            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_WATER);
         }
 
         if (name.getPath().equals("hemlock_swamp")) {
@@ -102,7 +99,6 @@ public class HallowsBiomes {
             gen.withFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, HallowsFeatures.Configured.VERTICAL_PILLAR);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.PATCH_NECROFIRE);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.IGNIS_CRYSTAL);
-            //gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.IGNIS_GEODE);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.OPAL_ORE);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_STYGIAN_RUIN);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_BLACKSTONE);
@@ -113,7 +109,7 @@ public class HallowsBiomes {
             gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.FLOWER_POPPIES);
             gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT);
             gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_DENSE);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.SPECTER_KELP);
+            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_WATER);
             //gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_HEMLOCK_WATER);
             //gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_HEMLOCK_LAND);
         }
@@ -124,7 +120,6 @@ public class HallowsBiomes {
             gen.withFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, HallowsFeatures.Configured.VERTICAL_PILLAR);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.PATCH_NECROFIRE);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.IGNIS_CRYSTAL);
-            //gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.IGNIS_GEODE);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.OPAL_ORE);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_STYGIAN_RUIN);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_BLACKSTONE);
@@ -133,7 +128,7 @@ public class HallowsBiomes {
             //gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PETRIFIED_SANDSTONE_ROCK);
             gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.TREES_ASPHODEL);
             gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.SPECTER_KELP);
+            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_WATER);
         }
     }
 }

@@ -120,8 +120,7 @@ public class HallowsBlocks {
     public static RegistryObject<Block> GILDED_TENEBRITE;
     public static RegistryObject<Block> SKULLISH_TENEBRITE;
 
-    public static RegistryObject<Block> SPECTER_KELP;
-    public static RegistryObject<Block> SPECTER_KELP_PLANT;
+    public static RegistryObject<Block> ANOINTMENT_TABLE;
 
     public static void registerBlocks() {
         HALLSTONE = RegistryUtil.createBlock("hallstone", () -> new Block(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
@@ -235,8 +234,7 @@ public class HallowsBlocks {
         GILDED_TENEBRITE = RegistryUtil.createBlock("gilded_tenebrite", () -> new Block(AbstractBlock.Properties.from(Blocks.END_STONE)), ItemGroup.BUILDING_BLOCKS);
         SKULLISH_TENEBRITE = RegistryUtil.createBlock("skullish_tenebrite", () -> new Block(AbstractBlock.Properties.from(Blocks.END_STONE)), ItemGroup.BUILDING_BLOCKS);
 
-        SPECTER_KELP = RegistryUtil.createBlock("specter_kelp", () -> new KelpTopBlock(AbstractBlock.Properties.from(Blocks.KELP_PLANT)), ItemGroup.DECORATIONS);
-        SPECTER_KELP_PLANT = RegistryUtil.createBlock("specter_kelp_plant", () -> new KelpBlock(AbstractBlock.Properties.from(Blocks.KELP_PLANT)), null);
+        ANOINTMENT_TABLE = RegistryUtil.createBlock("anointment_table", () -> new AnointmentTableBlock(AbstractBlock.Properties.from(Blocks.END_STONE)), ItemGroup.DECORATIONS);
     }
 
     public static void registerRenderLayers() {
@@ -254,8 +252,6 @@ public class HallowsBlocks {
         RenderTypeLookup.setRenderLayer(NECROFIRE_TORCH.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(NECROFIRE_WALL_TORCH.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(NECROFIRE_CAMPFIRE.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(SPECTER_KELP.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(SPECTER_KELP_PLANT.get(), RenderType.getCutout());
     }
 
     public static void registerFlammability() {
@@ -290,6 +286,5 @@ public class HallowsBlocks {
         ComposterBlock.CHANCES.put(BLOOD_EBONY_LEAF_CARPET.get(), 0.3F);
         ComposterBlock.CHANCES.put(DEADROOT.get(), 0.1F);
         ComposterBlock.CHANCES.put(HEMLOCK.get(), 0.25F);
-        ComposterBlock.CHANCES.put(SPECTER_KELP.get(), 0.3F);
     }
 }

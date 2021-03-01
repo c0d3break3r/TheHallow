@@ -26,3 +26,4 @@ forge*changelog.txt
 *.jar
 gradle/wrapper/gradle-wrapper.properties
 logs/latest.log
+*.log

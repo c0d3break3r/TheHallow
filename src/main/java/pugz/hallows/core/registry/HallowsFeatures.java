@@ -5,7 +5,6 @@ import com.google.common.collect.ImmutableSet;
 import net.minecraft.block.Blocks;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.blockplacer.DoublePlantBlockPlacer;
 import net.minecraft.world.gen.blockplacer.SimpleBlockPlacer;
 import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
 import net.minecraft.world.gen.blockstateprovider.WeightedBlockStateProvider;
@@ -23,6 +22,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import pugz.hallows.common.world.decorator.BranchTreeDecorator;
 import pugz.hallows.common.world.decorator.HangingLeavesTreeDecorator;
+import pugz.hallows.common.world.decorator.JackOLanternTreeDecorator;
 import pugz.hallows.common.world.feature.*;
 import pugz.hallows.common.world.feature.config.CaveBiomeFeatureConfig;
 import pugz.hallows.common.world.feature.config.GeodeFeatureConfig;
@@ -42,7 +42,6 @@ public class HallowsFeatures {
     public static RegistryObject<Feature<CaveBiomeFeatureConfig>> CAVE_BIOME;
     public static RegistryObject<Feature<NoFeatureConfig>> GIANT_PUMPKIN;
     public static RegistryObject<Feature<GeodeFeatureConfig>> GEODE;
-    public static RegistryObject<Feature<NoFeatureConfig>> SPECTER_KELP;
 
     public static class Configured {
         public static ConfiguredFeature<?, ?> PATCH_NECROFIRE;
@@ -57,11 +56,10 @@ public class HallowsFeatures {
         public static ConfiguredFeature<BaseTreeFeatureConfig, ?> BLOOD_EBONY_HANGING_LEAVES;
         public static ConfiguredFeature<?, ?> TREES_EBONY;
         public static ConfiguredFeature<?, ?> TREES_BLOOD_EBONY;
-        public static ConfiguredFeature<?, ?> PATCH_EBONY_LEAF_CARPET;
-        public static ConfiguredFeature<?, ?> PATCH_BLOOD_EBONY_LEAF_CARPET;
         public static ConfiguredFeature<?, ?> FLOWER_POPPIES;
         public static ConfiguredFeature<?, ?> PATCH_DEADROOT;
         public static ConfiguredFeature<?, ?> PATCH_DEADROOT_DENSE;
+        public static ConfiguredFeature<?, ?> PATCH_DEADROOT_WATER;
         public static ConfiguredFeature<?, ?> VERTICAL_PILLAR;
         public static ConfiguredFeature<?, ?> WATER_DELTA;
         public static ConfiguredFeature<?, ?> ORE_STYGIAN_RUIN;
@@ -77,18 +75,19 @@ public class HallowsFeatures {
         public static ConfiguredFeature<?, ?> IGNIS_CAVE_BIOME;
         public static ConfiguredFeature<?, ?> GIANT_PUMPKIN;
         public static ConfiguredFeature<?, ?> IGNIS_GEODE;
-        public static ConfiguredFeature<?, ?> SPECTER_KELP;
     }
 
     public static class Decorators {
         public static RegistryObject<TreeDecoratorType<HangingLeavesTreeDecorator>> HANGING_LEAVES;
         public static RegistryObject<TreeDecoratorType<BranchTreeDecorator>> BRANCH;
+        public static RegistryObject<TreeDecoratorType<JackOLanternTreeDecorator>> JACK_O_LANTERN;
     }
 
     public static class Placements {
         public static HangingLeavesTreeDecorator HANGING_LEAVES_EBONY_PLACEMENT = new HangingLeavesTreeDecorator(HallowsBlocks.HANGING_EBONY_LEAVES.get().getDefaultState(), 0.8F);
         public static HangingLeavesTreeDecorator HANGING_LEAVES_BLOOD_EBONY_PLACEMENT = new HangingLeavesTreeDecorator(HallowsBlocks.HANGING_BLOOD_EBONY_LEAVES.get().getDefaultState(), 0.8F);
         public static BranchTreeDecorator BRANCH_EBONY_PLACEMENT = new BranchTreeDecorator(HallowsBlocks.EBONY_BRANCH.get().getDefaultState(), 0.8F, 2, 0.4F);
+        public static JackOLanternTreeDecorator JACK_O_LANTERN_PLACEMENT = new JackOLanternTreeDecorator(0.1F);
 
         public static class Configured {
             public static ConfiguredPlacement<?> CAVE_BIOME_PLACEMENT = new ConfiguredPlacement<>(Placement.CARVING_MASK, new CaveEdgeConfig(GenerationStage.Carving.AIR, 0.4F)).chance(18);
@@ -102,12 +101,12 @@ public class HallowsFeatures {
         CAVE_BIOME = RegistryUtil.createFeature("cave_biome", IgnisCaveBiomeFeature::new);
         GIANT_PUMPKIN = RegistryUtil.createFeature("giant_pumpkin", GiantPumpkinFeature::new);
         GEODE = RegistryUtil.createFeature("geode", GeodeFeature::new);
-        SPECTER_KELP = RegistryUtil.createFeature("specter_kelp", SpecterKelpFeature::new);
     }
 
     public static void registerDecorators() {
         Decorators.HANGING_LEAVES = RegistryUtil.createTreeDecorator("hanging_leaves", () -> new TreeDecoratorType<>(HangingLeavesTreeDecorator.CODEC));
         Decorators.BRANCH = RegistryUtil.createTreeDecorator("branch", () -> new TreeDecoratorType<>(BranchTreeDecorator.CODEC));
+        Decorators.JACK_O_LANTERN = RegistryUtil.createTreeDecorator("jack_o_lantern", () -> new TreeDecoratorType<>(JackOLanternTreeDecorator.CODEC));
     }
 
     public static void registerConfiguredFeatures() {
@@ -178,11 +177,11 @@ public class HallowsFeatures {
 
         Configured.EBONY_HANGING_LEAVES = RegistryUtil.createConfiguredFeature("ebony_hanging_leaves", Feature.TREE.withConfiguration(
                 Configured.EBONY.getConfig().func_236685_a_(
-                        ImmutableList.of(Placements.HANGING_LEAVES_EBONY_PLACEMENT, Placements.BRANCH_EBONY_PLACEMENT))));
+                        ImmutableList.of(Placements.HANGING_LEAVES_EBONY_PLACEMENT, Placements.BRANCH_EBONY_PLACEMENT, Placements.JACK_O_LANTERN_PLACEMENT))));
 
         Configured.BLOOD_EBONY_HANGING_LEAVES = RegistryUtil.createConfiguredFeature("blood_ebony_hanging_leaves", Feature.TREE.withConfiguration(
                 Configured.BLOOD_EBONY.getConfig().func_236685_a_(
-                        ImmutableList.of(Placements.HANGING_LEAVES_BLOOD_EBONY_PLACEMENT, Placements.BRANCH_EBONY_PLACEMENT))));
+                        ImmutableList.of(Placements.HANGING_LEAVES_BLOOD_EBONY_PLACEMENT, Placements.BRANCH_EBONY_PLACEMENT, Placements.JACK_O_LANTERN_PLACEMENT))));
 
         Configured.TREES_EBONY = RegistryUtil.createConfiguredFeature("trees_ebony", Feature.RANDOM_SELECTOR.withConfiguration(
                 new MultipleRandomFeatureConfig(
@@ -216,6 +215,13 @@ public class HallowsFeatures {
                         .tries(64).whitelist(ImmutableSet.of(HallowsBlocks.PETRIFIED_SAND.get(), HallowsBlocks.HALLOWED_DIRT.get(), Blocks.COARSE_DIRT))
                         .func_227317_b_().build()
         ).withPlacement(Features.Placements.PATCH_PLACEMENT.func_242731_b(16))
+                .withPlacement(Placement.COUNT_NOISE.configure(new NoiseDependant(-0.8D, 5, 10))));
+
+        Configured.PATCH_DEADROOT_WATER = RegistryUtil.createConfiguredFeature("patch_deadroot_water", Feature.RANDOM_PATCH.withConfiguration(
+                new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(HallowsBlocks.DEADROOT.get().getDefaultState()), SimpleBlockPlacer.PLACER)
+                        .tries(64).whitelist(ImmutableSet.of(HallowsBlocks.PETRIFIED_SAND.get(), HallowsBlocks.HALLOWED_DIRT.get(), Blocks.COARSE_DIRT))
+                        .func_227317_b_().build()
+        ).withPlacement(Features.Placements.SEAGRASS_DISK_PLACEMENT.func_242731_b(16))
                 .withPlacement(Placement.COUNT_NOISE.configure(new NoiseDependant(-0.8D, 5, 10))));
 
         Configured.VERTICAL_PILLAR = RegistryUtil.createConfiguredFeature("vertical_pillar", VERTICAL_PILLAR.get().withConfiguration(
@@ -283,10 +289,5 @@ public class HallowsFeatures {
                 new GeodeFeatureConfig(
                         0.75D, 0.083D, true, 2, 4, 4, 5, 1, 3, -12, 12, 0.8D)).withPlacement(
                                 DecoratedPlacement.RANGE.configure(new TopSolidRangeConfig(6, 0, 47)).chance(64)));
-
-        Configured.SPECTER_KELP = RegistryUtil.createConfiguredFeature("specter_kelp", SPECTER_KELP.get().withConfiguration(new NoFeatureConfig()).withPlacement(
-                Features.Placements.KELP_PLACEMENT
-        ).square().withPlacement(
-                Placement.COUNT_NOISE_BIASED.configure(new TopSolidWithNoiseConfig(80, 80.0D, 0.0D))));
     }
 }
