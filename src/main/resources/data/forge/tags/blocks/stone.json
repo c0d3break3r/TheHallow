@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "hallows:hallstone",
+    "hallows:tenebrite",
+    "hallows:dusk_mortis",
+    "hallows:noon_mortis",
+    "hallows:dawn_mortis",
+    "hallows:midnight_mortis"
+  ]
+}

@@ -1,0 +1,28 @@
+modLoader="javafml"
+loaderVersion="[36,)"
+
+issueTrackerURL="https://github.com/c0d3break3r/TheHallows/issues"
+license="https://github.com/c0d3break3r/TheHallows/blob/main/LICENSE"
+
+[[mods]]
+    modId="hallows"
+    version="0.0.1"
+    logoFile="logo.png"
+    displayName="The Hallows"
+    authors="Pugz"
+    credits=""
+    description='''A spoooky new dimension!'''
+
+[[dependencies.hallows]]
+    modId="forge"
+    mandatory=true
+    versionRange="[34.1.0,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.hallows]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.3,]"
+    ordering="NONE"
+    side="BOTH"

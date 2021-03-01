@@ -1,0 +1,21 @@
+{
+	"parent": "block/block",
+	"textures": {
+		"all": "hallows:block/ignis_crystal_stem",
+		"particle": "#all"
+	},
+	"elements": [
+		{
+			"from": [1, 0, 1],
+			"to": [15, 16, 15],
+			"faces": {
+				"north": {"uv": [1, 0, 15, 16], "texture": "#all"},
+				"east": {"uv": [1, 0, 15, 16], "texture": "#all"},
+				"south": {"uv": [1, 0, 15, 16], "texture": "#all"},
+				"west": {"uv": [1, 0, 15, 16], "texture": "#all"},
+				"up": {"uv": [1, 0, 15, 14], "texture": "#all"},
+				"down": {"uv": [1, 0, 15, 14], "texture": "#all"}
+			}
+		}
+	]
+}

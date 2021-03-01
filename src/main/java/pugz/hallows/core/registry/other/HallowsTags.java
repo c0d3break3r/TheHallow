@@ -1,0 +1,26 @@
+package pugz.hallows.core.registry.other;
+
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ITag;
+import net.minecraft.tags.ItemTags;
+import pugz.hallows.core.Hallows;
+
+public class HallowsTags {
+    public static class Blocks {
+        public static final ITag.INamedTag<Block> ASPHODEL_LOGS = BlockTags.makeWrapperTag(Hallows.MOD_ID + ":asphodel_logs");
+        public static final ITag.INamedTag<Block> EBONY_LOGS = BlockTags.makeWrapperTag(Hallows.MOD_ID + ":ebony_logs");
+        public static final ITag.INamedTag<Block> INFINIBURN_HALLOWS = BlockTags.makeWrapperTag(Hallows.MOD_ID + ":infiniburn_hallows");
+        public static final ITag.INamedTag<Block> NECROFIRE_BASE_BLOCKS = BlockTags.makeWrapperTag(Hallows.MOD_ID + ":necrofire_base_blocks");
+        public static final ITag.INamedTag<Block> BASE_STONE_HALLOWS = BlockTags.makeWrapperTag(Hallows.MOD_ID + ":base_stone_hallows");
+        public static final ITag.INamedTag<Block> BRANCHES = BlockTags.makeWrapperTag(Hallows.MOD_ID + ":branches");
+    }
+
+    public static class Items {
+        public static final ITag.INamedTag<Item> ASPHODEL_LOGS = ItemTags.makeWrapperTag(Hallows.MOD_ID + ":asphodel_logs");
+        public static final ITag.INamedTag<Item> EBONY_LOGS = ItemTags.makeWrapperTag(Hallows.MOD_ID + ":ebony_logs");
+        public static final ITag.INamedTag<Item> NECROFIRE_BASE_BLOCKS = ItemTags.makeWrapperTag(Hallows.MOD_ID + ":necrofire_base_blocks");
+        public static final ITag.INamedTag<Item> BRANCHES = ItemTags.makeWrapperTag(Hallows.MOD_ID + ":branches");
+    }
+}

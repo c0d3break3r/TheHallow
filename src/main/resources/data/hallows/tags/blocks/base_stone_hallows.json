@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "hallows:hallstone",
+    "hallows:tenebrite",
+    "minecraft:blackstone"
+  ]
+}

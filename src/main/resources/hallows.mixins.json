@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "pugz.hallows.core.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "minVersion": "0.8",
+  "refmap": "hallows.refmap.json",
+  "mixins": [
+    "AbstractFireBlockMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

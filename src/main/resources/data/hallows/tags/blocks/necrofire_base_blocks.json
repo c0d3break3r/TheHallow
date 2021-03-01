@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "hallows:hallowed_dirt",
+    "hallows:hallstone",
+    "hallows:hallstone_emerald_ore",
+    "hallows:opal_ore",
+    "hallows:petrified_sand",
+    "hallows:petrified_sandstone"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "hallows:block/leaf_carpet",
+  "textures": {
+    "all": "hallows:block/ebony_leaves"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "hallows:hallstone_stairs",
+    "hallows:polished_hallstone_stairs",
+    "hallows:dawn_mortis_stairs",
+    "hallows:dawn_mortis_brick_stairs",
+    "hallows:dusk_mortis_stairs",
+    "hallows:dusk_mortis_brick_stairs",
+    "hallows:noon_mortis_stairs",
+    "hallows:noon_mortis_brick_stairs",
+    "hallows:midnight_mortis_stairs",
+    "hallows:midnight_mortis_brick_stairs",
+    "hallows:petrified_sandstone_stairs",
+    "hallows:tenebrite_stairs"
+  ]
+}

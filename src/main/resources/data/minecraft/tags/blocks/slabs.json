@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "hallows:hallstone_slab",
+    "hallows:polished_hallstone_slab",
+    "hallows:dawn_mortis_slab",
+    "hallows:dawn_mortis_brick_slab",
+    "hallows:dusk_mortis_slab",
+    "hallows:dusk_mortis_brick_slab",
+    "hallows:noon_mortis_slab",
+    "hallows:noon_mortis_brick_slab",
+    "hallows:midnight_mortis_slab",
+    "hallows:midnight_mortis_brick_slab",
+    "hallows:petrified_sandstone_slab",
+    "hallows:tenebrite_slab"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "half=upper": { "model": "hallows:block/hemlock_upper" },
+        "half=lower": { "model": "hallows:block/hemlock_lower" }
+    }
+}

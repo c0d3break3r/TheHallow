@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "hallows:ebony_log",
+    "hallows:stripped_ebony_log",
+    "hallows:ebony_wood",
+    "hallows:stripped_ebony_wood"
+  ]
+}
