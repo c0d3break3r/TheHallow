@@ -107,8 +107,10 @@ public class AnointingTableContainer extends AbstractRepairContainer {
                     amount += 0.05D;
                     break;
                 case "attribute.name.generic.attack_knockback":
-                case "attribute.name.generic.attack_speed":
                     amount += 0.2D;
+                    break;
+                case "attribute.name.generic.attack_speed":
+                    amount += 0.4D;
                     break;
                 case "attribute.name.generic.armor":
                 case "attribute.name.generic.attack_damage":
