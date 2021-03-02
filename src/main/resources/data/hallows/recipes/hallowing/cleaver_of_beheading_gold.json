@@ -1,0 +1,15 @@
+{
+  "type": "hallows:hallowing",
+  "base": {
+    "item": "savageandravage:cleaver_of_beheading"
+  },
+  "addition": {
+    "item": "minecraft:gold_ingot"
+  },
+  "result": {
+    "item": "savageandravage:cleaver_of_beheading"
+  },
+  "attribute": {
+    "attribute": "minecraft:generic.attack_knockback"
+  }
+}

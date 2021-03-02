@@ -1,0 +1,15 @@
+{
+  "type": "hallows:hallowing",
+  "base": {
+    "item": "savageandravage:griefer_helmet"
+  },
+  "addition": {
+    "item": "minecraft:diamond"
+  },
+  "result": {
+    "item": "savageandravage:griefer_helmet"
+  },
+  "attribute": {
+    "attribute": "minecraft:generic.armor_toughness"
+  }
+}

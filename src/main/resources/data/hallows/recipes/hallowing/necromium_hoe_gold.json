@@ -1,0 +1,15 @@
+{
+  "type": "hallows:hallowing",
+  "base": {
+    "item": "caverns_and_chasms:necromium_hoe"
+  },
+  "addition": {
+    "item": "minecraft:gold_ingot"
+  },
+  "result": {
+    "item": "caverns_and_chasms:necromium_hoe"
+  },
+  "attribute": {
+    "attribute": "minecraft:generic.attack_knockback"
+  }
+}

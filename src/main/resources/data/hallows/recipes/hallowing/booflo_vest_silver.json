@@ -1,0 +1,15 @@
+{
+  "type": "hallows:hallowing",
+  "base": {
+    "item": "endergetic:booflo_vest"
+  },
+  "addition": {
+    "item": "caverns_and_chasms:silver_ingot"
+  },
+  "result": {
+    "item": "minecraft:booflo_vest"
+  },
+  "attribute": {
+    "attribute": "minecraft:generic.armor"
+  }
+}

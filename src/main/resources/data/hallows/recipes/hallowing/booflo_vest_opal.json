@@ -1,0 +1,15 @@
+{
+  "type": "hallows:hallowing",
+  "base": {
+    "item": "endergetic:booflo_vest"
+  },
+  "addition": {
+    "item": "endergetic:opal"
+  },
+  "result": {
+    "item": "minecraft:booflo_vest"
+  },
+  "attribute": {
+    "attribute": "minecraft:generic.max_health"
+  }
+}

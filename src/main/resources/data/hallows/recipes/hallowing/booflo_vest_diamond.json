@@ -1,0 +1,15 @@
+{
+  "type": "hallows:hallowing",
+  "base": {
+    "item": "endergetic:booflo_vest"
+  },
+  "addition": {
+    "item": "endergetic:booflo_vest"
+  },
+  "result": {
+    "item": "minecraft:diamond_boots"
+  },
+  "attribute": {
+    "attribute": "minecraft:generic.armor_toughness"
+  }
+}
