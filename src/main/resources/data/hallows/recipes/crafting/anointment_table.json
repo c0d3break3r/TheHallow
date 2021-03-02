@@ -2,12 +2,12 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "SSS",
-    "PPP",
-    "PPP"
+    "TTT",
+    "TTT"
   ],
   "key": {
-    "P": {
-      "tag": "minecraft:planks"
+    "T": {
+      "item": "hallows:tenebrite"
     },
     "S": {
       "item": "hallows:stygian_ingot"
