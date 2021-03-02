@@ -79,15 +79,15 @@ public class HallowsCaveCarver extends WorldCarver<ProbabilityConfig> {
         return true;
     }
 
-    protected boolean carveBlock(IChunk chunk, Function<BlockPos, Biome> biomePos, BitSet carvingMask, Random rand, BlockPos.Mutable p_230358_5_, BlockPos.Mutable p_230358_6_, BlockPos.Mutable p_230358_7_, int seaLevel, int chunkX, int chunkZ, int posX, int posZ, int p_230358_13_, int posY, int p_230358_15_, MutableBoolean isSurface) {
+    protected boolean carveBlock(IChunk chunk, Function<BlockPos, Biome> biomePos, BitSet carvingMask, Random rand, BlockPos.Mutable place, BlockPos.Mutable p_230358_6_, BlockPos.Mutable p_230358_7_, int seaLevel, int chunkX, int chunkZ, int posX, int posZ, int p_230358_13_, int posY, int p_230358_15_, MutableBoolean isSurface) {
         int i = p_230358_13_ | p_230358_15_ << 4 | posY << 8;
         if (carvingMask.get(i)) {
             return false;
         } else {
             carvingMask.set(i);
-            p_230358_5_.setPos(posX, posY, posZ);
-            BlockState blockstate = chunk.getBlockState(p_230358_5_);
-            BlockState blockstate1 = chunk.getBlockState(p_230358_6_.setAndMove(p_230358_5_, Direction.UP));
+            place.setPos(posX, posY, posZ);
+            BlockState blockstate = chunk.getBlockState(place);
+            BlockState blockstate1 = chunk.getBlockState(p_230358_6_.setAndMove(place, Direction.UP));
             if (blockstate.isIn(Blocks.GRASS_BLOCK)) {
                 isSurface.setTrue();
             }
@@ -96,13 +96,13 @@ public class HallowsCaveCarver extends WorldCarver<ProbabilityConfig> {
                 return false;
             } else {
                 if (posY < 8) {
-                    chunk.setBlockState(p_230358_5_, LAVA.getBlockState(), false);
+                    chunk.setBlockState(place, LAVA.getBlockState(), false);
                 } else {
-                    chunk.setBlockState(p_230358_5_, CAVE_AIR, false);
+                    chunk.setBlockState(place, CAVE_AIR, false);
                     if (isSurface.isTrue()) {
-                        p_230358_7_.setAndMove(p_230358_5_, Direction.DOWN);
+                        p_230358_7_.setAndMove(place, Direction.DOWN);
                         if (chunk.getBlockState(p_230358_7_).isIn(Blocks.DIRT)) {
-                            chunk.setBlockState(p_230358_7_, biomePos.apply(p_230358_5_).getGenerationSettings().getSurfaceBuilderConfig().getTop(), false);
+                            chunk.setBlockState(p_230358_7_, biomePos.apply(place).getGenerationSettings().getSurfaceBuilderConfig().getTop(), false);
                         }
                     }
                 }

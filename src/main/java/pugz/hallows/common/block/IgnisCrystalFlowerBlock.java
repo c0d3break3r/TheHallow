@@ -69,12 +69,9 @@ public class IgnisCrystalFlowerBlock extends Block implements IWaterLoggable {
     @Nonnull
     @SuppressWarnings("deprecation")
     public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-        DoubleBlockHalf doubleblockhalf = stateIn.get(HALF);
-        if (facing.getAxis() != Direction.Axis.Y || doubleblockhalf == DoubleBlockHalf.LOWER != (facing == Direction.UP) || facingState.isIn(this) && facingState.get(HALF) != doubleblockhalf) {
-            return doubleblockhalf == DoubleBlockHalf.LOWER && facing == Direction.DOWN && !stateIn.isValidPosition(worldIn, currentPos) ? Blocks.AIR.getDefaultState() : super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
-        } else {
-            return Blocks.AIR.getDefaultState();
-        }
+        if (!stateIn.isValidPosition(worldIn, currentPos)) {
+            worldIn.getPendingBlockTicks().scheduleTick(currentPos, this, 1);
+        } return worldIn.getBlockState(currentPos.down()).isAir() ? Blocks.AIR.getDefaultState() : super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
     }
 
     @SuppressWarnings("deprecation")
