@@ -1,0 +1,15 @@
+{
+  "type": "hallows:hallowing",
+  "base": {
+    "item": "minecraft:gold_sword"
+  },
+  "addition": {
+    "item": "hallows:ignis_crystal_flower"
+  },
+  "result": {
+    "item": "minecraft:gold_sword"
+  },
+  "attribute": {
+    "attribute": "minecraft:generic.attack_damage"
+  }
+}

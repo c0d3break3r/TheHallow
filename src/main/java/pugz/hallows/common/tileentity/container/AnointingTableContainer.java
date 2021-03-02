@@ -8,14 +8,12 @@ import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.inventory.container.AbstractRepairContainer;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.*;
-import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeMod;
@@ -32,18 +30,15 @@ public class AnointingTableContainer extends AbstractRepairContainer {
     @Nullable
     private HallowingRecipe recipe;
     private final List<HallowingRecipe> recipes;
-    private PlayerInventory inventory;
 
     public AnointingTableContainer(int id, PlayerInventory inventory) {
         this(id, inventory, IWorldPosCallable.DUMMY);
-        this.inventory = inventory;
     }
 
     public AnointingTableContainer(int id, PlayerInventory inventory, IWorldPosCallable pos) {
         super(HallowsContainers.ANOINTING.get(), id, inventory, pos);
         this.world = inventory.player.world;
         this.recipes = this.world.getRecipeManager().getRecipesForType(HallowsRecipes.Recipes.HALLOWING);
-        this.inventory = inventory;
     }
 
     protected boolean func_230302_a_(BlockState state) {
@@ -60,8 +55,8 @@ public class AnointingTableContainer extends AbstractRepairContainer {
         this.field_234642_c_.onCrafting(player);
         this.func_234654_d_(0);
         this.func_234654_d_(1);
-        this.field_234644_e_.consume((p_234653_0_, p_234653_1_) -> {
-            p_234653_0_.playEvent(1044, p_234653_1_, 0);
+        this.field_234644_e_.consume((world, pos) -> {
+            world.playEvent(1044, pos, 0);
         });
         return stack;
     }
@@ -78,8 +73,12 @@ public class AnointingTableContainer extends AbstractRepairContainer {
             this.field_234642_c_.setInventorySlotContents(0, ItemStack.EMPTY);
         } else {
             this.recipe = list.get(0);
-            ItemStack itemstack = this.recipe.getCraftingResult(this.field_234643_d_);
             Attribute attribute = this.recipe.getAttribute();
+            if (attribute == Attributes.FLYING_SPEED ||
+                    attribute == Attributes.ZOMBIE_SPAWN_REINFORCEMENTS ||
+                    attribute == Attributes.HORSE_JUMP_STRENGTH) return;
+
+            ItemStack itemstack = this.recipe.getCraftingResult(this.field_234643_d_);
             EquipmentSlotType slot = MobEntity.getSlotForItemStack(itemstack);
             double amount = 0;
 
@@ -97,28 +96,29 @@ public class AnointingTableContainer extends AbstractRepairContainer {
                 default:
                 case "attribute.name.generic.armor":
                 case "attribute.name.generic.armor_toughness":
-                case "attribute.name.generic.max_health":
                     amount += 1.0D;
                     break;
                 case "attribute.name.generic.follow_range":
                     amount -= 4.0D;
                     break;
                 case "attribute.name.generic.knockback_resistance":
-                case "attribute.name.generic.flying_speed":
                 case "attribute.name.generic.movement_speed":
                 case "forge.swimSpeed":
-                    amount += 0.1D;
+                    amount += 0.05D;
                     break;
                 case "attribute.name.generic.attack_knockback":
                     amount += 0.2D;
                     break;
                 case "attribute.name.generic.attack_speed":
+                    amount -= 0.5D;
+                    break;
                 case "attribute.name.generic.attack_damage":
+                case "attribute.name.generic.max_health":
                 case "forge.reachDistance":
                     amount += 0.5D;
                     break;
                 case "attribute.name.generic.luck":
-                    amount += 32.0D;
+                    amount += 2.0D;
                     break;
                 case "forge.nameTagDistance":
                     amount -= 8.0D;
@@ -140,8 +140,8 @@ public class AnointingTableContainer extends AbstractRepairContainer {
     }
 
     protected boolean func_241210_a_(ItemStack stack) {
-        return this.recipes.stream().anyMatch((p_241444_1_) -> {
-            return p_241444_1_.isValidAdditionItem(stack);
+        return this.recipes.stream().anyMatch((recipe) -> {
+            return recipe.isValidAdditionItem(stack);
         });
     }
 
