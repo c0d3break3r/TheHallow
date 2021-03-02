@@ -2,6 +2,6 @@
   "variants": {
     "type=bottom": { "model": "hallows:block/asphodel_slab" },
     "type=top": { "model": "hallows:block/asphodel_slab_top" },
-    "type=double": { "model": "hallows:block/asphodel" }
+    "type=double": { "model": "hallows:block/asphodel_planks" }
   }
 }

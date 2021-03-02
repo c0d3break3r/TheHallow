@@ -2,6 +2,7 @@ package pugz.hallows.core.util;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
@@ -17,7 +18,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import pugz.hallows.common.item.HallowsArmorMaterial;
@@ -26,12 +26,6 @@ import pugz.hallows.core.registry.HallowsItems;
 import java.util.List;
 
 public class Events {
-    public static class Hallows {
-        public static void onModifyItemAttributes(ItemAttributeModifierEvent event) {
-            //Attributes.class;
-        }
-    }
-
     public static class Charge {
         private static int charge = 0;
 
@@ -41,7 +35,7 @@ public class Events {
                 if (((ArmorItem)stack.getItem()).getArmorMaterial() == HallowsItems.STYGIAN_TIER) {
                     HallowsArmorMaterial material = (HallowsArmorMaterial)((ArmorItem)stack.getItem()).getArmorMaterial();
                     List<ITextComponent> tooltip = event.getToolTip();
-                    tooltip.add(new StringTextComponent("+" + material.getCharge(((ArmorItem) stack.getItem()).getEquipmentSlot()) + " Charge").mergeStyle(TextFormatting.BLUE, TextFormatting.ITALIC));
+                    tooltip.add(new StringTextComponent("+" + material.getCharge(MobEntity.getSlotForItemStack(stack)) + " Charge").mergeStyle(TextFormatting.BLUE));
                 }
             }
         }
