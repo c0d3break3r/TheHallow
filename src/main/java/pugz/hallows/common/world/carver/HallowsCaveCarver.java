@@ -158,53 +158,6 @@ public class HallowsCaveCarver extends WorldCarver<ProbabilityConfig> {
         }
     }
 
-    protected boolean func_227208_a_(IChunk chunk, Function<BlockPos, Biome> biomePos, long seed, int seaLevel, int chunkX, int chunkZ, double randOffsetXCoord, double startY, double randOffsetZCoord, double p_227208_14_, double p_227208_16_, BitSet carvingMask) {
-        Random random = new Random(seed + (long)chunkX + (long)chunkZ);
-        double d0 = (double)(chunkX * 16 + 8);
-        double d1 = (double)(chunkZ * 16 + 8);
-        p_227208_14_ *= 1.5D;
-        if (!(randOffsetXCoord < d0 - 16.0D - p_227208_14_ * 2.0D) && !(randOffsetZCoord < d1 - 16.0D - p_227208_14_ * 2.0D) && !(randOffsetXCoord > d0 + 16.0D + p_227208_14_ * 2.0D) && !(randOffsetZCoord > d1 + 16.0D + p_227208_14_ * 2.0D)) {
-            int i = Math.max(MathHelper.floor(randOffsetXCoord - p_227208_14_) - chunkX * 16 - 1, 0);
-            int j = Math.min(MathHelper.floor(randOffsetXCoord + p_227208_14_) - chunkX * 16 + 1, 16);
-            int k = Math.max(MathHelper.floor(startY - p_227208_16_) - 1, 1);
-            int l = Math.min(MathHelper.floor(startY + p_227208_16_) + 1, this.maxHeight - 8);
-            int i1 = Math.max(MathHelper.floor(randOffsetZCoord - p_227208_14_) - chunkZ * 16 - 1, 0);
-            int j1 = Math.min(MathHelper.floor(randOffsetZCoord + p_227208_14_) - chunkZ * 16 + 1, 16);
-            if (this.func_222700_a(chunk, chunkX, chunkZ, i, j, k, l, i1, j1)) {
-                return false;
-            } else {
-                boolean flag = false;
-                BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable();
-                BlockPos.Mutable blockpos$mutable1 = new BlockPos.Mutable();
-                BlockPos.Mutable blockpos$mutable2 = new BlockPos.Mutable();
-
-                for(int k1 = i; k1 < j; ++k1) {
-                    int l1 = k1 + chunkX * 16;
-                    double d2 = ((double)l1 + 0.5D - randOffsetXCoord) / p_227208_14_;
-
-                    for(int i2 = i1; i2 < j1; ++i2) {
-                        int j2 = i2 + chunkZ * 16;
-                        double d3 = ((double)j2 + 0.5D - randOffsetZCoord) / p_227208_14_;
-                        if (!(d2 * d2 + d3 * d3 >= 1.0D)) {
-                            MutableBoolean mutableboolean = new MutableBoolean(false);
-
-                            for(int k2 = l; k2 > k; --k2) {
-                                double d4 = ((double)k2 - 0.5D - startY) / p_227208_16_;
-                                if (!this.func_222708_a(d2, d4, d3, k2)) {
-                                    flag |= this.carveBlock(chunk, biomePos, carvingMask, random, blockpos$mutable, blockpos$mutable1, blockpos$mutable2, seaLevel, chunkX, chunkZ, l1, j2, k1, k2, i2, mutableboolean);
-                                }
-                            }
-                        }
-                    }
-                }
-
-                return flag;
-            }
-        } else {
-            return false;
-        }
-    }
-
     protected boolean func_222708_a(double p_222708_1_, double p_222708_3_, double p_222708_5_, int p_222708_7_) {
         return (p_222708_1_ * p_222708_1_ + p_222708_5_ * p_222708_5_) * (double)this.field_202536_i[p_222708_7_ - 1] + p_222708_3_ * p_222708_3_ / 6.0D >= 1.0D;
     }
