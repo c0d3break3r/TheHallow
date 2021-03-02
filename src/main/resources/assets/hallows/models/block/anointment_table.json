@@ -3,6 +3,6 @@
   "textures": {
     "top": "hallows:block/anointment_table_top",
     "side": "hallows:block/anointment_table_side",
-    "bottom": "hallows:block/tenebrite"
+    "bottom": "hallows:block/skullish_tenebrite"
   }
 }
