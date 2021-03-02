@@ -2,6 +2,8 @@ package pugz.hallows.core.util;
 
 import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -29,6 +31,7 @@ import net.minecraftforge.fml.RegistryObject;
 import pugz.hallows.common.world.biome.AbstractBiome;
 import pugz.hallows.core.Hallows;
 import pugz.hallows.core.registry.*;
+import pugz.hallows.core.registry.other.HallowsContainers;
 
 import javax.annotation.Nullable;
 import java.util.function.Supplier;
@@ -46,6 +49,10 @@ public class RegistryUtil {
 
     public static <T extends TileEntity> RegistryObject<TileEntityType<T>> createTileEntity(String name, Supplier<? extends T> supplier, Supplier<Block[]> blocks) {
         return HallowsTileEntities.TILE_ENTITIES.register(name, () -> new TileEntityType<>(supplier, Sets.newHashSet(blocks.get()), null));
+    }
+
+    public static <T extends Container> RegistryObject<ContainerType<T>> createContainer(final String key, ContainerType.IFactory<T> factory) {
+        return HallowsContainers.CONTAINERS.register(key, () -> new ContainerType<>(factory));
     }
 
     public static RegistryKey<Biome> createBiome(AbstractBiome biome) {

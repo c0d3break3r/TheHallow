@@ -14,13 +14,13 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nonnull;
 
-public class AnointmentRecipe implements IRecipe<IInventory> {
+public class AnointingRecipe implements IRecipe<IInventory> {
     private final Ingredient base;
     private final Ingredient addition;
     private final ItemStack result;
     private final ResourceLocation recipeId;
 
-    public AnointmentRecipe(ResourceLocation recipeId, Ingredient base, Ingredient addition, ItemStack result) {
+    public AnointingRecipe(ResourceLocation recipeId, Ingredient base, Ingredient addition, ItemStack result) {
         this.recipeId = recipeId;
         this.base = base;
         this.addition = addition;
@@ -75,23 +75,23 @@ public class AnointmentRecipe implements IRecipe<IInventory> {
         return IRecipeType.SMITHING;
     }
 
-    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<AnointmentRecipe> {
+    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<AnointingRecipe> {
         @Nonnull
-        public AnointmentRecipe read(ResourceLocation recipeId, JsonObject json) {
+        public AnointingRecipe read(ResourceLocation recipeId, JsonObject json) {
             Ingredient ingredient = Ingredient.deserialize(JSONUtils.getJsonObject(json, "base"));
             Ingredient ingredient1 = Ingredient.deserialize(JSONUtils.getJsonObject(json, "addition"));
             ItemStack itemstack = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "result"));
-            return new AnointmentRecipe(recipeId, ingredient, ingredient1, itemstack);
+            return new AnointingRecipe(recipeId, ingredient, ingredient1, itemstack);
         }
 
-        public AnointmentRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
+        public AnointingRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
             Ingredient ingredient = Ingredient.read(buffer);
             Ingredient ingredient1 = Ingredient.read(buffer);
             ItemStack itemstack = buffer.readItemStack();
-            return new AnointmentRecipe(recipeId, ingredient, ingredient1, itemstack);
+            return new AnointingRecipe(recipeId, ingredient, ingredient1, itemstack);
         }
 
-        public void write(PacketBuffer buffer, AnointmentRecipe recipe) {
+        public void write(PacketBuffer buffer, AnointingRecipe recipe) {
             recipe.base.write(buffer);
             recipe.addition.write(buffer);
             buffer.writeItemStack(recipe.result);

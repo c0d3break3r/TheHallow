@@ -86,6 +86,7 @@
   "block.hallows.tenebrite_wall": "Tenebrite Wall",
   "block.hallows.gilded_tenebrite": "Gilded Tenebrite",
   "block.hallows.skullish_tenebrite": "Skullish Tenebrite",
+  "block.hallows.anointment_table": "Anointment Table",
 
   "item.hallows.stygian_ingot": "Stygian Ingot",
   "item.hallows.stygian_helmet": "Stygian Helmet",
@@ -101,5 +102,7 @@
   "biome.hallows.hanging_woods": "Hanging Woods",
   "biome.hallows.hemlock_swamp": "Hemlock Swamp",
   "biome.hallows.petrified_sands": "Petrified Sands",
-  "biome.hallows.petrified_boneyard": "Petrified Boneyard"
+  "biome.hallows.petrified_boneyard": "Petrified Boneyard",
+
+  "container.anoint": "Anointing"
 }

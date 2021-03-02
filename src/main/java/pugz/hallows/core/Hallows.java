@@ -1,6 +1,7 @@
 package pugz.hallows.core;
 
 import com.google.common.collect.ImmutableMap;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.settings.StructureSeparationSettings;
@@ -13,8 +14,10 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import pugz.hallows.client.gui.AnointingTableScreen;
 import pugz.hallows.common.block.NecrofireBlock;
 import pugz.hallows.core.registry.*;
+import pugz.hallows.core.registry.other.HallowsContainers;
 import pugz.hallows.core.util.Events;
 
 import java.util.HashMap;
@@ -30,6 +33,7 @@ public class Hallows {
         HallowsBlocks.BLOCKS.register(eventBus);
         HallowsItems.ITEMS.register(eventBus);
         HallowsTileEntities.TILE_ENTITIES.register(eventBus);
+        HallowsContainers.CONTAINERS.register(eventBus);
         HallowsBiomes.BIOMES.register(eventBus);
         HallowsSurfaceBuilders.SURFACE_BUILDERS.register(eventBus);
         HallowsCarvers.CARVERS.register(eventBus);
@@ -40,6 +44,7 @@ public class Hallows {
         HallowsBlocks.registerBlocks();
         HallowsItems.registerItems();
         HallowsTileEntities.registerTileEntities();
+        HallowsContainers.registerContainers();
         HallowsBiomes.registerBiomes();
         HallowsSurfaceBuilders.registerSurfaceBuilders();
         HallowsCarvers.registerCarvers();
@@ -83,5 +88,7 @@ public class Hallows {
     public void clientSetup(FMLClientSetupEvent event) {
         HallowsBlocks.registerRenderLayers();
         HallowsDimensions.registerEffects();
+
+        ScreenManager.registerFactory(HallowsContainers.ANOINTING.get(), AnointingTableScreen::new);
     }
 }
