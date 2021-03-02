@@ -98,6 +98,8 @@ public class AnointingTableContainer extends AbstractRepairContainer {
 
             switch (attribute.getAttributeName()) {
                 default:
+                case "attribute.name.generic.armor":
+                case "attribute.name.generic.max_health":
                 case "attribute.name.generic.armor_toughness":
                     amount += 1.0D;
                     break;
@@ -106,15 +108,11 @@ public class AnointingTableContainer extends AbstractRepairContainer {
                 case "attribute.name.generic.movement_speed":
                     amount += 0.05D;
                     break;
-                case "attribute.name.generic.attack_knockback":
-                    amount += 0.2D;
-                    break;
                 case "attribute.name.generic.attack_speed":
                     amount += 0.4D;
                     break;
-                case "attribute.name.generic.armor":
+                case "attribute.name.generic.attack_knockback":
                 case "attribute.name.generic.attack_damage":
-                case "attribute.name.generic.max_health":
                 case "forge.reachDistance":
                     amount += 0.5D;
                     break;
