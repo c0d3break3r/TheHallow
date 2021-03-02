@@ -1,20 +1,24 @@
 package pugz.hallows.core.registry.other;
 
-import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
-import pugz.hallows.common.item.crafting.AnointingRecipe;
+import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import pugz.hallows.common.item.crafting.HallowingRecipe;
 import pugz.hallows.core.Hallows;
+import pugz.hallows.core.util.RegistryUtil;
 
 public class HallowsRecipes {
-    public static final IRecipeType<AnointingRecipe> ANOINTING = register("anointing");
+    public static final DeferredRegister<IRecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Hallows.MOD_ID);
 
-    private static <T extends IRecipe<?>> IRecipeType<T> register(final String key) {
-        return Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(Hallows.MOD_ID, key), new IRecipeType<T>() {
-            public String toString() {
-                return key;
-            }
-        });
+    public static RegistryObject<IRecipeSerializer<HallowingRecipe>> HALLOWING;
+
+    public static class Recipes {
+        public static final IRecipeType<HallowingRecipe> HALLOWING = RegistryUtil.createRecipe("hallowing");
+    }
+
+    public static void registerRecipeSerializers() {
+        HALLOWING = RegistryUtil.createRecipeSerializer("hallowing", new HallowingRecipe.Serializer());
     }
 }

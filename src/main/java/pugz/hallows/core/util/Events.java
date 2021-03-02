@@ -41,7 +41,7 @@ public class Events {
                 if (((ArmorItem)stack.getItem()).getArmorMaterial() == HallowsItems.STYGIAN_TIER) {
                     HallowsArmorMaterial material = (HallowsArmorMaterial)((ArmorItem)stack.getItem()).getArmorMaterial();
                     List<ITextComponent> tooltip = event.getToolTip();
-                    tooltip.add(new StringTextComponent("+" + material.getCharge(((ArmorItem) stack.getItem()).getEquipmentSlot()) + "Charge").mergeStyle(TextFormatting.BLUE, TextFormatting.ITALIC));
+                    tooltip.add(new StringTextComponent("+" + material.getCharge(((ArmorItem) stack.getItem()).getEquipmentSlot()) + " Charge").mergeStyle(TextFormatting.BLUE, TextFormatting.ITALIC));
                 }
             }
         }

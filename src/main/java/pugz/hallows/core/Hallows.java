@@ -18,6 +18,7 @@ import pugz.hallows.client.gui.AnointingTableScreen;
 import pugz.hallows.common.block.NecrofireBlock;
 import pugz.hallows.core.registry.*;
 import pugz.hallows.core.registry.other.HallowsContainers;
+import pugz.hallows.core.registry.other.HallowsRecipes;
 import pugz.hallows.core.util.Events;
 
 import java.util.HashMap;
@@ -34,6 +35,7 @@ public class Hallows {
         HallowsItems.ITEMS.register(eventBus);
         HallowsTileEntities.TILE_ENTITIES.register(eventBus);
         HallowsContainers.CONTAINERS.register(eventBus);
+        HallowsRecipes.RECIPE_SERIALIZERS.register(eventBus);
         HallowsBiomes.BIOMES.register(eventBus);
         HallowsSurfaceBuilders.SURFACE_BUILDERS.register(eventBus);
         HallowsCarvers.CARVERS.register(eventBus);
@@ -45,6 +47,7 @@ public class Hallows {
         HallowsItems.registerItems();
         HallowsTileEntities.registerTileEntities();
         HallowsContainers.registerContainers();
+        HallowsRecipes.registerRecipeSerializers();
         HallowsBiomes.registerBiomes();
         HallowsSurfaceBuilders.registerSurfaceBuilders();
         HallowsCarvers.registerCarvers();

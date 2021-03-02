@@ -7,6 +7,9 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.RegistryKey;
@@ -32,6 +35,7 @@ import pugz.hallows.common.world.biome.AbstractBiome;
 import pugz.hallows.core.Hallows;
 import pugz.hallows.core.registry.*;
 import pugz.hallows.core.registry.other.HallowsContainers;
+import pugz.hallows.core.registry.other.HallowsRecipes;
 
 import javax.annotation.Nullable;
 import java.util.function.Supplier;
@@ -53,6 +57,18 @@ public class RegistryUtil {
 
     public static <T extends Container> RegistryObject<ContainerType<T>> createContainer(final String key, ContainerType.IFactory<T> factory) {
         return HallowsContainers.CONTAINERS.register(key, () -> new ContainerType<>(factory));
+    }
+
+    public static <T extends IRecipe<?>> IRecipeType<T> createRecipe(final String name) {
+        return Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(Hallows.MOD_ID, name), new IRecipeType<T>() {
+            public String toString() {
+                return name;
+            }
+        });
+    }
+
+    public static <S extends IRecipeSerializer<T>, T extends IRecipe<?>> RegistryObject<S> createRecipeSerializer(final String name, S recipeSerializer) {
+        return HallowsRecipes.RECIPE_SERIALIZERS.register(name, () -> recipeSerializer);
     }
 
     public static RegistryKey<Biome> createBiome(AbstractBiome biome) {
