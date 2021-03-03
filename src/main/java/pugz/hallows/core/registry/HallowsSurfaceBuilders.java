@@ -9,7 +9,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import pugz.hallows.common.world.surface.GlaciersSurfaceBuilder;
 import pugz.hallows.common.world.surface.HallowedSurfaceBuilder;
 import pugz.hallows.core.Hallows;
-import pugz.hallows.core.util.RegistryUtil;
+import pugz.hallows.core.util.RegistryHelper;
 
 public class HallowsSurfaceBuilders {
     public static final DeferredRegister<SurfaceBuilder<?>> SURFACE_BUILDERS = DeferredRegister.create(ForgeRegistries.SURFACE_BUILDERS, Hallows.MOD_ID);
@@ -18,12 +18,12 @@ public class HallowsSurfaceBuilders {
     public static RegistryObject<SurfaceBuilder<SurfaceBuilderConfig>> GLACIERS;
 
     public static void registerSurfaceBuilders() {
-        HALLOWED = RegistryUtil.createSurfaceBuilder("hallowed", () -> new HallowedSurfaceBuilder(SurfaceBuilderConfig.field_237203_a_));
-        GLACIERS = RegistryUtil.createSurfaceBuilder("glaciers", () -> new GlaciersSurfaceBuilder(SurfaceBuilderConfig.field_237203_a_));
+        HALLOWED = RegistryHelper.createSurfaceBuilder("hallowed", () -> new HallowedSurfaceBuilder(SurfaceBuilderConfig.field_237203_a_));
+        GLACIERS = RegistryHelper.createSurfaceBuilder("glaciers", () -> new GlaciersSurfaceBuilder(SurfaceBuilderConfig.field_237203_a_));
     }
 
     public static class Configured {
-        public static final ConfiguredSurfaceBuilder<SurfaceBuilderConfig> HALLOWED = RegistryUtil.createConfiguredSurfaceBuilder("hallowed", HallowsSurfaceBuilders.HALLOWED.get().func_242929_a(SurfaceBuilder.GRASS_DIRT_SAND_CONFIG));
-        public static final ConfiguredSurfaceBuilder<SurfaceBuilderConfig> GLACIERS = RegistryUtil.createConfiguredSurfaceBuilder("glaciers", HallowsSurfaceBuilders.GLACIERS.get().func_242929_a(SurfaceBuilder.GRASS_DIRT_SAND_CONFIG));
+        public static final ConfiguredSurfaceBuilder<SurfaceBuilderConfig> HALLOWED = RegistryHelper.createConfiguredSurfaceBuilder("hallowed", HallowsSurfaceBuilders.HALLOWED.get().func_242929_a(SurfaceBuilder.GRASS_DIRT_SAND_CONFIG));
+        public static final ConfiguredSurfaceBuilder<SurfaceBuilderConfig> GLACIERS = RegistryHelper.createConfiguredSurfaceBuilder("glaciers", HallowsSurfaceBuilders.GLACIERS.get().func_242929_a(SurfaceBuilder.GRASS_DIRT_SAND_CONFIG));
     }
 }

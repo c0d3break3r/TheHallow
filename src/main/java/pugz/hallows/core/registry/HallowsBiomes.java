@@ -10,7 +10,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import pugz.hallows.common.world.biome.*;
 import pugz.hallows.core.Hallows;
-import pugz.hallows.core.util.RegistryUtil;
+import pugz.hallows.core.util.RegistryHelper;
 
 public class HallowsBiomes {
     public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, Hallows.MOD_ID);
@@ -24,13 +24,13 @@ public class HallowsBiomes {
     public static RegistryKey<Biome> PETRIFIED_BONEYARD;
 
     public static void registerBiomes() {
-        PERISHED_VALLEY = RegistryUtil.createBiome(new PerishedValleyBiome());
-        PUMPKIN_VALLEY = RegistryUtil.createBiome(new PumpkinValleyBiome());
-        NECROTIC_GLACIERS = RegistryUtil.createBiome(new NecroticGlaciersBiome());
-        HANGING_WOODS = RegistryUtil.createBiome(new HangingWoodsBiome());
-        HEMLOCK_SWAMP = RegistryUtil.createBiome(new HemlockSwampBiome());
-        PETRIFIED_SANDS = RegistryUtil.createBiome(new PetrifiedSandsBiome());
-        PETRIFIED_BONEYARD = RegistryUtil.createBiome(new PetrifiedBoneyardBiome());
+        PERISHED_VALLEY = RegistryHelper.createBiome(new PerishedValleyBiome());
+        PUMPKIN_VALLEY = RegistryHelper.createBiome(new PumpkinValleyBiome());
+        NECROTIC_GLACIERS = RegistryHelper.createBiome(new NecroticGlaciersBiome());
+        HANGING_WOODS = RegistryHelper.createBiome(new HangingWoodsBiome());
+        HEMLOCK_SWAMP = RegistryHelper.createBiome(new HemlockSwampBiome());
+        PETRIFIED_SANDS = RegistryHelper.createBiome(new PetrifiedSandsBiome());
+        PETRIFIED_BONEYARD = RegistryHelper.createBiome(new PetrifiedBoneyardBiome());
     }
 
     public static void onBiomeLoading(final BiomeLoadingEvent event) {

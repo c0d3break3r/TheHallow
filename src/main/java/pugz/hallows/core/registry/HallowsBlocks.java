@@ -1,7 +1,6 @@
 package pugz.hallows.core.registry;
 
 import net.minecraft.block.*;
-import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.item.ItemGroup;
@@ -10,7 +9,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import pugz.hallows.common.block.*;
 import pugz.hallows.core.Hallows;
-import pugz.hallows.core.util.RegistryUtil;
+import pugz.hallows.core.util.RegistryHelper;
 
 public class HallowsBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Hallows.MOD_ID);
@@ -121,120 +120,123 @@ public class HallowsBlocks {
     public static RegistryObject<Block> SKULLISH_TENEBRITE;
 
     public static RegistryObject<Block> ANOINTMENT_TABLE;
+    public static RegistryObject<Block> GIANT_CAULDRON;
 
     public static void registerBlocks() {
-        HALLSTONE = RegistryUtil.createBlock("hallstone", () -> new Block(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
-        HALLSTONE_SLAB = RegistryUtil.createBlock("hallstone_slab", () -> new SlabBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
-        HALLSTONE_STAIRS = RegistryUtil.createBlock("hallstone_stairs", () -> new StairsBlock(() -> HallowsBlocks.HALLSTONE.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
-        HALLSTONE_WALL = RegistryUtil.createBlock("hallstone_wall", () -> new WallBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.DECORATIONS);
-        POLISHED_HALLSTONE = RegistryUtil.createBlock("polished_hallstone", () -> new Block(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
-        POLISHED_HALLSTONE_SLAB = RegistryUtil.createBlock("polished_hallstone_slab", () -> new SlabBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
-        POLISHED_HALLSTONE_STAIRS = RegistryUtil.createBlock("polished_hallstone_stairs", () -> new StairsBlock(() -> HallowsBlocks.POLISHED_HALLSTONE.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
-        POLISHED_HALLSTONE_WALL = RegistryUtil.createBlock("polished_hallstone_wall", () -> new WallBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.DECORATIONS);
-        HALLOWED_DIRT = RegistryUtil.createBlock("hallowed_dirt", () -> new Block(AbstractBlock.Properties.from(Blocks.DIRT)), ItemGroup.BUILDING_BLOCKS);
-        DEADROOT = RegistryUtil.createBlock("deadroot", () -> new DeadrootBlock(AbstractBlock.Properties.from(Blocks.GRASS)), ItemGroup.DECORATIONS);
+        HALLSTONE = RegistryHelper.createBlock("hallstone", () -> new Block(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
+        HALLSTONE_SLAB = RegistryHelper.createBlock("hallstone_slab", () -> new SlabBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
+        HALLSTONE_STAIRS = RegistryHelper.createBlock("hallstone_stairs", () -> new StairsBlock(() -> HallowsBlocks.HALLSTONE.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
+        HALLSTONE_WALL = RegistryHelper.createBlock("hallstone_wall", () -> new WallBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.DECORATIONS);
+        POLISHED_HALLSTONE = RegistryHelper.createBlock("polished_hallstone", () -> new Block(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
+        POLISHED_HALLSTONE_SLAB = RegistryHelper.createBlock("polished_hallstone_slab", () -> new SlabBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
+        POLISHED_HALLSTONE_STAIRS = RegistryHelper.createBlock("polished_hallstone_stairs", () -> new StairsBlock(() -> HallowsBlocks.POLISHED_HALLSTONE.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
+        POLISHED_HALLSTONE_WALL = RegistryHelper.createBlock("polished_hallstone_wall", () -> new WallBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.DECORATIONS);
+        HALLOWED_DIRT = RegistryHelper.createBlock("hallowed_dirt", () -> new Block(AbstractBlock.Properties.from(Blocks.DIRT)), ItemGroup.BUILDING_BLOCKS);
+        DEADROOT = RegistryHelper.createBlock("deadroot", () -> new DeadrootBlock(AbstractBlock.Properties.from(Blocks.GRASS)), ItemGroup.DECORATIONS);
 
-        OPAL_ORE = RegistryUtil.createBlock("opal_ore", () -> new HallowsOreBlock(AbstractBlock.Properties.from(Blocks.STONE).setRequiresTool().harvestLevel(2), 3, 7), ItemGroup.BUILDING_BLOCKS);
-        HALLSTONE_EMERALD_ORE = RegistryUtil.createBlock("hallstone_emerald_ore", () -> new HallowsOreBlock(AbstractBlock.Properties.from(Blocks.STONE).setRequiresTool().harvestLevel(2), 3, 7), ItemGroup.BUILDING_BLOCKS);
-        STYGIAN_RUIN = RegistryUtil.createBlock("stygian_ruin", () -> new Block(AbstractBlock.Properties.from(Blocks.ANCIENT_DEBRIS).setRequiresTool().harvestLevel(3)), ItemGroup.BUILDING_BLOCKS);
+        OPAL_ORE = RegistryHelper.createBlock("opal_ore", () -> new HallowsOreBlock(AbstractBlock.Properties.from(Blocks.STONE).setRequiresTool().harvestLevel(2), 3, 7), ItemGroup.BUILDING_BLOCKS);
+        HALLSTONE_EMERALD_ORE = RegistryHelper.createBlock("hallstone_emerald_ore", () -> new HallowsOreBlock(AbstractBlock.Properties.from(Blocks.STONE).setRequiresTool().harvestLevel(2), 3, 7), ItemGroup.BUILDING_BLOCKS);
+        STYGIAN_RUIN = RegistryHelper.createBlock("stygian_ruin", () -> new Block(AbstractBlock.Properties.from(Blocks.ANCIENT_DEBRIS).setRequiresTool().harvestLevel(3)), ItemGroup.BUILDING_BLOCKS);
 
-        DAWN_MORTIS = RegistryUtil.createBlock("dawn_mortis", () -> new Block(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
-        DAWN_MORTIS_SLAB = RegistryUtil.createBlock("dawn_mortis_slab", () -> new SlabBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
-        DAWN_MORTIS_STAIRS = RegistryUtil.createBlock("dawn_mortis_stairs", () -> new StairsBlock(() -> HallowsBlocks.DAWN_MORTIS.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
-        DAWN_MORTIS_WALL = RegistryUtil.createBlock("dawn_mortis_wall", () -> new WallBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.DECORATIONS);
-        DAWN_MORTIS_BRICKS = RegistryUtil.createBlock("dawn_mortis_bricks", () -> new Block(AbstractBlock.Properties.from(Blocks.STONE_BRICKS)), ItemGroup.BUILDING_BLOCKS);
-        DAWN_MORTIS_BRICK_SLAB = RegistryUtil.createBlock("dawn_mortis_brick_slab", () -> new SlabBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
-        DAWN_MORTIS_BRICK_STAIRS = RegistryUtil.createBlock("dawn_mortis_brick_stairs", () -> new StairsBlock(() -> HallowsBlocks.DAWN_MORTIS_BRICKS.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
-        DAWN_MORTIS_BRICK_WALL = RegistryUtil.createBlock("dawn_mortis_brick_wall", () -> new WallBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.DECORATIONS);
-        NOON_MORTIS = RegistryUtil.createBlock("noon_mortis", () -> new Block(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
-        NOON_MORTIS_SLAB = RegistryUtil.createBlock("noon_mortis_slab", () -> new SlabBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
-        NOON_MORTIS_STAIRS = RegistryUtil.createBlock("noon_mortis_stairs", () -> new StairsBlock(() -> HallowsBlocks.NOON_MORTIS.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
-        NOON_MORTIS_WALL = RegistryUtil.createBlock("noon_mortis_wall", () -> new WallBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.DECORATIONS);
-        NOON_MORTIS_BRICKS = RegistryUtil.createBlock("noon_mortis_bricks", () -> new Block(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
-        NOON_MORTIS_BRICK_SLAB = RegistryUtil.createBlock("noon_mortis_brick_slab", () -> new SlabBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
-        NOON_MORTIS_BRICK_STAIRS = RegistryUtil.createBlock("noon_mortis_brick_stairs", () -> new StairsBlock(() -> HallowsBlocks.NOON_MORTIS_BRICKS.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
-        NOON_MORTIS_BRICK_WALL = RegistryUtil.createBlock("noon_mortis_brick_wall", () -> new WallBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.DECORATIONS);
-        DUSK_MORTIS = RegistryUtil.createBlock("dusk_mortis", () -> new Block(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
-        DUSK_MORTIS_SLAB = RegistryUtil.createBlock("dusk_mortis_slab", () -> new SlabBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
-        DUSK_MORTIS_STAIRS = RegistryUtil.createBlock("dusk_mortis_stairs", () -> new StairsBlock(() -> HallowsBlocks.DUSK_MORTIS.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
-        DUSK_MORTIS_WALL = RegistryUtil.createBlock("dusk_mortis_wall", () -> new WallBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.DECORATIONS);
-        DUSK_MORTIS_BRICKS = RegistryUtil.createBlock("dusk_mortis_bricks", () -> new Block(AbstractBlock.Properties.from(Blocks.STONE_BRICKS)), ItemGroup.BUILDING_BLOCKS);
-        DUSK_MORTIS_BRICK_SLAB = RegistryUtil.createBlock("dusk_mortis_brick_slab", () -> new SlabBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
-        DUSK_MORTIS_BRICK_STAIRS = RegistryUtil.createBlock("dusk_mortis_brick_stairs", () -> new StairsBlock(() -> HallowsBlocks.DUSK_MORTIS_BRICKS.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
-        DUSK_MORTIS_BRICK_WALL = RegistryUtil.createBlock("dusk_mortis_brick_wall", () -> new WallBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.DECORATIONS);
-        MIDNIGHT_MORTIS = RegistryUtil.createBlock("midnight_mortis", () -> new Block(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
-        MIDNIGHT_MORTIS_SLAB = RegistryUtil.createBlock("midnight_mortis_slab", () -> new SlabBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
-        MIDNIGHT_MORTIS_STAIRS = RegistryUtil.createBlock("midnight_mortis_stairs", () -> new StairsBlock(() -> HallowsBlocks.MIDNIGHT_MORTIS.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
-        MIDNIGHT_MORTIS_WALL = RegistryUtil.createBlock("midnight_mortis_wall", () -> new WallBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.DECORATIONS);
-        MIDNIGHT_MORTIS_BRICKS = RegistryUtil.createBlock("midnight_mortis_bricks", () -> new Block(AbstractBlock.Properties.from(Blocks.STONE_BRICKS)), ItemGroup.BUILDING_BLOCKS);
-        MIDNIGHT_MORTIS_BRICK_SLAB = RegistryUtil.createBlock("midnight_mortis_brick_slab", () -> new SlabBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
-        MIDNIGHT_MORTIS_BRICK_STAIRS = RegistryUtil.createBlock("midnight_mortis_brick_stairs", () -> new StairsBlock(() -> HallowsBlocks.MIDNIGHT_MORTIS_BRICKS.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
-        MIDNIGHT_MORTIS_BRICK_WALL = RegistryUtil.createBlock("midnight_mortis_brick_wall", () -> new WallBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.DECORATIONS);
+        DAWN_MORTIS = RegistryHelper.createBlock("dawn_mortis", () -> new Block(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
+        DAWN_MORTIS_SLAB = RegistryHelper.createBlock("dawn_mortis_slab", () -> new SlabBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
+        DAWN_MORTIS_STAIRS = RegistryHelper.createBlock("dawn_mortis_stairs", () -> new StairsBlock(() -> HallowsBlocks.DAWN_MORTIS.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
+        DAWN_MORTIS_WALL = RegistryHelper.createBlock("dawn_mortis_wall", () -> new WallBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.DECORATIONS);
+        DAWN_MORTIS_BRICKS = RegistryHelper.createBlock("dawn_mortis_bricks", () -> new Block(AbstractBlock.Properties.from(Blocks.STONE_BRICKS)), ItemGroup.BUILDING_BLOCKS);
+        DAWN_MORTIS_BRICK_SLAB = RegistryHelper.createBlock("dawn_mortis_brick_slab", () -> new SlabBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
+        DAWN_MORTIS_BRICK_STAIRS = RegistryHelper.createBlock("dawn_mortis_brick_stairs", () -> new StairsBlock(() -> HallowsBlocks.DAWN_MORTIS_BRICKS.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
+        DAWN_MORTIS_BRICK_WALL = RegistryHelper.createBlock("dawn_mortis_brick_wall", () -> new WallBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.DECORATIONS);
+        NOON_MORTIS = RegistryHelper.createBlock("noon_mortis", () -> new Block(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
+        NOON_MORTIS_SLAB = RegistryHelper.createBlock("noon_mortis_slab", () -> new SlabBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
+        NOON_MORTIS_STAIRS = RegistryHelper.createBlock("noon_mortis_stairs", () -> new StairsBlock(() -> HallowsBlocks.NOON_MORTIS.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
+        NOON_MORTIS_WALL = RegistryHelper.createBlock("noon_mortis_wall", () -> new WallBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.DECORATIONS);
+        NOON_MORTIS_BRICKS = RegistryHelper.createBlock("noon_mortis_bricks", () -> new Block(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
+        NOON_MORTIS_BRICK_SLAB = RegistryHelper.createBlock("noon_mortis_brick_slab", () -> new SlabBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
+        NOON_MORTIS_BRICK_STAIRS = RegistryHelper.createBlock("noon_mortis_brick_stairs", () -> new StairsBlock(() -> HallowsBlocks.NOON_MORTIS_BRICKS.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
+        NOON_MORTIS_BRICK_WALL = RegistryHelper.createBlock("noon_mortis_brick_wall", () -> new WallBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.DECORATIONS);
+        DUSK_MORTIS = RegistryHelper.createBlock("dusk_mortis", () -> new Block(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
+        DUSK_MORTIS_SLAB = RegistryHelper.createBlock("dusk_mortis_slab", () -> new SlabBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
+        DUSK_MORTIS_STAIRS = RegistryHelper.createBlock("dusk_mortis_stairs", () -> new StairsBlock(() -> HallowsBlocks.DUSK_MORTIS.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
+        DUSK_MORTIS_WALL = RegistryHelper.createBlock("dusk_mortis_wall", () -> new WallBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.DECORATIONS);
+        DUSK_MORTIS_BRICKS = RegistryHelper.createBlock("dusk_mortis_bricks", () -> new Block(AbstractBlock.Properties.from(Blocks.STONE_BRICKS)), ItemGroup.BUILDING_BLOCKS);
+        DUSK_MORTIS_BRICK_SLAB = RegistryHelper.createBlock("dusk_mortis_brick_slab", () -> new SlabBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
+        DUSK_MORTIS_BRICK_STAIRS = RegistryHelper.createBlock("dusk_mortis_brick_stairs", () -> new StairsBlock(() -> HallowsBlocks.DUSK_MORTIS_BRICKS.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
+        DUSK_MORTIS_BRICK_WALL = RegistryHelper.createBlock("dusk_mortis_brick_wall", () -> new WallBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.DECORATIONS);
+        MIDNIGHT_MORTIS = RegistryHelper.createBlock("midnight_mortis", () -> new Block(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
+        MIDNIGHT_MORTIS_SLAB = RegistryHelper.createBlock("midnight_mortis_slab", () -> new SlabBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
+        MIDNIGHT_MORTIS_STAIRS = RegistryHelper.createBlock("midnight_mortis_stairs", () -> new StairsBlock(() -> HallowsBlocks.MIDNIGHT_MORTIS.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
+        MIDNIGHT_MORTIS_WALL = RegistryHelper.createBlock("midnight_mortis_wall", () -> new WallBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.DECORATIONS);
+        MIDNIGHT_MORTIS_BRICKS = RegistryHelper.createBlock("midnight_mortis_bricks", () -> new Block(AbstractBlock.Properties.from(Blocks.STONE_BRICKS)), ItemGroup.BUILDING_BLOCKS);
+        MIDNIGHT_MORTIS_BRICK_SLAB = RegistryHelper.createBlock("midnight_mortis_brick_slab", () -> new SlabBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
+        MIDNIGHT_MORTIS_BRICK_STAIRS = RegistryHelper.createBlock("midnight_mortis_brick_stairs", () -> new StairsBlock(() -> HallowsBlocks.MIDNIGHT_MORTIS_BRICKS.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
+        MIDNIGHT_MORTIS_BRICK_WALL = RegistryHelper.createBlock("midnight_mortis_brick_wall", () -> new WallBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.DECORATIONS);
 
-        NECROFIRE = RegistryUtil.createBlock("necrofire", () -> new NecrofireBlock(AbstractBlock.Properties.from(Blocks.FIRE).setLightLevel((s) -> {
+        NECROFIRE = RegistryHelper.createBlock("necrofire", () -> new NecrofireBlock(AbstractBlock.Properties.from(Blocks.FIRE).setLightLevel((s) -> {
             return 12;
         })), null);
-        NECROFIRE_CAMPFIRE = RegistryUtil.createBlock("necrofire_campfire", () -> new NecrofireCampfireBlock(Block.Properties.from(Blocks.CAMPFIRE)), ItemGroup.DECORATIONS);
-        NECROFIRE_LANTERN = RegistryUtil.createBlock("necrofire_lantern", () -> new LanternBlock(AbstractBlock.Properties.from(Blocks.LANTERN).setLightLevel((s) -> {
+        NECROFIRE_CAMPFIRE = RegistryHelper.createBlock("necrofire_campfire", () -> new NecrofireCampfireBlock(Block.Properties.from(Blocks.CAMPFIRE)), ItemGroup.DECORATIONS);
+        NECROFIRE_LANTERN = RegistryHelper.createBlock("necrofire_lantern", () -> new LanternBlock(AbstractBlock.Properties.from(Blocks.LANTERN).setLightLevel((s) -> {
             return 15;
         })), ItemGroup.DECORATIONS);
-        NECROFIRE_TORCH = RegistryUtil.createBlock("necrofire_torch", () -> new NecrofireTorchBlock(AbstractBlock.Properties.from(Blocks.TORCH).setLightLevel((s) -> {
+        NECROFIRE_TORCH = RegistryHelper.createBlock("necrofire_torch", () -> new NecrofireTorchBlock(AbstractBlock.Properties.from(Blocks.TORCH).setLightLevel((s) -> {
             return 14;
         })), null);
-        NECROFIRE_WALL_TORCH = RegistryUtil.createBlock("necrofire_wall_torch", () -> new NecrofireWallTorchBlock(AbstractBlock.Properties.from(Blocks.WALL_TORCH).setLightLevel((s) -> {
+        NECROFIRE_WALL_TORCH = RegistryHelper.createBlock("necrofire_wall_torch", () -> new NecrofireWallTorchBlock(AbstractBlock.Properties.from(Blocks.WALL_TORCH).setLightLevel((s) -> {
             return 14;
         })), null);
 
-        STRIPPED_ASPHODEL_LOG = RegistryUtil.createBlock("stripped_asphodel_log", () -> new RotatedPillarBlock(AbstractBlock.Properties.from(Blocks.STRIPPED_OAK_LOG)), ItemGroup.BUILDING_BLOCKS);
-        ASPHODEL_LOG = RegistryUtil.createBlock("asphodel_log", () -> new HallowsLogBlock((RotatedPillarBlock) HallowsBlocks.STRIPPED_ASPHODEL_LOG.get()), ItemGroup.BUILDING_BLOCKS);
-        STRIPPED_ASPHODEL_WOOD = RegistryUtil.createBlock("stripped_asphodel_wood", () -> new RotatedPillarBlock(AbstractBlock.Properties.from(Blocks.STRIPPED_OAK_WOOD)), ItemGroup.BUILDING_BLOCKS);
-        ASPHODEL_WOOD = RegistryUtil.createBlock("asphodel_wood", () -> new HallowsLogBlock((RotatedPillarBlock) HallowsBlocks.STRIPPED_ASPHODEL_WOOD.get()), ItemGroup.BUILDING_BLOCKS);
-        ASPHODEL_PLANKS = RegistryUtil.createBlock("asphodel_planks", () -> new Block(AbstractBlock.Properties.from(Blocks.OAK_PLANKS)), ItemGroup.BUILDING_BLOCKS);
-        ASPHODEL_SLAB = RegistryUtil.createBlock("asphodel_slab", () -> new SlabBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
-        ASPHODEL_STAIRS = RegistryUtil.createBlock("asphodel_stairs", () -> new StairsBlock(() -> HallowsBlocks.ASPHODEL_PLANKS.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
+        STRIPPED_ASPHODEL_LOG = RegistryHelper.createBlock("stripped_asphodel_log", () -> new RotatedPillarBlock(AbstractBlock.Properties.from(Blocks.STRIPPED_OAK_LOG)), ItemGroup.BUILDING_BLOCKS);
+        ASPHODEL_LOG = RegistryHelper.createBlock("asphodel_log", () -> new HallowsLogBlock((RotatedPillarBlock) HallowsBlocks.STRIPPED_ASPHODEL_LOG.get()), ItemGroup.BUILDING_BLOCKS);
+        STRIPPED_ASPHODEL_WOOD = RegistryHelper.createBlock("stripped_asphodel_wood", () -> new RotatedPillarBlock(AbstractBlock.Properties.from(Blocks.STRIPPED_OAK_WOOD)), ItemGroup.BUILDING_BLOCKS);
+        ASPHODEL_WOOD = RegistryHelper.createBlock("asphodel_wood", () -> new HallowsLogBlock((RotatedPillarBlock) HallowsBlocks.STRIPPED_ASPHODEL_WOOD.get()), ItemGroup.BUILDING_BLOCKS);
+        ASPHODEL_PLANKS = RegistryHelper.createBlock("asphodel_planks", () -> new Block(AbstractBlock.Properties.from(Blocks.OAK_PLANKS)), ItemGroup.BUILDING_BLOCKS);
+        ASPHODEL_SLAB = RegistryHelper.createBlock("asphodel_slab", () -> new SlabBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
+        ASPHODEL_STAIRS = RegistryHelper.createBlock("asphodel_stairs", () -> new StairsBlock(() -> HallowsBlocks.ASPHODEL_PLANKS.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
 
-        STRIPPED_EBONY_LOG = RegistryUtil.createBlock("stripped_ebony_log", () -> new RotatedPillarBlock(AbstractBlock.Properties.from(Blocks.STRIPPED_OAK_LOG)), ItemGroup.BUILDING_BLOCKS);
-        EBONY_LOG = RegistryUtil.createBlock("ebony_log", () -> new HallowsLogBlock((RotatedPillarBlock) HallowsBlocks.STRIPPED_EBONY_LOG.get()), ItemGroup.BUILDING_BLOCKS);
-        STRIPPED_EBONY_WOOD = RegistryUtil.createBlock("stripped_ebony_wood", () -> new RotatedPillarBlock(AbstractBlock.Properties.from(Blocks.STRIPPED_OAK_WOOD)), ItemGroup.BUILDING_BLOCKS);
-        EBONY_WOOD = RegistryUtil.createBlock("ebony_wood", () -> new HallowsLogBlock((RotatedPillarBlock) HallowsBlocks.STRIPPED_EBONY_WOOD.get()), ItemGroup.BUILDING_BLOCKS);
-        STRIPPED_EBONY_BRANCH = RegistryUtil.createBlock("stripped_ebony_branch", () -> new BranchBlock(null), ItemGroup.DECORATIONS);
-        EBONY_BRANCH = RegistryUtil.createBlock("ebony_branch", () -> new BranchBlock((RotatedPillarBlock) HallowsBlocks.STRIPPED_EBONY_BRANCH.get()), ItemGroup.DECORATIONS);
-        EBONY_PLANKS = RegistryUtil.createBlock("ebony_planks", () -> new Block(AbstractBlock.Properties.from(Blocks.OAK_PLANKS)), ItemGroup.BUILDING_BLOCKS);
-        EBONY_SLAB = RegistryUtil.createBlock("ebony_slab", () -> new SlabBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
-        EBONY_STAIRS = RegistryUtil.createBlock("ebony_stairs", () -> new StairsBlock(() -> HallowsBlocks.EBONY_PLANKS.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
-        EBONY_LEAVES = RegistryUtil.createBlock("ebony_leaves", () -> new LeavesBlock(AbstractBlock.Properties.from(Blocks.OAK_LEAVES)), ItemGroup.DECORATIONS);
-        BLOOD_EBONY_LEAVES = RegistryUtil.createBlock("blood_ebony_leaves", () -> new LeavesBlock(AbstractBlock.Properties.from(Blocks.OAK_LEAVES)), ItemGroup.DECORATIONS);
-        HANGING_EBONY_LEAVES = RegistryUtil.createBlock("hanging_ebony_leaves", () -> new HangingLeavesBlock(AbstractBlock.Properties.from(Blocks.OAK_LEAVES)), ItemGroup.DECORATIONS);
-        HANGING_BLOOD_EBONY_LEAVES = RegistryUtil.createBlock("hanging_blood_ebony_leaves", () -> new HangingLeavesBlock(AbstractBlock.Properties.from(Blocks.OAK_LEAVES)), ItemGroup.DECORATIONS);
-        EBONY_LEAF_CARPET = RegistryUtil.createBlock("ebony_leaf_carpet", () -> new LeafCarpetBlock(AbstractBlock.Properties.from(Blocks.OAK_LEAVES)), ItemGroup.DECORATIONS);
-        BLOOD_EBONY_LEAF_CARPET = RegistryUtil.createBlock("blood_ebony_leaf_carpet", () -> new LeafCarpetBlock(AbstractBlock.Properties.from(Blocks.OAK_LEAVES)), ItemGroup.DECORATIONS);
+        STRIPPED_EBONY_LOG = RegistryHelper.createBlock("stripped_ebony_log", () -> new RotatedPillarBlock(AbstractBlock.Properties.from(Blocks.STRIPPED_OAK_LOG)), ItemGroup.BUILDING_BLOCKS);
+        EBONY_LOG = RegistryHelper.createBlock("ebony_log", () -> new HallowsLogBlock((RotatedPillarBlock) HallowsBlocks.STRIPPED_EBONY_LOG.get()), ItemGroup.BUILDING_BLOCKS);
+        STRIPPED_EBONY_WOOD = RegistryHelper.createBlock("stripped_ebony_wood", () -> new RotatedPillarBlock(AbstractBlock.Properties.from(Blocks.STRIPPED_OAK_WOOD)), ItemGroup.BUILDING_BLOCKS);
+        EBONY_WOOD = RegistryHelper.createBlock("ebony_wood", () -> new HallowsLogBlock((RotatedPillarBlock) HallowsBlocks.STRIPPED_EBONY_WOOD.get()), ItemGroup.BUILDING_BLOCKS);
+        STRIPPED_EBONY_BRANCH = RegistryHelper.createBlock("stripped_ebony_branch", () -> new BranchBlock(null), ItemGroup.DECORATIONS);
+        EBONY_BRANCH = RegistryHelper.createBlock("ebony_branch", () -> new BranchBlock((RotatedPillarBlock) HallowsBlocks.STRIPPED_EBONY_BRANCH.get()), ItemGroup.DECORATIONS);
+        EBONY_PLANKS = RegistryHelper.createBlock("ebony_planks", () -> new Block(AbstractBlock.Properties.from(Blocks.OAK_PLANKS)), ItemGroup.BUILDING_BLOCKS);
+        EBONY_SLAB = RegistryHelper.createBlock("ebony_slab", () -> new SlabBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
+        EBONY_STAIRS = RegistryHelper.createBlock("ebony_stairs", () -> new StairsBlock(() -> HallowsBlocks.EBONY_PLANKS.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
+        EBONY_LEAVES = RegistryHelper.createBlock("ebony_leaves", () -> new LeavesBlock(AbstractBlock.Properties.from(Blocks.OAK_LEAVES)), ItemGroup.DECORATIONS);
+        BLOOD_EBONY_LEAVES = RegistryHelper.createBlock("blood_ebony_leaves", () -> new LeavesBlock(AbstractBlock.Properties.from(Blocks.OAK_LEAVES)), ItemGroup.DECORATIONS);
+        HANGING_EBONY_LEAVES = RegistryHelper.createBlock("hanging_ebony_leaves", () -> new HangingLeavesBlock(AbstractBlock.Properties.from(Blocks.OAK_LEAVES)), ItemGroup.DECORATIONS);
+        HANGING_BLOOD_EBONY_LEAVES = RegistryHelper.createBlock("hanging_blood_ebony_leaves", () -> new HangingLeavesBlock(AbstractBlock.Properties.from(Blocks.OAK_LEAVES)), ItemGroup.DECORATIONS);
+        EBONY_LEAF_CARPET = RegistryHelper.createBlock("ebony_leaf_carpet", () -> new LeafCarpetBlock(AbstractBlock.Properties.from(Blocks.OAK_LEAVES)), ItemGroup.DECORATIONS);
+        BLOOD_EBONY_LEAF_CARPET = RegistryHelper.createBlock("blood_ebony_leaf_carpet", () -> new LeafCarpetBlock(AbstractBlock.Properties.from(Blocks.OAK_LEAVES)), ItemGroup.DECORATIONS);
 
-        PETRIFIED_SAND = RegistryUtil.createBlock("petrified_sand", () -> new SandBlock(6377538, AbstractBlock.Properties.from(Blocks.SAND)), ItemGroup.BUILDING_BLOCKS);
-        PETRIFIED_SANDSTONE = RegistryUtil.createBlock("petrified_sandstone", () -> new Block(AbstractBlock.Properties.from(Blocks.SANDSTONE)), ItemGroup.BUILDING_BLOCKS);
-        PETRIFIED_SANDSTONE_SLAB = RegistryUtil.createBlock("petrified_sandstone_slab", () -> new SlabBlock(AbstractBlock.Properties.from(Blocks.SANDSTONE)), ItemGroup.BUILDING_BLOCKS);
-        PETRIFIED_SANDSTONE_STAIRS = RegistryUtil.createBlock("petrified_sandstone_stairs", () -> new StairsBlock(() -> HallowsBlocks.PETRIFIED_SANDSTONE.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.SANDSTONE)), ItemGroup.BUILDING_BLOCKS);
-        PETRIFIED_SANDSTONE_WALL = RegistryUtil.createBlock("petrified_sandstone_wall", () -> new WallBlock(AbstractBlock.Properties.from(Blocks.SANDSTONE)), ItemGroup.DECORATIONS);
+        PETRIFIED_SAND = RegistryHelper.createBlock("petrified_sand", () -> new SandBlock(6377538, AbstractBlock.Properties.from(Blocks.SAND)), ItemGroup.BUILDING_BLOCKS);
+        PETRIFIED_SANDSTONE = RegistryHelper.createBlock("petrified_sandstone", () -> new Block(AbstractBlock.Properties.from(Blocks.SANDSTONE)), ItemGroup.BUILDING_BLOCKS);
+        PETRIFIED_SANDSTONE_SLAB = RegistryHelper.createBlock("petrified_sandstone_slab", () -> new SlabBlock(AbstractBlock.Properties.from(Blocks.SANDSTONE)), ItemGroup.BUILDING_BLOCKS);
+        PETRIFIED_SANDSTONE_STAIRS = RegistryHelper.createBlock("petrified_sandstone_stairs", () -> new StairsBlock(() -> HallowsBlocks.PETRIFIED_SANDSTONE.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.SANDSTONE)), ItemGroup.BUILDING_BLOCKS);
+        PETRIFIED_SANDSTONE_WALL = RegistryHelper.createBlock("petrified_sandstone_wall", () -> new WallBlock(AbstractBlock.Properties.from(Blocks.SANDSTONE)), ItemGroup.DECORATIONS);
 
-        IGNIS_CRYSTAL_FLOWER = RegistryUtil.createBlock("ignis_crystal_flower", () -> new IgnisCrystalFlowerBlock(AbstractBlock.Properties.from(Blocks.STONE).setLightLevel((s) -> {
+        IGNIS_CRYSTAL_FLOWER = RegistryHelper.createBlock("ignis_crystal_flower", () -> new IgnisCrystalFlowerBlock(AbstractBlock.Properties.from(Blocks.STONE).setLightLevel((s) -> {
             return 8;
         })), ItemGroup.DECORATIONS);
-        IGNIS_CRYSTAL_STEM = RegistryUtil.createBlock("ignis_crystal_stem", () -> new IgnisCrystalBlock(AbstractBlock.Properties.from(Blocks.STONE).setLightLevel((s) -> {
+        IGNIS_CRYSTAL_STEM = RegistryHelper.createBlock("ignis_crystal_stem", () -> new IgnisCrystalBlock(AbstractBlock.Properties.from(Blocks.STONE).setLightLevel((s) -> {
             return 9;
         })), ItemGroup.DECORATIONS);
-        IGNIS_CRYSTAL_BLOCK = RegistryUtil.createBlock("ignis_crystal_block", () -> new Block(AbstractBlock.Properties.from(Blocks.STONE).setLightLevel((s) -> {
+        IGNIS_CRYSTAL_BLOCK = RegistryHelper.createBlock("ignis_crystal_block", () -> new Block(AbstractBlock.Properties.from(Blocks.STONE).setLightLevel((s) -> {
             return 10;
         })), ItemGroup.BUILDING_BLOCKS);
 
-        HEMLOCK = RegistryUtil.createBlock("hemlock", () -> new HemlockBlock(AbstractBlock.Properties.from(Blocks.GRASS)), ItemGroup.DECORATIONS);
+        HEMLOCK = RegistryHelper.createBlock("hemlock", () -> new HemlockBlock(AbstractBlock.Properties.from(Blocks.GRASS)), ItemGroup.DECORATIONS);
 
-        TENEBRITE = RegistryUtil.createBlock("tenebrite", () -> new Block(AbstractBlock.Properties.from(Blocks.END_STONE)), ItemGroup.BUILDING_BLOCKS);
-        TENEBRITE_SLAB = RegistryUtil.createBlock("tenebrite_slab", () -> new SlabBlock(AbstractBlock.Properties.from(Blocks.END_STONE)), ItemGroup.BUILDING_BLOCKS);
-        TENEBRITE_STAIRS = RegistryUtil.createBlock("tenebrite_stairs", () -> new StairsBlock(() -> HallowsBlocks.TENEBRITE.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.END_STONE)), ItemGroup.BUILDING_BLOCKS);
-        TENEBRITE_WALL = RegistryUtil.createBlock("tenebrite_wall", () -> new WallBlock(AbstractBlock.Properties.from(Blocks.END_STONE)), ItemGroup.DECORATIONS);
-        GILDED_TENEBRITE = RegistryUtil.createBlock("gilded_tenebrite", () -> new Block(AbstractBlock.Properties.from(Blocks.END_STONE)), ItemGroup.BUILDING_BLOCKS);
-        SKULLISH_TENEBRITE = RegistryUtil.createBlock("skullish_tenebrite", () -> new Block(AbstractBlock.Properties.from(Blocks.END_STONE)), ItemGroup.BUILDING_BLOCKS);
+        TENEBRITE = RegistryHelper.createBlock("tenebrite", () -> new Block(AbstractBlock.Properties.from(Blocks.END_STONE)), ItemGroup.BUILDING_BLOCKS);
+        TENEBRITE_SLAB = RegistryHelper.createBlock("tenebrite_slab", () -> new SlabBlock(AbstractBlock.Properties.from(Blocks.END_STONE)), ItemGroup.BUILDING_BLOCKS);
+        TENEBRITE_STAIRS = RegistryHelper.createBlock("tenebrite_stairs", () -> new StairsBlock(() -> HallowsBlocks.TENEBRITE.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.END_STONE)), ItemGroup.BUILDING_BLOCKS);
+        TENEBRITE_WALL = RegistryHelper.createBlock("tenebrite_wall", () -> new WallBlock(AbstractBlock.Properties.from(Blocks.END_STONE)), ItemGroup.DECORATIONS);
+        GILDED_TENEBRITE = RegistryHelper.createBlock("gilded_tenebrite", () -> new Block(AbstractBlock.Properties.from(Blocks.END_STONE)), ItemGroup.BUILDING_BLOCKS);
+        SKULLISH_TENEBRITE = RegistryHelper.createBlock("skullish_tenebrite", () -> new Block(AbstractBlock.Properties.from(Blocks.END_STONE)), ItemGroup.BUILDING_BLOCKS);
 
-        ANOINTMENT_TABLE = RegistryUtil.createBlock("anointment_table", () -> new AnointmentTableBlock(AbstractBlock.Properties.from(Blocks.END_STONE)), ItemGroup.DECORATIONS);
+        ANOINTMENT_TABLE = RegistryHelper.createBlock("anointment_table", () -> new AnointmentTableBlock(AbstractBlock.Properties.from(Blocks.END_STONE)), ItemGroup.DECORATIONS);
+
+        GIANT_CAULDRON = RegistryHelper.createBlock("giant_cauldron", () -> new GiantCauldronBlock(AbstractBlock.Properties.from(Blocks.CAULDRON)), ItemGroup.MISC);
     }
 
     public static void registerRenderLayers() {

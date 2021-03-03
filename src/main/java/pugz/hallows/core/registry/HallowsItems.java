@@ -13,7 +13,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import pugz.hallows.common.item.HallowsArmorMaterial;
 import pugz.hallows.core.Hallows;
-import pugz.hallows.core.util.RegistryUtil;
+import pugz.hallows.core.util.RegistryHelper;
 
 public class HallowsItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Hallows.MOD_ID);
@@ -31,14 +31,14 @@ public class HallowsItems {
     public static RegistryObject<Item> NECROFIRE_TORCH;
 
     public static void registerItems() {
-        STYGIAN_INGOT = RegistryUtil.createItem("stygian_ingot", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));
-        STYGIAN_HELMET = RegistryUtil.createItem("stygian_helmet", () -> new ArmorItem(STYGIAN_TIER, EquipmentSlotType.HEAD, new Item.Properties().group(ItemGroup.COMBAT)));
-        STYGIAN_CHESTPLATE = RegistryUtil.createItem("stygian_chestplate", () -> new ArmorItem(STYGIAN_TIER, EquipmentSlotType.CHEST, new Item.Properties().group(ItemGroup.COMBAT)));
-        STYGIAN_LEGGINGS = RegistryUtil.createItem("stygian_leggings", () -> new ArmorItem(STYGIAN_TIER, EquipmentSlotType.LEGS, new Item.Properties().group(ItemGroup.COMBAT)));
-        STYGIAN_BOOTS = RegistryUtil.createItem("stygian_boots", () -> new ArmorItem(STYGIAN_TIER, EquipmentSlotType.FEET, new Item.Properties().group(ItemGroup.COMBAT)));
+        STYGIAN_INGOT = RegistryHelper.createItem("stygian_ingot", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));
+        STYGIAN_HELMET = RegistryHelper.createItem("stygian_helmet", () -> new ArmorItem(STYGIAN_TIER, EquipmentSlotType.HEAD, new Item.Properties().group(ItemGroup.COMBAT)));
+        STYGIAN_CHESTPLATE = RegistryHelper.createItem("stygian_chestplate", () -> new ArmorItem(STYGIAN_TIER, EquipmentSlotType.CHEST, new Item.Properties().group(ItemGroup.COMBAT)));
+        STYGIAN_LEGGINGS = RegistryHelper.createItem("stygian_leggings", () -> new ArmorItem(STYGIAN_TIER, EquipmentSlotType.LEGS, new Item.Properties().group(ItemGroup.COMBAT)));
+        STYGIAN_BOOTS = RegistryHelper.createItem("stygian_boots", () -> new ArmorItem(STYGIAN_TIER, EquipmentSlotType.FEET, new Item.Properties().group(ItemGroup.COMBAT)));
 
-        OPAL = RegistryUtil.createItem("opal", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));
-        HEMLOCK_LEAF = RegistryUtil.createItem("hemlock_leaf", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));
-        NECROFIRE_TORCH = RegistryUtil.createItem("necrofire_torch", () -> new WallOrFloorItem(HallowsBlocks.NECROFIRE_TORCH.get(), HallowsBlocks.NECROFIRE_WALL_TORCH.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
+        OPAL = RegistryHelper.createItem("opal", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));
+        HEMLOCK_LEAF = RegistryHelper.createItem("hemlock_leaf", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));
+        NECROFIRE_TORCH = RegistryHelper.createItem("necrofire_torch", () -> new WallOrFloorItem(HallowsBlocks.NECROFIRE_TORCH.get(), HallowsBlocks.NECROFIRE_WALL_TORCH.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
     }
 }

@@ -1,0 +1,15 @@
+{
+  "type": "hallows:hallowing",
+  "base": {
+    "item": "autumnity:snail_shell_chestplate"
+  },
+  "addition": {
+    "item": "endergetic:opal"
+  },
+  "result": {
+    "item": "autumnity:snail_shell_chestplate"
+  },
+  "attribute": {
+    "attribute": "minecraft:generic.max_health"
+  }
+}

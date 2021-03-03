@@ -3,6 +3,7 @@ package pugz.hallows.core;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.util.registry.WorldGenRegistries;
+import net.minecraft.village.PointOfInterestType;
 import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.settings.StructureSeparationSettings;
 import net.minecraftforge.api.distmarker.Dist;
@@ -42,6 +43,7 @@ public class Hallows {
         HallowsFeatures.FEATURES.register(eventBus);
         HallowsStructures.STRUCTURE_FEATURES.register(eventBus);
         HallowsFeatures.TREE_DECORATORS.register(eventBus);
+        HallowsDimensions.POINTS_OF_INTEREST.register(eventBus);
 
         HallowsBlocks.registerBlocks();
         HallowsItems.registerItems();
@@ -54,10 +56,12 @@ public class Hallows {
         HallowsFeatures.registerFeatures();
         HallowsStructures.registerStructures();
         HallowsFeatures.registerDecorators();
+        HallowsDimensions.registerPOIs();
 
         MinecraftForge.EVENT_BUS.addListener(HallowsBiomes::onBiomeLoading);
         MinecraftForge.EVENT_BUS.addListener(HallowsStructures::onWorldLoad);
         MinecraftForge.EVENT_BUS.addListener(NecrofireBlock::onRightClickBlock);
+        MinecraftForge.EVENT_BUS.addListener(Events.Teleport::onProjectileImpact);
         MinecraftForge.EVENT_BUS.addListener(Events.Charge::onItemTooltip);
         MinecraftForge.EVENT_BUS.addListener(Events.Charge::onLivingHurt);
 
@@ -69,6 +73,9 @@ public class Hallows {
 
     public void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
+            //PointOfInterestType.registerBlockStates(HallowsDimensions.PORTAL.get());
+            //PointOfInterestType.BLOCKS_OF_INTEREST.addAll(HallowsDimensions.PORTAL.get().blockStates);
+
             HallowsDimensions.registerDimensions();
             HallowsFeatures.registerConfiguredFeatures();
             HallowsStructures.setupStructures();

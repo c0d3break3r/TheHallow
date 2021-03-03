@@ -1,13 +1,13 @@
 {
   "type": "hallows:hallowing",
   "base": {
-    "item": "endergetic:booflo_vest"
+    "item": "minecraft:golden_chestplate"
   },
   "addition": {
-    "item": "endergetic:diamond"
+    "item": "minecraft:diamond"
   },
   "result": {
-    "item": "minecraft:diamond_boots"
+    "item": "minecraft:golden_chestplate"
   },
   "attribute": {
     "attribute": "minecraft:generic.armor_toughness"

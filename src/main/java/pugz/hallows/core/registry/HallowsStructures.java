@@ -21,7 +21,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import pugz.hallows.common.world.structure.PetrifiedPyramidPieces;
 import pugz.hallows.common.world.structure.PetrifiedPyramidStructure;
 import pugz.hallows.core.Hallows;
-import pugz.hallows.core.util.RegistryUtil;
+import pugz.hallows.core.util.RegistryHelper;
 
 import java.util.*;
 
@@ -41,11 +41,11 @@ public class HallowsStructures {
     }
 
     public static void registerStructures() {
-        PETRIFIED_PYRAMID = RegistryUtil.createStructure("petrified_pyramid", PetrifiedPyramidStructure::new);
+        PETRIFIED_PYRAMID = RegistryHelper.createStructure("petrified_pyramid", PetrifiedPyramidStructure::new);
     }
 
     public static void registerConfiguredStructures() {
-        Configured.PETRIFIED_PYRAMID = RegistryUtil.createConfiguredStructure("petrified_pyramid", HallowsStructures.PETRIFIED_PYRAMID.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
+        Configured.PETRIFIED_PYRAMID = RegistryHelper.createConfiguredStructure("petrified_pyramid", HallowsStructures.PETRIFIED_PYRAMID.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
     }
 
     public static void setupStructures() {
