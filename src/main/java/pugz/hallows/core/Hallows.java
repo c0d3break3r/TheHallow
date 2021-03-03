@@ -7,6 +7,7 @@ import net.minecraft.village.PointOfInterestType;
 import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.settings.StructureSeparationSettings;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -15,6 +16,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.ForgeRegistries;
 import pugz.hallows.client.gui.AnointingTableScreen;
 import pugz.hallows.common.block.NecrofireBlock;
 import pugz.hallows.core.registry.*;
@@ -37,6 +39,7 @@ public class Hallows {
         HallowsTileEntities.TILE_ENTITIES.register(eventBus);
         HallowsContainers.CONTAINERS.register(eventBus);
         HallowsRecipes.RECIPE_SERIALIZERS.register(eventBus);
+        HallowsEntities.ENTITIES.register(eventBus);
         HallowsBiomes.BIOMES.register(eventBus);
         HallowsSurfaceBuilders.SURFACE_BUILDERS.register(eventBus);
         HallowsCarvers.CARVERS.register(eventBus);
@@ -50,6 +53,7 @@ public class Hallows {
         HallowsTileEntities.registerTileEntities();
         HallowsContainers.registerContainers();
         HallowsRecipes.registerRecipeSerializers();
+        HallowsEntities.registerEntities();
         HallowsBiomes.registerBiomes();
         HallowsSurfaceBuilders.registerSurfaceBuilders();
         HallowsCarvers.registerCarvers();
@@ -62,8 +66,8 @@ public class Hallows {
         MinecraftForge.EVENT_BUS.addListener(HallowsStructures::onWorldLoad);
         MinecraftForge.EVENT_BUS.addListener(NecrofireBlock::onRightClickBlock);
         MinecraftForge.EVENT_BUS.addListener(Events.Teleport::onProjectileImpact);
-        MinecraftForge.EVENT_BUS.addListener(Events.Charge::onItemTooltip);
         MinecraftForge.EVENT_BUS.addListener(Events.Charge::onLivingHurt);
+        //MinecraftForge.EVENT_BUS.addListener(HallowsEntities::onEntityAttributeCreation);
 
         eventBus.addListener(EventPriority.NORMAL, this::commonSetup);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
@@ -71,7 +75,7 @@ public class Hallows {
         });
     }
 
-    public void commonSetup(FMLCommonSetupEvent event) {
+    public void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             //PointOfInterestType.registerBlockStates(HallowsDimensions.PORTAL.get());
             //PointOfInterestType.BLOCKS_OF_INTEREST.addAll(HallowsDimensions.PORTAL.get().blockStates);
@@ -82,6 +86,7 @@ public class Hallows {
             HallowsStructures.registerConfiguredStructures();
             HallowsBlocks.registerFlammability();
             HallowsBlocks.registerCompostables();
+            HallowsEntities.registerEntityAttributes();
 
             WorldGenRegistries.NOISE_SETTINGS.getEntries().forEach(settings -> {
                 Map<Structure<?>, StructureSeparationSettings> structureMap = settings.getValue().getStructures().func_236195_a_();
@@ -95,9 +100,12 @@ public class Hallows {
         });
     }
 
-    public void clientSetup(FMLClientSetupEvent event) {
+    @OnlyIn(Dist.CLIENT)
+    public void clientSetup(final FMLClientSetupEvent event) {
         HallowsBlocks.registerRenderLayers();
+        HallowsEntities.registerRenderers();
         HallowsDimensions.registerEffects();
+        MinecraftForge.EVENT_BUS.addListener(Events.Charge::onItemTooltip);
 
         ScreenManager.registerFactory(HallowsContainers.ANOINTING.get(), AnointingTableScreen::new);
     }

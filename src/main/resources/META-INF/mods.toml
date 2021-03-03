@@ -2,12 +2,12 @@ modLoader="javafml"
 loaderVersion="[36,)"
 
 issueTrackerURL="https://github.com/c0d3break3r/TheHallows/issues"
-license="https://github.com/c0d3break3r/TheHallows/blob/main/LICENSE"
+license="Pugz, All Rights Reserved"
 
 [[mods]]
     modId="hallows"
     version="0.0.1"
-    logoFile="logo.png"
+    logoFile="TheHallow.png"
     displayName="The Hallow"
     authors="Pugz"
     credits=""

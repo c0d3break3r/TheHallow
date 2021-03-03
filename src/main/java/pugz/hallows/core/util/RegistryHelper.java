@@ -3,6 +3,8 @@ package pugz.hallows.core.util;
 import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
@@ -72,6 +74,10 @@ public class RegistryHelper {
 
     public static <S extends IRecipeSerializer<T>, T extends IRecipe<?>> RegistryObject<S> createRecipeSerializer(final String name, S recipeSerializer) {
         return HallowsRecipes.RECIPE_SERIALIZERS.register(name, () -> recipeSerializer);
+    }
+
+    public static <E extends Entity> RegistryObject<EntityType<E>> createEntity(String name, Supplier<EntityType<E>> supplier) {
+        return HallowsEntities.ENTITIES.register(name, supplier);
     }
 
     public static RegistryKey<Biome> createBiome(AbstractBiome biome) {
