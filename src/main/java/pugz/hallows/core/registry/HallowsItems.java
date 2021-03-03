@@ -41,11 +41,11 @@ public class HallowsItems {
         STYGIAN_CHESTPLATE = RegistryHelper.createItem("stygian_chestplate", () -> new ArmorItem(STYGIAN_MATERIAL, EquipmentSlotType.CHEST, new Item.Properties().group(ItemGroup.COMBAT)));
         STYGIAN_LEGGINGS = RegistryHelper.createItem("stygian_leggings", () -> new ArmorItem(STYGIAN_MATERIAL, EquipmentSlotType.LEGS, new Item.Properties().group(ItemGroup.COMBAT)));
         STYGIAN_BOOTS = RegistryHelper.createItem("stygian_boots", () -> new ArmorItem(STYGIAN_MATERIAL, EquipmentSlotType.FEET, new Item.Properties().group(ItemGroup.COMBAT)));
-        STYGIAN_SWORD = RegistryHelper.createItem("stygian_sword", () -> new SwordItem(STYGIAN_TIER, 4, -2.4F, new Item.Properties().group(ItemGroup.COMBAT)));
-        STYGIAN_PICKAXE = RegistryHelper.createItem("stygian_pickaxe", () -> new PickaxeItem(STYGIAN_TIER, 2, -2.8F, new Item.Properties().group(ItemGroup.TOOLS)));
-        STYGIAN_AXE = RegistryHelper.createItem("stygian_axe", () -> new AxeItem(STYGIAN_TIER, 5.5F, -3.0F, new Item.Properties().group(ItemGroup.TOOLS)));
-        STYGIAN_SHOVEL = RegistryHelper.createItem("stygian_shovel", () -> new ShovelItem(STYGIAN_TIER, 2.0F, -3.0F, new Item.Properties().group(ItemGroup.TOOLS)));
-        STYGIAN_HOE = RegistryHelper.createItem("stygian_hoe", () -> new HoeItem(STYGIAN_TIER, -3, 0.0F, new Item.Properties().group(ItemGroup.TOOLS)));
+        STYGIAN_SWORD = RegistryHelper.createItem("stygian_sword", () -> new SwordItem(STYGIAN_TIER, 3, -2.4F, new Item.Properties().group(ItemGroup.COMBAT)));
+        STYGIAN_PICKAXE = RegistryHelper.createItem("stygian_pickaxe", () -> new PickaxeItem(STYGIAN_TIER, 1, -2.8F, new Item.Properties().group(ItemGroup.TOOLS)));
+        STYGIAN_AXE = RegistryHelper.createItem("stygian_axe", () -> new AxeItem(STYGIAN_TIER, 5.0F, -3.0F, new Item.Properties().group(ItemGroup.TOOLS)));
+        STYGIAN_SHOVEL = RegistryHelper.createItem("stygian_shovel", () -> new ShovelItem(STYGIAN_TIER, 1.5F, -3.0F, new Item.Properties().group(ItemGroup.TOOLS)));
+        STYGIAN_HOE = RegistryHelper.createItem("stygian_hoe", () -> new HoeItem(STYGIAN_TIER, -4, 0.0F, new Item.Properties().group(ItemGroup.TOOLS)));
 
         OPAL = RegistryHelper.createItem("opal", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));
         HEMLOCK_LEAF = RegistryHelper.createItem("hemlock_leaf", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));

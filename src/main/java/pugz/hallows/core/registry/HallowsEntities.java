@@ -27,6 +27,7 @@ public class HallowsEntities {
                 .build("ghost"));
     }
 
+    // TODO: Switch to EntityAttributeCreationEvent (Doesn't work for some reason?)
     public static void registerEntityAttributes() {
         GlobalEntityTypeAttributes.put(GHOST.get(), GhostEntity.registerAttributes().create());
     }

@@ -8,7 +8,6 @@ import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.monster.VexEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
@@ -47,23 +46,23 @@ public class GhostEntity extends MonsterEntity {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 16.0F));
+        this.goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
+        this.goalSelector.addGoal(3, new WaterAvoidingRandomFlyingGoal(this, 1.0D));
+        this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.0D, true));
+        this.goalSelector.addGoal(6, new GhostEntity.ChargeAttackGoal());
         this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
-        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, true));
-        this.goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
-        this.goalSelector.addGoal(7, new WaterAvoidingRandomFlyingGoal(this, 1.0D));
-        this.goalSelector.addGoal(2, new HurtByTargetGoal(this).setCallsForHelp(GhostEntity.class));
-        this.goalSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
-        this.goalSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, true));
-        this.goalSelector.addGoal(4, new GhostEntity.ChargeAttackGoal());
-        this.goalSelector.addGoal(8, new GhostEntity.MoveRandomGoal());
+        this.goalSelector.addGoal(9, new LookAtGoal(this, LivingEntity.class, 3.0F, 1.0F));
+        this.goalSelector.addGoal(10, new GhostEntity.MoveRandomGoal());
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, true));
+        this.targetSelector.addGoal(2, new HurtByTargetGoal(this, PlayerEntity.class).setCallsForHelp(GhostEntity.class));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
     }
 
     public static AttributeModifierMap.MutableAttribute registerAttributes() {
         return MonsterEntity.func_234295_eP_()
-                .createMutableAttribute(Attributes.FOLLOW_RANGE, 20.0D)
+                .createMutableAttribute(Attributes.FOLLOW_RANGE, 30.0D)
                 .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.2D)
-                .createMutableAttribute(Attributes.ATTACK_DAMAGE, 2.0D)
+                .createMutableAttribute(Attributes.ATTACK_DAMAGE, 4.0D)
                 .createMutableAttribute(Attributes.MAX_HEALTH, 15.0D);
     }
 
@@ -85,7 +84,7 @@ public class GhostEntity extends MonsterEntity {
 
     @Nonnull
     public EntitySize getSize(Pose poseIn) {
-        return super.getSize(poseIn).scale(1.5F);
+        return super.getSize(poseIn).scale(1.2F);
     }
 
     @Override
@@ -216,7 +215,7 @@ public class GhostEntity extends MonsterEntity {
                     GhostEntity.this.moveController.setMoveTo(vector3d.x, vector3d.y, vector3d.z, 1.0D);
                 }
 
-                if (d0 < 3.0D) {
+                if (d0 < 4.5D) {
                     GhostEntity.this.addPotionEffect(new EffectInstance(Effects.INVISIBILITY, 25, 0, true, false));
                 }
             }
@@ -240,13 +239,12 @@ public class GhostEntity extends MonsterEntity {
                     if (GhostEntity.this.getAttackTarget() == null) {
                         Vector3d vector3d1 = GhostEntity.this.getMotion();
                         GhostEntity.this.rotationYaw = -((float) MathHelper.atan2(vector3d1.x, vector3d1.z)) * (180F / (float)Math.PI);
-                        GhostEntity.this.renderYawOffset = GhostEntity.this.rotationYaw;
                     } else {
                         double d2 = GhostEntity.this.getAttackTarget().getPosX() - GhostEntity.this.getPosX();
                         double d1 = GhostEntity.this.getAttackTarget().getPosZ() - GhostEntity.this.getPosZ();
                         GhostEntity.this.rotationYaw = -((float)MathHelper.atan2(d2, d1)) * (180F / (float)Math.PI);
-                        GhostEntity.this.renderYawOffset = GhostEntity.this.rotationYaw;
                     }
+                    GhostEntity.this.renderYawOffset = GhostEntity.this.rotationYaw;
                 }
             }
         }

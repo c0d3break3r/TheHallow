@@ -19,7 +19,7 @@ public class GhostRenderer extends MobRenderer<GhostEntity, GhostModel> {
     }
 
     protected void preRenderCallback(GhostEntity ghost, MatrixStack matrixStackIn, float partialTickTime) {
-        matrixStackIn.scale(1.5F, 1.5F, 1.5F);
+        matrixStackIn.scale(1.2F, 1.2F, 1.2F);
     }
 
     @Nonnull
