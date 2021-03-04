@@ -28,6 +28,12 @@ public class PetrifiedPyramidStructure extends Structure<NoFeatureConfig> {
 
     @Nonnull
     @Override
+    public String getStructureName() {
+        return Hallows.MOD_ID + "petrified_pyramid";
+    }
+
+    @Nonnull
+    @Override
     public  IStartFactory<NoFeatureConfig> getStartFactory() {
         return PetrifiedPyramidStructure.Start::new;
     }

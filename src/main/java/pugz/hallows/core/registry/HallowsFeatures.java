@@ -212,9 +212,9 @@ public class HallowsFeatures {
 
         Configured.PATCH_DEADROOT_DENSE = RegistryHelper.createConfiguredFeature("patch_deadroot_dense", Feature.RANDOM_PATCH.withConfiguration(
                 new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(HallowsBlocks.DEADROOT.get().getDefaultState()), SimpleBlockPlacer.PLACER)
-                        .tries(64).whitelist(ImmutableSet.of(HallowsBlocks.PETRIFIED_SAND.get(), HallowsBlocks.HALLOWED_DIRT.get(), Blocks.COARSE_DIRT))
+                        .tries(48).whitelist(ImmutableSet.of(HallowsBlocks.PETRIFIED_SAND.get(), HallowsBlocks.HALLOWED_DIRT.get(), Blocks.COARSE_DIRT))
                         .func_227317_b_().build()
-        ).withPlacement(Features.Placements.PATCH_PLACEMENT.func_242731_b(18)));
+        ).withPlacement(Features.Placements.PATCH_PLACEMENT.func_242731_b(12)));
 
         Configured.PATCH_DEADROOT_WATER = RegistryHelper.createConfiguredFeature("patch_deadroot_water", Feature.RANDOM_PATCH.withConfiguration(
                 new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(HallowsBlocks.DEADROOT.get().getDefaultState()), SimpleBlockPlacer.PLACER)
