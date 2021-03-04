@@ -90,7 +90,7 @@ public class GhostEntity extends MonsterEntity {
     @Override
     public boolean attackEntityAsMob(Entity entityIn) {
         if (super.attackEntityAsMob(entityIn)) {
-            if (entityIn instanceof LivingEntity) ((LivingEntity) entityIn).addPotionEffect(new EffectInstance(Effects.BLINDNESS, 25, 0));
+            if (entityIn instanceof LivingEntity) ((LivingEntity) entityIn).addPotionEffect(new EffectInstance(Effects.BLINDNESS, 20, 0));
             return true;
         } else return false;
     }
@@ -196,7 +196,7 @@ public class GhostEntity extends MonsterEntity {
             Vector3d vector3d = livingentity.getEyePosition(1.0F);
             GhostEntity.this.moveController.setMoveTo(vector3d.x, vector3d.y, vector3d.z, 1.0D);
             GhostEntity.this.setCharging(true);
-            GhostEntity.this.playSound(SoundEvents.ENTITY_VEX_CHARGE, 1.0F, 1.0F);
+            GhostEntity.this.playSound(SoundEvents.ENTITY_GHAST_SCREAM, 1.0F, 1.0F);
         }
 
         public void resetTask() {
@@ -215,9 +215,7 @@ public class GhostEntity extends MonsterEntity {
                     GhostEntity.this.moveController.setMoveTo(vector3d.x, vector3d.y, vector3d.z, 1.0D);
                 }
 
-                if (d0 < 4.5D) {
-                    GhostEntity.this.addPotionEffect(new EffectInstance(Effects.INVISIBILITY, 25, 0, true, false));
-                }
+                if (d0 < 4.5D) GhostEntity.this.addPotionEffect(new EffectInstance(Effects.INVISIBILITY, 20, 0, true, false));
             }
         }
     }

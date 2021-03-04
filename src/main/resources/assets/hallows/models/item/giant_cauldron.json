@@ -1,3 +1,6 @@
 {
-  "parent": "hallows:block/giant_cauldron_bottom"
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "hallows:item/giant_cauldron"
+  }
 }

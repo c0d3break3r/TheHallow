@@ -58,7 +58,7 @@ public class HallowsBiomes {
             gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_DENSE);
             gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_WATER);
             gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_PUMPKIN_COMMON);
-            spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(HallowsEntities.GHOST.get(), 20, 1, 2));
+            spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(HallowsEntities.GHOST.get(), 30, 1, 2));
 
             if (name.getPath().equals("pumpkin_valley")) {
                 gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.GIANT_PUMPKIN);
@@ -96,7 +96,7 @@ public class HallowsBiomes {
             gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT);
             gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_DENSE);
             gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_WATER);
-            spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(HallowsEntities.GHOST.get(), 20, 1, 2));
+            spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(HallowsEntities.GHOST.get(), 30, 1, 2));
         }
 
         if (name.getPath().equals("hemlock_swamp")) {
@@ -118,7 +118,7 @@ public class HallowsBiomes {
             gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_WATER);
             //gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_HEMLOCK_WATER);
             //gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_HEMLOCK_LAND);
-            spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(HallowsEntities.GHOST.get(), 20, 1, 2));
+            spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(HallowsEntities.GHOST.get(), 25, 1, 2));
         }
 
         if (name.getPath().equals("petrified_sands") || name.getPath().equals("petrified_boneyard")) {
@@ -136,7 +136,7 @@ public class HallowsBiomes {
             gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.TREES_ASPHODEL);
             gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT);
             gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_WATER);
-            spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(HallowsEntities.GHOST.get(), 20, 1, 2));
+            spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(HallowsEntities.GHOST.get(), 25, 1, 2));
         }
     }
 }
