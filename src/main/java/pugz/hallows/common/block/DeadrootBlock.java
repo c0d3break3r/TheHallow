@@ -13,6 +13,7 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraftforge.common.IForgeShearable;
+import net.minecraftforge.common.PlantType;
 
 import javax.annotation.Nonnull;
 
@@ -23,6 +24,11 @@ public class DeadrootBlock extends BushBlock implements IWaterLoggable, IForgeSh
     public DeadrootBlock(AbstractBlock.Properties properties) {
         super(properties);
         this.setDefaultState(this.getDefaultState().with(WATERLOGGED, false));
+    }
+
+    @Override
+    public PlantType getPlantType(IBlockReader world, BlockPos pos) {
+        return PlantType.NETHER;
     }
 
     @Nonnull

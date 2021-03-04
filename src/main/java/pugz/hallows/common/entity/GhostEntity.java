@@ -72,16 +72,6 @@ public class GhostEntity extends MonsterEntity {
         this.dataManager.register(GHOST_FLAGS, (byte)0);
     }
 
-    @Override
-    public void readAdditional(CompoundNBT nbt) {
-        super.readAdditional(nbt);
-    }
-
-    @Override
-    public void writeAdditional(CompoundNBT nbt) {
-        super.readAdditional(nbt);
-    }
-
     @Nonnull
     public EntitySize getSize(Pose poseIn) {
         return super.getSize(poseIn).scale(1.2F);
@@ -90,7 +80,7 @@ public class GhostEntity extends MonsterEntity {
     @Override
     public boolean attackEntityAsMob(Entity entityIn) {
         if (super.attackEntityAsMob(entityIn)) {
-            if (entityIn instanceof LivingEntity) ((LivingEntity) entityIn).addPotionEffect(new EffectInstance(Effects.BLINDNESS, 20, 0));
+            if (entityIn instanceof LivingEntity) ((LivingEntity) entityIn).addPotionEffect(new EffectInstance(Effects.BLINDNESS, 25, 0));
             return true;
         } else return false;
     }
@@ -144,10 +134,8 @@ public class GhostEntity extends MonsterEntity {
         return false;
     }
 
-    @Nonnull
-    @Override
-    public IPacket<?> createSpawnPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
+    public boolean isWaterSensitive() {
+        return true;
     }
 
     private boolean getGhostFlag(int mask) {
@@ -215,7 +203,7 @@ public class GhostEntity extends MonsterEntity {
                     GhostEntity.this.moveController.setMoveTo(vector3d.x, vector3d.y, vector3d.z, 1.0D);
                 }
 
-                if (d0 < 4.5D) GhostEntity.this.addPotionEffect(new EffectInstance(Effects.INVISIBILITY, 20, 0, true, false));
+                if (d0 < 4.5D) GhostEntity.this.addPotionEffect(new EffectInstance(Effects.INVISIBILITY, 25, 0, true, false));
             }
         }
     }

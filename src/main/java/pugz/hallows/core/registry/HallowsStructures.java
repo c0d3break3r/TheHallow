@@ -34,18 +34,22 @@ public class HallowsStructures {
 
     public static class Configured {
         public static StructureFeature<NoFeatureConfig, ? extends Structure<NoFeatureConfig>> PETRIFIED_PYRAMID;
+
+        public static void registerConfiguredStructures() {
+            Configured.PETRIFIED_PYRAMID = RegistryHelper.createConfiguredStructure("petrified_pyramid", HallowsStructures.PETRIFIED_PYRAMID.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
+        }
     }
 
     public static final class Pieces {
-        public static final IStructurePieceType PETRIFIED_PYRAMID_PIECE = Registry.register(Registry.STRUCTURE_PIECE, new ResourceLocation(Hallows.MOD_ID, "petrified_pyramid_piece"), PetrifiedPyramidPieces.Piece::new);
+        public static IStructurePieceType PETRIFIED_PYRAMID_PIECE;
+
+        public static void registerPieces() {
+            PETRIFIED_PYRAMID_PIECE = Registry.register(Registry.STRUCTURE_PIECE, new ResourceLocation(Hallows.MOD_ID, "petrified_pyramid_piece"), PetrifiedPyramidPieces.Piece::new);
+        }
     }
 
     public static void registerStructures() {
         PETRIFIED_PYRAMID = RegistryHelper.createStructure("petrified_pyramid", PetrifiedPyramidStructure::new);
-    }
-
-    public static void registerConfiguredStructures() {
-        Configured.PETRIFIED_PYRAMID = RegistryHelper.createConfiguredStructure("petrified_pyramid", HallowsStructures.PETRIFIED_PYRAMID.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
     }
 
     public static void setupStructures() {

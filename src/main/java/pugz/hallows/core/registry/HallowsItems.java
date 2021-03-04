@@ -34,6 +34,7 @@ public class HallowsItems {
     public static RegistryObject<Item> HEMLOCK_LEAF;
     public static RegistryObject<Item> NECROFIRE_TORCH;
     public static RegistryObject<Item> WITCHS_BREW;
+    public static RegistryObject<Item> GHOST_CLOTH;
 
     public static void registerItems() {
         STYGIAN_INGOT = RegistryHelper.createItem("stygian_ingot", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));

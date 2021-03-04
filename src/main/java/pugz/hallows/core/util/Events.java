@@ -6,18 +6,17 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.item.EnderPearlEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.RegistryKey;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -36,7 +35,6 @@ import pugz.hallows.core.registry.HallowsDimensions;
 import pugz.hallows.core.registry.HallowsItems;
 
 import java.util.List;
-import java.util.UUID;
 
 public class Events {
     public static class Teleport {
@@ -44,22 +42,31 @@ public class Events {
             Entity entity = event.getEntity();
             RayTraceResult result = event.getRayTraceResult();
             if (entity instanceof EnderPearlEntity && result.getType() == RayTraceResult.Type.BLOCK) {
-                BlockState state = entity.world.getBlockState(new BlockPos(result.getHitVec()));
+                BlockPos hitPos = new BlockPos(result.getHitVec());
+                BlockState state = entity.world.getBlockState(hitPos);
+
                 if (state.isIn(HallowsBlocks.GIANT_CAULDRON.get())) {
                     if (state.get(GiantCauldronBlock.ACTIVATED)) {
+
                         Entity thrower = ((EnderPearlEntity)entity).func_234616_v_();
-                        if (!thrower.isPassenger() && !thrower.isBeingRidden() && thrower.isNonBoss()) {
-                            if (thrower.world instanceof ServerWorld) {
-                                RegistryKey<World> key = thrower.world.getDimensionKey() == HallowsDimensions.DIMENSION ? World.OVERWORLD : HallowsDimensions.DIMENSION;
-                                ServerWorld serverWorld = thrower.world.getServer().getWorld(key);
-                                if (serverWorld != null) {
-                                    thrower.func_242279_ag();
-                                    thrower.changeDimension(serverWorld, new HallowsTeleporter(serverWorld));
-                                }
-                            }
+                        if (!thrower.isPassenger() && !thrower.isBeingRidden() && thrower.isNonBoss() && thrower instanceof ServerPlayerEntity) {
+                            teleportPlayer((ServerPlayerEntity)thrower, hitPos);
                         }
                     }
                 }
+            }
+        }
+
+        public static void teleportPlayer(ServerPlayerEntity player, BlockPos pos) {
+            if (player.getRidingEntity() != null || player.isBeingRidden()) return;
+
+            if (player.world.getDimensionKey().equals(HallowsDimensions.DIMENSION)) {
+                ServerWorld teleportWorld = player.server.func_241755_D_();
+                player.changeDimension(teleportWorld, new HallowsTeleporter(pos));
+            } else {
+                ServerWorld server = player.server.getWorld(HallowsDimensions.DIMENSION);
+                if (server == null) return;
+                player.changeDimension(server, new HallowsTeleporter(pos));
             }
         }
     }
@@ -87,7 +94,7 @@ public class Events {
 
                 for (ItemStack stack : player.getArmorInventoryList()) {
                     if (stack.getItem() instanceof ArmorItem) {
-                        if (((ArmorItem)stack.getItem()).getArmorMaterial() == HallowsItems.STYGIAN_TIER) {
+                        if (((ArmorItem)stack.getItem()).getArmorMaterial() == HallowsItems.STYGIAN_MATERIAL) {
                             HallowsArmorMaterial material = (HallowsArmorMaterial)((ArmorItem)stack.getItem()).getArmorMaterial();
                             charge += material.getCharge(((ArmorItem) stack.getItem()).getEquipmentSlot()) * world.getRandom().nextFloat();
                         }

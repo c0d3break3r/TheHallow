@@ -83,7 +83,8 @@ public class Hallows {
             HallowsDimensions.registerDimensions();
             HallowsFeatures.registerConfiguredFeatures();
             HallowsStructures.setupStructures();
-            HallowsStructures.registerConfiguredStructures();
+            HallowsStructures.Configured.registerConfiguredStructures();
+            HallowsStructures.Pieces.registerPieces();
             HallowsBlocks.registerFlammability();
             HallowsBlocks.registerCompostables();
             HallowsEntities.registerEntityAttributes();
