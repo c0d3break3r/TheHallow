@@ -16,16 +16,16 @@ public class HauntModel extends EntityModel<HauntEntity> {
 	private final ModelRenderer leftArm;
 
 	public HauntModel() {
-		textureWidth = 16;
-		textureHeight = 16;
+		textureWidth = 64;
+		textureHeight = 64;
 
 		rightLeg = new ModelRenderer(this);
 		rightLeg.setRotationPoint(0.0F, 24.0F, 0.0F);
 		rightLeg.setTextureOffset(0, 0).addBox(-4.0F, -14.0F, 0.0F, 4.0F, 14.0F, 4.0F, 0.0F, false);
 
 		leftLeg = new ModelRenderer(this);
-		leftLeg.setRotationPoint(0.0F, 24.0F, 0.0F);
-		leftLeg.setTextureOffset(0, 0).addBox(5.0F, -14.0F, 0.0F, 4.0F, 14.0F, 4.0F, 0.0F, false);
+		leftLeg.setRotationPoint(7.0F, 12.0F, 2.0F);
+		leftLeg.setTextureOffset(0, 0).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 14.0F, 4.0F, 0.0F, false);
 
 		body = new ModelRenderer(this);
 		body.setRotationPoint(9.0F, 24.0F, 0.0F);
@@ -38,19 +38,17 @@ public class HauntModel extends EntityModel<HauntEntity> {
 		head.setTextureOffset(0, 0).addBox(-5.0F, 0.0F, -4.0F, 10.0F, 6.0F, 4.0F, 0.0F, false);
 
 		rightArm = new ModelRenderer(this);
-		rightArm.setRotationPoint(-6.5F, 8.0F, 0.0F);
-		rightArm.setTextureOffset(0, 0).addBox(-4.0F, -12.0F, 0.0F, 4.0F, 24.0F, 4.0F, 0.0F, false);
+		rightArm.setRotationPoint(-8.5F, -2.0F, 2.0F);
+		rightArm.setTextureOffset(0, 0).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 24.0F, 4.0F, 0.0F, false);
 
 		leftArm = new ModelRenderer(this);
-		leftArm.setRotationPoint(-6.5F, 8.0F, 0.0F);
-		leftArm.setTextureOffset(0, 0).addBox(18.0F, -12.0F, 0.0F, 4.0F, 24.0F, 4.0F, 0.0F, false);
+		leftArm.setRotationPoint(13.5F, -2.0F, 2.0F);
+		leftArm.setTextureOffset(0, 0).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 24.0F, 4.0F, 0.0F, false);
 	}
 
 	public void setRotationAngles(HauntEntity haunt, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		this.head.rotateAngleY = netHeadYaw * ((float)Math.PI / 180F);
 		this.head.rotateAngleX = headPitch * ((float)Math.PI / 180F);
-		this.leftLeg.rotateAngleX = -1.5F * MathHelper.func_233021_e_(limbSwing, 13.0F) * limbSwingAmount;
-		this.rightLeg.rotateAngleX = 1.5F * MathHelper.func_233021_e_(limbSwing, 13.0F) * limbSwingAmount;
 		this.leftLeg.rotateAngleY = 0.0F;
 		this.rightLeg.rotateAngleY = 0.0F;
 
@@ -61,8 +59,8 @@ public class HauntModel extends EntityModel<HauntEntity> {
 
 	public void setLivingAnimations(HauntEntity haunt, float limbSwing, float limbSwingAmount, float partialTick) {
 		if (haunt.getAttackTimer() > 0) {
-			this.rightArm.rotateAngleX = -2.0F + 1.5F * MathHelper.func_233021_e_((float)haunt.getAttackTimer() - partialTick, 10.0F);
-			this.leftArm.rotateAngleX = -2.0F + 1.5F * MathHelper.func_233021_e_((float)haunt.getAttackTimer() - partialTick, 10.0F);
+			this.rightArm.rotateAngleX = 1.5F * MathHelper.func_233021_e_((float)haunt.getAttackTimer() - partialTick, 10.0F);
+			this.leftArm.rotateAngleX = 1.5F * MathHelper.func_233021_e_((float)haunt.getAttackTimer() - partialTick, 10.0F);
 		}
 	}
 

@@ -16,6 +16,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import pugz.hallows.core.registry.HallowsBlocks;
+import pugz.hallows.core.registry.HallowsItems;
 import pugz.hallows.core.registry.other.HallowsRecipes;
 
 import javax.annotation.Nonnull;
@@ -23,14 +24,16 @@ import javax.annotation.Nonnull;
 public class HallowingRecipe implements IRecipe<IInventory> {
     private final Ingredient base;
     private final Ingredient addition;
+    private final Ingredient brew;
     private final ItemStack result;
     private final Attribute attribute;
     private final ResourceLocation recipeId;
 
-    public HallowingRecipe(ResourceLocation recipeId, Ingredient base, Ingredient addition, ItemStack result, Attribute attribute) {
+    public HallowingRecipe(ResourceLocation recipeId, Ingredient base, Ingredient addition, Ingredient brew, ItemStack result, Attribute attribute) {
         this.recipeId = recipeId;
         this.base = base;
         this.addition = addition;
+        this.brew = brew;
         this.result = result;
         this.attribute = attribute;
     }
@@ -57,6 +60,10 @@ public class HallowingRecipe implements IRecipe<IInventory> {
     @Nonnull
     public Ingredient getBase() {
         return base;
+    }
+
+    public Ingredient getBrew() {
+        return brew;
     }
 
     @Nonnull
@@ -100,7 +107,7 @@ public class HallowingRecipe implements IRecipe<IInventory> {
             Ingredient ingredient1 = Ingredient.deserialize(JSONUtils.getJsonObject(json, "addition"));
             ItemStack itemstack = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "result"));
             Attribute attribute = deserializeAttribute(JSONUtils.getJsonObject(json, "attribute"));
-            return new HallowingRecipe(recipeId, ingredient, ingredient1, itemstack, attribute);
+            return new HallowingRecipe(recipeId, ingredient, ingredient1, Ingredient.fromItems(HallowsItems.WITCHS_BREW.get()), itemstack, attribute);
         }
 
         public HallowingRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
@@ -108,7 +115,7 @@ public class HallowingRecipe implements IRecipe<IInventory> {
             Ingredient ingredient1 = Ingredient.read(buffer);
             ItemStack itemstack = buffer.readItemStack();
             Attribute attribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(buffer.readString()));
-            return new HallowingRecipe(recipeId, ingredient, ingredient1, itemstack, attribute);
+            return new HallowingRecipe(recipeId, ingredient, ingredient1, Ingredient.fromItems(HallowsItems.WITCHS_BREW.get()), itemstack, attribute);
         }
 
         public void write(PacketBuffer buffer, HallowingRecipe recipe) {

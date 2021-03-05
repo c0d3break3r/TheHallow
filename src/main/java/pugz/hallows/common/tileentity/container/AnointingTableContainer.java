@@ -3,7 +3,6 @@ package pugz.hallows.common.tileentity.container;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -11,12 +10,16 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.AbstractRepairContainer;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.*;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.world.World;
 import pugz.hallows.common.item.crafting.HallowingRecipe;
+import pugz.hallows.core.registry.HallowsBlocks;
+import pugz.hallows.core.registry.HallowsItems;
 import pugz.hallows.core.registry.other.HallowsContainers;
 import pugz.hallows.core.registry.other.HallowsRecipes;
 
@@ -27,11 +30,17 @@ public class AnointingTableContainer extends AbstractRepairContainer {
     private final World world;
     private HallowingRecipe recipe;
     private final List<HallowingRecipe> recipes;
-    private PlayerEntity player;
+    private final PlayerEntity player;
+
+    protected final IInventory field_234643_d_ = new Inventory(2) {
+        public void markDirty() {
+            super.markDirty();
+            AnointingTableContainer.this.onCraftMatrixChanged(this);
+        }
+    };
 
     public AnointingTableContainer(int id, PlayerInventory inventory) {
         this(id, inventory, IWorldPosCallable.DUMMY);
-        this.player = inventory.player;
     }
 
     public AnointingTableContainer(int id, PlayerInventory inventory, IWorldPosCallable pos) {
@@ -39,10 +48,11 @@ public class AnointingTableContainer extends AbstractRepairContainer {
         this.world = inventory.player.world;
         this.player = inventory.player;
         this.recipes = this.world.getRecipeManager().getRecipesForType(HallowsRecipes.Recipes.HALLOWING);
+        //this.addSlot(new Slot(this.field_234643_d_, 0, 76, 67));
     }
 
     protected boolean func_230302_a_(BlockState state) {
-        return state.isIn(Blocks.SMITHING_TABLE);
+        return state.isIn(HallowsBlocks.ANOINTMENT_TABLE.get());
     }
 
     protected boolean func_230303_b_(PlayerEntity player, boolean p_230303_2_) {
@@ -153,7 +163,7 @@ public class AnointingTableContainer extends AbstractRepairContainer {
     protected boolean func_241210_a_(ItemStack stack) {
         return this.recipes.stream().anyMatch((recipe) -> {
             return recipe.isValidAdditionItem(stack);
-        });
+        }) || stack.getItem() == HallowsItems.WITCHS_BREW.get();
     }
 
     public boolean canMergeSlot(ItemStack stack, Slot slotIn) {

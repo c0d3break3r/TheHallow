@@ -2,6 +2,7 @@ package pugz.hallows.common.entity;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
@@ -22,6 +23,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.EnumSet;
+import java.util.UUID;
 
 public class HauntEntity extends MonsterEntity {
     private static final DataParameter<Boolean> SCREAMING = EntityDataManager.createKey(HauntEntity.class, DataSerializers.BOOLEAN);
@@ -37,10 +39,10 @@ public class HauntEntity extends MonsterEntity {
     protected void registerGoals() {
         super.registerGoals();
         //this.goalSelector.addGoal(0, new HauntEntity.StareGoal(this));
-        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 0.5D, false));
-        this.goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 0.5D));
-        this.goalSelector.addGoal(3, new MoveTowardsTargetGoal(this, 0.5D, 32.0F));
-        this.goalSelector.addGoal(4, new RandomWalkingGoal(this, 0.25D));
+        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.0D, false));
+        this.goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
+        this.goalSelector.addGoal(3, new MoveTowardsTargetGoal(this, 1.5D, 32.0F));
+        this.goalSelector.addGoal(4, new RandomWalkingGoal(this, 0.75D));
         this.goalSelector.addGoal(5, new LookRandomlyGoal(this));
         this.goalSelector.addGoal(5, new LookAtGoal(this, LivingEntity.class, 3.0F, 1.0F));
         this.targetSelector.addGoal(1, new HauntEntity.FindPlayerGoal(this));

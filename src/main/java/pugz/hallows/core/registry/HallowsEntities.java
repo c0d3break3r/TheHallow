@@ -30,20 +30,14 @@ public class HallowsEntities {
                 .build("ghost"));
 
         HAUNT = RegistryHelper.createEntity("haunt", () -> EntityType.Builder.<HauntEntity>create(
-                HauntEntity::new, EntityClassification.MONSTER).size(0.5F, 1.3F)
+                HauntEntity::new, EntityClassification.MONSTER).size(1.2F, 2.4F)
                 .setTrackingRange(64).setShouldReceiveVelocityUpdates(true).setUpdateInterval(3)
                 .build("haunt"));
     }
 
-    // TODO: Switch to EntityAttributeCreationEvent (Doesn't work for some reason?)
     public static void registerEntityAttributes() {
         GlobalEntityTypeAttributes.put(GHOST.get(), GhostEntity.registerAttributes().create());
         GlobalEntityTypeAttributes.put(HAUNT.get(), HauntEntity.registerAttributes().create());
-    }
-
-    public static void onEntityAttributeCreation(EntityAttributeCreationEvent event) {
-        event.put(GHOST.get(), GhostEntity.registerAttributes().create());
-        event.put(HAUNT.get(), HauntEntity.registerAttributes().create());
     }
 
     @OnlyIn(Dist.CLIENT)
