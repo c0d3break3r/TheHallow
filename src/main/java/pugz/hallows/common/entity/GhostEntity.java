@@ -14,6 +14,7 @@ import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
@@ -35,6 +36,7 @@ public class GhostEntity extends MonsterEntity {
         super(entity, world);
         this.moveController = new GhostEntity.MoveHelperController(this);
         this.experienceValue = 2;
+        this.setPathPriority(PathNodeType.WATER, -1.0F);
     }
 
     @Override

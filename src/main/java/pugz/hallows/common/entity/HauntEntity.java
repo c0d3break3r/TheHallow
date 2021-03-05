@@ -7,36 +7,54 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.EnumSet;
 
 public class HauntEntity extends MonsterEntity {
+    private static final DataParameter<Boolean> SCREAMING = EntityDataManager.createKey(HauntEntity.class, DataSerializers.BOOLEAN);
+    private int attackTimer;
+
     public HauntEntity(EntityType<? extends HauntEntity> entity, World world) {
         super(entity, world);
         this.experienceValue = 4;
+        this.setPathPriority(PathNodeType.WATER, -1.0F);
     }
 
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(1, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
-        this.goalSelector.addGoal(2, new HauntEntity.StareGoal(this));
+        //this.goalSelector.addGoal(0, new HauntEntity.StareGoal(this));
+        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 0.5D, false));
+        this.goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 0.5D));
         this.goalSelector.addGoal(3, new MoveTowardsTargetGoal(this, 0.5D, 32.0F));
         this.goalSelector.addGoal(4, new RandomWalkingGoal(this, 0.25D));
         this.goalSelector.addGoal(5, new LookRandomlyGoal(this));
-        this.goalSelector.addGoal(6, new LookAtGoal(this, LivingEntity.class, 3.0F, 1.0F));
+        this.goalSelector.addGoal(5, new LookAtGoal(this, LivingEntity.class, 3.0F, 1.0F));
         this.targetSelector.addGoal(1, new HauntEntity.FindPlayerGoal(this));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, false));
     }
 
+    public void setAttackTarget(@Nullable LivingEntity living) {
+        this.dataManager.set(SCREAMING, living != null);
+        super.setAttackTarget(living);
+    }
+
     protected void registerData() {
         super.registerData();
+        this.dataManager.register(SCREAMING, false);
     }
 
     public static AttributeModifierMap.MutableAttribute registerAttributes() {
@@ -96,9 +114,18 @@ public class HauntEntity extends MonsterEntity {
         super.updateAITasks();
     }
 
-    public boolean attackEntityFrom(DamageSource source, float amount) {
-        if (this.isInvulnerableTo(source)) return false;
+    @Override
+    public void livingTick() {
+        super.livingTick();
+        if (this.attackTimer > 0) {
+            --this.attackTimer;
+        }
+    }
 
+    public boolean attackEntityFrom(DamageSource source, float amount) {
+        this.attackTimer = 10;
+
+        if (this.isInvulnerableTo(source)) return false;
         else if (source instanceof IndirectEntityDamageSource) {
             for (int i = 0; i < 64; ++i) {
                 if (this.teleportRandomly()) return true;
@@ -112,6 +139,29 @@ public class HauntEntity extends MonsterEntity {
             }
             return flag;
         }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public void handleStatusUpdate(byte id) {
+        if (id == 4) {
+            this.attackTimer = 10;
+            this.playSound(SoundEvents.ENTITY_IRON_GOLEM_ATTACK, 1.0F, 1.0F);
+        } else {
+            super.handleStatusUpdate(id);
+        }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public int getAttackTimer() {
+        return this.attackTimer;
+    }
+
+    public boolean isScreaming() {
+        return this.dataManager.get(SCREAMING);
+    }
+
+    public void setScreaming(boolean screaming) {
+        this.dataManager.set(SCREAMING, screaming);
     }
 
     protected boolean teleportRandomly() {
@@ -175,10 +225,12 @@ public class HauntEntity extends MonsterEntity {
         public void startExecuting() {
             this.aggroTime = 5;
             this.teleportTime = 0;
+            this.haunt.setScreaming(true);
         }
 
         public void resetTask() {
             this.player = null;
+            this.haunt.setScreaming(false);
             super.resetTask();
         }
 
@@ -191,13 +243,12 @@ public class HauntEntity extends MonsterEntity {
                     return true;
                 }
             } else {
+                this.haunt.setScreaming(false);
                 return this.nearestTarget != null && this.field_220792_n.canTarget(this.haunt, this.nearestTarget) || super.shouldContinueExecuting();
             }
         }
 
         public void tick() {
-            System.out.println("hi");
-
             if (this.haunt.getAttackTarget() == null) {
                 super.setNearestTarget(null);
             }
