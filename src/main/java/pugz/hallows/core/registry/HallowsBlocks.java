@@ -1,9 +1,13 @@
 package pugz.hallows.core.registry;
 
 import net.minecraft.block.*;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -122,6 +126,9 @@ public class HallowsBlocks {
     public static RegistryObject<Block> ANOINTMENT_TABLE;
     public static RegistryObject<Block> GIANT_CAULDRON;
 
+    public static RegistryObject<Block> WILL_O_WISP_VINES;
+    public static RegistryObject<Block> WILL_O_WISP_FRUIT;
+
     public static void registerBlocks() {
         HALLSTONE = RegistryHelper.createBlock("hallstone", () -> new Block(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
         HALLSTONE_SLAB = RegistryHelper.createBlock("hallstone_slab", () -> new SlabBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
@@ -235,8 +242,16 @@ public class HallowsBlocks {
         SKULLISH_TENEBRITE = RegistryHelper.createBlock("skullish_tenebrite", () -> new Block(AbstractBlock.Properties.from(Blocks.END_STONE)), ItemGroup.BUILDING_BLOCKS);
 
         ANOINTMENT_TABLE = RegistryHelper.createBlock("anointment_table", () -> new AnointmentTableBlock(AbstractBlock.Properties.from(Blocks.END_STONE)), ItemGroup.DECORATIONS);
-
         GIANT_CAULDRON = RegistryHelper.createBlock("giant_cauldron", () -> new GiantCauldronBlock(AbstractBlock.Properties.from(Blocks.CAULDRON)), ItemGroup.MISC);
+
+        WILL_O_WISP_VINES = RegistryHelper.createBlock("will_o_wisp_vines", () -> new WillOWispVineStemBlock(AbstractBlock.Properties.create(Material.PLANTS, MaterialColor.NETHERRACK).tickRandomly().doesNotBlockMovement().zeroHardnessAndResistance().sound(SoundType.PLANT)), null);
+        WILL_O_WISP_FRUIT = RegistryHelper.createBlock("will_o_wisp_fruit", () -> new WillOWispFruitBlock(AbstractBlock.Properties.create(Material.PLANTS, MaterialColor.NETHERRACK).setLightLevel((s) -> {
+            return s.get(WillOWispFruitBlock.FRUIT) ? 8 : 0;
+        }).tickRandomly().doesNotBlockMovement().zeroHardnessAndResistance().sound(SoundType.PLANT).setEmmisiveRendering(HallowsBlocks::needsPostProcessing).setNeedsPostProcessing(HallowsBlocks::needsPostProcessing)), ItemGroup.DECORATIONS);
+    }
+
+    private static boolean needsPostProcessing(BlockState state, IBlockReader reader, BlockPos pos) {
+        return true;
     }
 
     public static void registerRenderLayers() {
@@ -254,6 +269,8 @@ public class HallowsBlocks {
         RenderTypeLookup.setRenderLayer(NECROFIRE_TORCH.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(NECROFIRE_WALL_TORCH.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(NECROFIRE_CAMPFIRE.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(WILL_O_WISP_VINES.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(WILL_O_WISP_FRUIT.get(), RenderType.getCutout());
     }
 
     public static void registerFlammability() {
@@ -288,5 +305,6 @@ public class HallowsBlocks {
         ComposterBlock.CHANCES.put(BLOOD_EBONY_LEAF_CARPET.get(), 0.3F);
         ComposterBlock.CHANCES.put(DEADROOT.get(), 0.1F);
         ComposterBlock.CHANCES.put(HEMLOCK.get(), 0.25F);
+        ComposterBlock.CHANCES.put(WILL_O_WISP_FRUIT.get(), 0.6F);
     }
 }

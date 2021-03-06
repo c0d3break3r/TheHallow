@@ -36,6 +36,15 @@ public class HallowsItems {
     public static RegistryObject<Item> WITCHS_BREW;
     public static RegistryObject<Item> GHOST_CLOTH;
 
+    public static RegistryObject<Item> ORANGE_WILL_O_WISP_BERRY;
+    public static RegistryObject<Item> ORANGE_WILL_O_WISP_CANDY;
+    public static RegistryObject<Item> YELLOW_WILL_O_WISP_BERRY;
+    public static RegistryObject<Item> YELLOW_WILL_O_WISP_CANDY;
+    public static RegistryObject<Item> BLUE_WILL_O_WISP_BERRY;
+    public static RegistryObject<Item> BLUE_WILL_O_WISP_CANDY;
+    public static RegistryObject<Item> PURPLE_WILL_O_WISP_BERRY;
+    public static RegistryObject<Item> PURPLE_WILL_O_WISP_CANDY;
+
     public static void registerItems() {
         STYGIAN_INGOT = RegistryHelper.createItem("stygian_ingot", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));
         STYGIAN_HELMET = RegistryHelper.createItem("stygian_helmet", () -> new ArmorItem(STYGIAN_MATERIAL, EquipmentSlotType.HEAD, new Item.Properties().group(ItemGroup.COMBAT)));
@@ -52,5 +61,10 @@ public class HallowsItems {
         HEMLOCK_LEAF = RegistryHelper.createItem("hemlock_leaf", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));
         NECROFIRE_TORCH = RegistryHelper.createItem("necrofire_torch", () -> new WallOrFloorItem(HallowsBlocks.NECROFIRE_TORCH.get(), HallowsBlocks.NECROFIRE_WALL_TORCH.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
         WITCHS_BREW = RegistryHelper.createItem("witch_brew", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));
+
+        ORANGE_WILL_O_WISP_BERRY = RegistryHelper.createItem("orange_will_o_wisp_berry", () -> new Item(new Item.Properties().group(ItemGroup.FOOD)));
+    }
+
+    public static class Foods {
     }
 }
