@@ -25,7 +25,6 @@ import pugz.hallows.common.world.decorator.HangingLeavesTreeDecorator;
 import pugz.hallows.common.world.decorator.JackOLanternTreeDecorator;
 import pugz.hallows.common.world.feature.*;
 import pugz.hallows.common.world.feature.config.CaveBiomeFeatureConfig;
-import pugz.hallows.common.world.feature.config.GeodeFeatureConfig;
 import pugz.hallows.core.Hallows;
 import pugz.hallows.core.registry.other.HallowsTags;
 import pugz.hallows.core.util.RegistryHelper;
@@ -38,10 +37,8 @@ public class HallowsFeatures {
 
     public static RegistryObject<Feature<NoFeatureConfig>> VERTICAL_PILLAR;
     public static RegistryObject<Feature<OreFeatureConfig>> SPREAD_ORE;
-    public static RegistryObject<Feature<NoFeatureConfig>> CRYSTAL;
     public static RegistryObject<Feature<CaveBiomeFeatureConfig>> CAVE_BIOME;
-    public static RegistryObject<Feature<NoFeatureConfig>> GIANT_PUMPKIN;
-    public static RegistryObject<Feature<GeodeFeatureConfig>> GEODE;
+    public static RegistryObject<Feature<NoFeatureConfig>> SPREAD_PLANT;
 
     public static class Configured {
         public static ConfiguredFeature<?, ?> PATCH_NECROFIRE;
@@ -68,13 +65,9 @@ public class HallowsFeatures {
         public static ConfiguredFeature<?, ?> ORE_GILDED_TENEBRITE;
         public static ConfiguredFeature<?, ?> PETRIFIED_SANDSTONE_ROCK;
         public static ConfiguredFeature<?, ?> DISK_PETRIFIED_SAND;
-        public static ConfiguredFeature<?, ?> IGNIS_CRYSTAL;
-        public static ConfiguredFeature<?, ?> PATCH_HEMLOCK_WATER;
-        public static ConfiguredFeature<?, ?> PATCH_HEMLOCK_LAND;
+        public static ConfiguredFeature<?, ?> PATCH_HEMLOCK;
         public static ConfiguredFeature<?, ?> PATCH_PUMPKIN_COMMON;
         public static ConfiguredFeature<?, ?> IGNIS_CAVE_BIOME;
-        public static ConfiguredFeature<?, ?> GIANT_PUMPKIN;
-        public static ConfiguredFeature<?, ?> IGNIS_GEODE;
     }
 
     public static class Decorators {
@@ -97,10 +90,8 @@ public class HallowsFeatures {
     public static void registerFeatures() {
         VERTICAL_PILLAR = RegistryHelper.createFeature("vertical_pillar", VerticalPillarFeature::new);
         SPREAD_ORE = RegistryHelper.createFeature("spread_ore", SpreadOreFeature::new);
-        CRYSTAL = RegistryHelper.createFeature("crystal", CrystalFeature::new);
         CAVE_BIOME = RegistryHelper.createFeature("cave_biome", IgnisCaveBiomeFeature::new);
-        GIANT_PUMPKIN = RegistryHelper.createFeature("giant_pumpkin", GiantPumpkinFeature::new);
-        GEODE = RegistryHelper.createFeature("geode", GeodeFeature::new);
+        //SPREAD_PLANT = RegistryHelper.createFeature("spread_plant", SpreadPlantFeature::new);
     }
 
     public static void registerDecorators() {
@@ -263,11 +254,9 @@ public class HallowsFeatures {
                         ImmutableList.of(Blocks.DIRT.getDefaultState(), Blocks.GRASS_BLOCK.getDefaultState(), HallowsBlocks.HALLOWED_DIRT.get().getDefaultState())))
                 .withPlacement(Features.Placements.PATCH_PLACEMENT));
 
-        Configured.IGNIS_CRYSTAL = RegistryHelper.createConfiguredFeature("ignis_crystal", CRYSTAL.get().withConfiguration(new NoFeatureConfig()).withPlacement(
-                Placement.COUNT_MULTILAYER.configure(new FeatureSpreadConfig(8)).withPlacement(
-                        Placement.RANGE.configure(new TopSolidRangeConfig(0, 10, 37))
-                )
-        ));
+        //Configured.PATCH_HEMLOCK = RegistryHelper.createConfiguredFeature("patch_hemlock", SPREAD_PLANT.get().withConfiguration(
+        //        IFeatureConfig.NO_FEATURE_CONFIG
+        //));
 
         Configured.PATCH_PUMPKIN_COMMON = RegistryHelper.createConfiguredFeature("patch_pumpkin_common", Feature.RANDOM_PATCH.withConfiguration(
                 new BlockClusterFeatureConfig.Builder(
@@ -281,12 +270,5 @@ public class HallowsFeatures {
                         HallowsBlocks.TENEBRITE.get().getDefaultState(), HallowsBlocks.TENEBRITE.get().getDefaultState(), HallowsBlocks.TENEBRITE.get().getDefaultState(), HallowsBlocks.TENEBRITE.get().getDefaultState(),
                         128, 0.01F, new TagMatchRuleTest(HallowsTags.Blocks.BASE_STONE_HALLOWS), false)
         ).withPlacement(Placements.Configured.CAVE_BIOME_PLACEMENT));
-
-        Configured.GIANT_PUMPKIN = RegistryHelper.createConfiguredFeature("giant_pumpkin", GIANT_PUMPKIN.get().withConfiguration(new NoFeatureConfig()));
-
-        Configured.IGNIS_GEODE = RegistryHelper.createConfiguredFeature("ignis_geode", GEODE.get().withConfiguration(
-                new GeodeFeatureConfig(
-                        0.75D, 0.083D, true, 2, 4, 4, 5, 1, 3, -12, 12, 0.8D)).withPlacement(
-                                DecoratedPlacement.RANGE.configure(new TopSolidRangeConfig(6, 0, 47)).chance(64)));
     }
 }

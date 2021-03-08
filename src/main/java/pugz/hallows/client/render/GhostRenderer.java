@@ -26,7 +26,7 @@ public class GhostRenderer extends MobRenderer<GhostEntity, GhostModel> {
     @Nonnull
     public Vector3d getRenderOffset(GhostEntity ghost, float partialTicks) {
         if (ghost.isCharging()) {
-            return new Vector3d(ghost.getRNG().nextGaussian() * 0.01D, 0.0D, ghost.getRNG().nextGaussian() * 0.01D);
+            return new Vector3d(ghost.getRNG().nextGaussian() * 0.02D, 0.0D, ghost.getRNG().nextGaussian() * 0.02D);
         } else {
             return super.getRenderOffset(ghost, partialTicks);
         }

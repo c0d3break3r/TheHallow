@@ -83,6 +83,7 @@ public class HallowsBlocks {
     public static RegistryObject<Block> ASPHODEL_FENCE_GATE;
     public static RegistryObject<Block> ASPHODEL_BUTTON;
     public static RegistryObject<Block> ASPHODEL_PRESSURE_PLATE;
+    public static RegistryObject<Block> ASPHODEL_SAPLING;
 
     public static RegistryObject<Block> EBONY_LOG;
     public static RegistryObject<Block> STRIPPED_EBONY_LOG;
@@ -98,7 +99,9 @@ public class HallowsBlocks {
     public static RegistryObject<Block> EBONY_BUTTON;
     public static RegistryObject<Block> EBONY_PRESSURE_PLATE;
     public static RegistryObject<Block> EBONY_LEAVES;
+    public static RegistryObject<Block> EBONY_SAPLING;
     public static RegistryObject<Block> BLOOD_EBONY_LEAVES;
+    public static RegistryObject<Block> BLOOD_EBONY_SAPLING;
     public static RegistryObject<Block> HANGING_EBONY_LEAVES;
     public static RegistryObject<Block> HANGING_BLOOD_EBONY_LEAVES;
     public static RegistryObject<Block> EBONY_LEAF_CARPET;

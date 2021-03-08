@@ -32,13 +32,6 @@ public class AnointingTableContainer extends AbstractRepairContainer {
     private final List<HallowingRecipe> recipes;
     private final PlayerEntity player;
 
-    protected final IInventory field_234643_d_ = new Inventory(2) {
-        public void markDirty() {
-            super.markDirty();
-            AnointingTableContainer.this.onCraftMatrixChanged(this);
-        }
-    };
-
     public AnointingTableContainer(int id, PlayerInventory inventory) {
         this(id, inventory, IWorldPosCallable.DUMMY);
     }

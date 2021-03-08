@@ -9,25 +9,25 @@ import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 import java.util.EnumSet;
+import java.util.Random;
 
 public class GhostEntity extends MonsterEntity {
     protected static final DataParameter<Byte> GHOST_FLAGS = EntityDataManager.createKey(GhostEntity.class, DataSerializers.BYTE);
@@ -205,8 +205,24 @@ public class GhostEntity extends MonsterEntity {
                     GhostEntity.this.moveController.setMoveTo(vector3d.x, vector3d.y, vector3d.z, 1.0D);
                 }
 
-                if (d0 < 4.5D) GhostEntity.this.addPotionEffect(new EffectInstance(Effects.INVISIBILITY, 25, 0, true, false));
+                if (d0 < 6.0D) {
+                    GhostEntity.this.addPotionEffect(new EffectInstance(Effects.INVISIBILITY, 25, 0, true, false));
+                    // JUST ONCE
+                    //spawnParticles(GhostEntity.this.world, GhostEntity.this.getPosition(), GhostEntity.this.rand);
+                }
             }
+        }
+    }
+
+    public void spawnParticles(World worldIn, BlockPos pos, Random rand) {
+        for(int i = 0; i < 4; ++i) {
+            double d0 = (double)pos.getX() + rand.nextDouble();
+            double d1 = (double)pos.getY() + rand.nextDouble();
+            double d2 = (double)pos.getZ() + rand.nextDouble();
+            double d3 = ((double)rand.nextFloat() - 0.5D) * 1.5D;
+            double d4 = ((double)rand.nextFloat() - 0.5D) * 1.5D;
+            double d5 = ((double)rand.nextFloat() - 0.5D) * 1.5D;
+            worldIn.addParticle(ParticleTypes.PORTAL, d0, d1, d2, d3, d4, d5);
         }
     }
 
