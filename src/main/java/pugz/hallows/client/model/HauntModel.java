@@ -11,6 +11,7 @@ public class HauntModel extends EntityModel<HauntEntity> {
 	private final ModelRenderer rightLeg;
 	private final ModelRenderer leftLeg;
 	private final ModelRenderer body;
+	private final ModelRenderer body_r1;
 	private final ModelRenderer head;
 	private final ModelRenderer rightArm;
 	private final ModelRenderer leftArm;
@@ -29,38 +30,42 @@ public class HauntModel extends EntityModel<HauntEntity> {
 
 		body = new ModelRenderer(this);
 		body.setRotationPoint(9.0F, 24.0F, 0.0F);
-		body.setTextureOffset(0, 0).addBox(-15.5F, -30.0F, -3.0F, 18.0F, 18.0F, 10.0F, 0.0F, false);
+		
+
+		body_r1 = new ModelRenderer(this);
+		body_r1.setRotationPoint(-9.0F, 0.0F, 4.0F);
+		body.addChild(body_r1);
+		body_r1.setTextureOffset(0, 0).addBox(-6.5F, -30.0F, -3.0F, 18.0F, 18.0F, 10.0F, 0.0F, false);
 
 		head = new ModelRenderer(this);
-		head.setRotationPoint(-6.5F, -27.0F, -3.0F);
+		head.setRotationPoint(-6.5F, -27.0F, -6.0F);
 		body.addChild(head);
 		head.setTextureOffset(0, 0).addBox(-5.0F, -10.0F, -4.0F, 10.0F, 10.0F, 10.0F, 0.0F, false);
 		head.setTextureOffset(0, 0).addBox(-5.0F, 0.0F, -4.0F, 10.0F, 6.0F, 4.0F, 0.0F, false);
 
 		rightArm = new ModelRenderer(this);
 		rightArm.setRotationPoint(-8.5F, -2.0F, 2.0F);
-		rightArm.setTextureOffset(0, 0).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 24.0F, 4.0F, 0.0F, false);
+		rightArm.setTextureOffset(0, 0).addBox(-2.0F, -2.0F, -5.0F, 4.0F, 24.0F, 4.0F, 0.0F, false);
 
 		leftArm = new ModelRenderer(this);
 		leftArm.setRotationPoint(13.5F, -2.0F, 2.0F);
-		leftArm.setTextureOffset(0, 0).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 24.0F, 4.0F, 0.0F, false);
+		leftArm.setTextureOffset(0, 0).addBox(-2.0F, -2.0F, -5.0F, 4.0F, 24.0F, 4.0F, 0.0F, false);
 	}
 
-	public void setRotationAngles(HauntEntity haunt, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		this.head.rotateAngleY = netHeadYaw * ((float)Math.PI / 180F);
-		this.head.rotateAngleX = headPitch * ((float)Math.PI / 180F);
-		this.leftLeg.rotateAngleY = 0.0F;
-		this.rightLeg.rotateAngleY = 0.0F;
+	@Override
+	public void setRotationAngles(HauntEntity haunt, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
+		body_r1.rotateAngleX = 0.2618F;
+
+		this.rightArm.rotateAngleX = MathHelper.cos(limbSwing * 0.1681F + (float)Math.PI) * limbSwingAmount * 0.25F;
+		this.leftArm.rotateAngleX = MathHelper.cos(limbSwing * 0.1681F) * limbSwingAmount * 0.25F;
+		this.rightArm.rotateAngleZ = MathHelper.cos(limbSwing * 0.1681F + (float)Math.PI) * limbSwingAmount * 0.2F;
+		this.leftArm.rotateAngleZ = MathHelper.cos(limbSwing * 0.1681F) * limbSwingAmount * 0.2F;
+
+		this.rightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.1681F) * 0.3F * limbSwingAmount;
+		this.leftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.1681F + (float)Math.PI) * 0.3F * limbSwingAmount;
 
 		if (haunt.isScreaming()) {
-			this.head.rotateAngleZ = MathHelper.cos(ageInTicks * 0.3331F + (float)Math.PI) * limbSwingAmount * 0.5F;
-		}
-	}
 
-	public void setLivingAnimations(HauntEntity haunt, float limbSwing, float limbSwingAmount, float partialTick) {
-		if (haunt.getAttackTimer() > 0) {
-			this.rightArm.rotateAngleX = 1.5F * MathHelper.func_233021_e_((float)haunt.getAttackTimer() - partialTick, 10.0F);
-			this.leftArm.rotateAngleX = 1.5F * MathHelper.func_233021_e_((float)haunt.getAttackTimer() - partialTick, 10.0F);
 		}
 	}
 

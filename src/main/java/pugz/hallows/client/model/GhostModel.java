@@ -45,6 +45,7 @@ public class GhostModel extends EntityModel<GhostEntity> {
 	@Override
 	public void setRotationAngles(GhostEntity ghost, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
 		ModelHelper.func_239105_a_(this.leftArm, this.rightArm, true, this.swingProgress, ageInTicks);
+
 		this.rightArm.rotateAngleX = MathHelper.cos(limbSwing * 0.3331F + (float)Math.PI) * limbSwingAmount * 0.5F;
 		this.leftArm.rotateAngleX = MathHelper.cos(limbSwing * 0.3331F) * limbSwingAmount * 0.5F;
 		this.rightArm.rotateAngleZ = MathHelper.cos(limbSwing * 0.3331F + (float)Math.PI) * limbSwingAmount * 0.25F;

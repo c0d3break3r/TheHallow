@@ -1,8 +1,6 @@
 {
 	"ambientocclusion": false,
 	"textures": {
-		"fruit": "hallows:block/orange_will_o_wisp_fruit",
-		"vine": "hallows:block/will_o_wisp_vines_end",
 		"particle": "#fruit"
 	},
 	"elements": [

@@ -23,15 +23,18 @@ import pugz.hallows.core.registry.HallowsItems;
 
 import javax.annotation.Nonnull;
 import java.util.Random;
+import java.util.function.Supplier;
 
 public class WillOWispFruitBlock extends AbstractTopPlantBlock {
     public static final BooleanProperty FRUIT = BooleanProperty.create("fruit");
     protected static final VoxelShape SHAPE = Block.makeCuboidShape(4.0D, 4.0D, 4.0D, 12.0D, 16.0D, 12.0D);
     protected static final VoxelShape FRUIT_SHAPE = Block.makeCuboidShape(4.0D, 6.0D, 4.0D, 12.0D, 14.0D, 12.0D);
+    private final Supplier<Item> fruit;
 
-    public WillOWispFruitBlock(AbstractBlock.Properties properties) {
+    public WillOWispFruitBlock(AbstractBlock.Properties properties, Supplier<Item> fruit) {
         super(properties, Direction.DOWN, SHAPE, false, 0.1D);
         this.setDefaultState(this.getDefaultState().with(FRUIT, false));
+        this.fruit = fruit;
     }
 
     @Nonnull

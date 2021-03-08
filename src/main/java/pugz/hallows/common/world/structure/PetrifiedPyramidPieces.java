@@ -79,14 +79,6 @@ public class PetrifiedPyramidPieces {
             BlockPos blockpos2 = this.templatePosition;
             this.templatePosition = this.templatePosition.add(0, i - 90 - 1, 0);
             boolean flag = super.func_230383_a_(reader, manager, generator, random, boundingBox, chunkPos, pos);
-            if (this.resourceLocation.equals(PetrifiedPyramidPieces.PIECES)) {
-                BlockPos blockpos3 = this.templatePosition.add(Template.transformedBlockPos(placementsettings, new BlockPos(3, 0, 5)));
-                BlockState blockstate = reader.getBlockState(blockpos3.down());
-                if (!blockstate.isAir() && !blockstate.isIn(Blocks.LADDER)) {
-                    reader.setBlockState(blockpos3, Blocks.SNOW_BLOCK.getDefaultState(), 3);
-                }
-            }
-
             this.templatePosition = blockpos2;
             return flag;
         }

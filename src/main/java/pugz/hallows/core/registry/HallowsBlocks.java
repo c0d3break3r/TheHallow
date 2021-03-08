@@ -127,7 +127,10 @@ public class HallowsBlocks {
     public static RegistryObject<Block> GIANT_CAULDRON;
 
     public static RegistryObject<Block> WILL_O_WISP_VINES;
-    public static RegistryObject<Block> WILL_O_WISP_FRUIT;
+    public static RegistryObject<Block> ORANGE_WILL_O_WISP_FRUIT;
+    public static RegistryObject<Block> YELLOW_WILL_O_WISP_FRUIT;
+    public static RegistryObject<Block> BLUE_WILL_O_WISP_FRUIT;
+    public static RegistryObject<Block> PURPLE_WILL_O_WISP_FRUIT;
 
     public static void registerBlocks() {
         HALLSTONE = RegistryHelper.createBlock("hallstone", () -> new Block(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
@@ -245,9 +248,18 @@ public class HallowsBlocks {
         GIANT_CAULDRON = RegistryHelper.createBlock("giant_cauldron", () -> new GiantCauldronBlock(AbstractBlock.Properties.from(Blocks.CAULDRON)), ItemGroup.MISC);
 
         WILL_O_WISP_VINES = RegistryHelper.createBlock("will_o_wisp_vines", () -> new WillOWispVineStemBlock(AbstractBlock.Properties.create(Material.PLANTS, MaterialColor.NETHERRACK).tickRandomly().doesNotBlockMovement().zeroHardnessAndResistance().sound(SoundType.PLANT)), null);
-        WILL_O_WISP_FRUIT = RegistryHelper.createBlock("will_o_wisp_fruit", () -> new WillOWispFruitBlock(AbstractBlock.Properties.create(Material.PLANTS, MaterialColor.NETHERRACK).setLightLevel((s) -> {
+        ORANGE_WILL_O_WISP_FRUIT = RegistryHelper.createBlock("orange_will_o_wisp_fruit", () -> new WillOWispFruitBlock(AbstractBlock.Properties.create(Material.PLANTS, MaterialColor.NETHERRACK).setLightLevel((s) -> {
             return s.get(WillOWispFruitBlock.FRUIT) ? 8 : 0;
-        }).tickRandomly().doesNotBlockMovement().zeroHardnessAndResistance().sound(SoundType.PLANT).setEmmisiveRendering(HallowsBlocks::needsPostProcessing).setNeedsPostProcessing(HallowsBlocks::needsPostProcessing)), ItemGroup.DECORATIONS);
+        }).tickRandomly().doesNotBlockMovement().zeroHardnessAndResistance().sound(SoundType.PLANT).setEmmisiveRendering(HallowsBlocks::needsPostProcessing).setNeedsPostProcessing(HallowsBlocks::needsPostProcessing), () -> HallowsItems.ORANGE_WILL_O_WISP_BERRY.get()), ItemGroup.DECORATIONS);
+        YELLOW_WILL_O_WISP_FRUIT = RegistryHelper.createBlock("yellow_will_o_wisp_fruit", () -> new WillOWispFruitBlock(AbstractBlock.Properties.create(Material.PLANTS, MaterialColor.NETHERRACK).setLightLevel((s) -> {
+            return s.get(WillOWispFruitBlock.FRUIT) ? 8 : 0;
+        }).tickRandomly().doesNotBlockMovement().zeroHardnessAndResistance().sound(SoundType.PLANT).setEmmisiveRendering(HallowsBlocks::needsPostProcessing).setNeedsPostProcessing(HallowsBlocks::needsPostProcessing), () -> HallowsItems.YELLOW_WILL_O_WISP_BERRY.get()), ItemGroup.DECORATIONS);
+        BLUE_WILL_O_WISP_FRUIT = RegistryHelper.createBlock("blue_will_o_wisp_fruit", () -> new WillOWispFruitBlock(AbstractBlock.Properties.create(Material.PLANTS, MaterialColor.NETHERRACK).setLightLevel((s) -> {
+            return s.get(WillOWispFruitBlock.FRUIT) ? 8 : 0;
+        }).tickRandomly().doesNotBlockMovement().zeroHardnessAndResistance().sound(SoundType.PLANT).setEmmisiveRendering(HallowsBlocks::needsPostProcessing).setNeedsPostProcessing(HallowsBlocks::needsPostProcessing), () -> HallowsItems.BLUE_WILL_O_WISP_BERRY.get()), ItemGroup.DECORATIONS);
+        PURPLE_WILL_O_WISP_FRUIT = RegistryHelper.createBlock("purple_will_o_wisp_fruit", () -> new WillOWispFruitBlock(AbstractBlock.Properties.create(Material.PLANTS, MaterialColor.NETHERRACK).setLightLevel((s) -> {
+            return s.get(WillOWispFruitBlock.FRUIT) ? 8 : 0;
+        }).tickRandomly().doesNotBlockMovement().zeroHardnessAndResistance().sound(SoundType.PLANT).setEmmisiveRendering(HallowsBlocks::needsPostProcessing).setNeedsPostProcessing(HallowsBlocks::needsPostProcessing), () -> HallowsItems.PURPLE_WILL_O_WISP_BERRY.get()), ItemGroup.DECORATIONS);
     }
 
     private static boolean needsPostProcessing(BlockState state, IBlockReader reader, BlockPos pos) {
@@ -270,7 +282,10 @@ public class HallowsBlocks {
         RenderTypeLookup.setRenderLayer(NECROFIRE_WALL_TORCH.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(NECROFIRE_CAMPFIRE.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(WILL_O_WISP_VINES.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(WILL_O_WISP_FRUIT.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(ORANGE_WILL_O_WISP_FRUIT.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(YELLOW_WILL_O_WISP_FRUIT.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BLUE_WILL_O_WISP_FRUIT.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(PURPLE_WILL_O_WISP_FRUIT.get(), RenderType.getCutout());
     }
 
     public static void registerFlammability() {
@@ -305,6 +320,9 @@ public class HallowsBlocks {
         ComposterBlock.CHANCES.put(BLOOD_EBONY_LEAF_CARPET.get(), 0.3F);
         ComposterBlock.CHANCES.put(DEADROOT.get(), 0.1F);
         ComposterBlock.CHANCES.put(HEMLOCK.get(), 0.25F);
-        ComposterBlock.CHANCES.put(WILL_O_WISP_FRUIT.get(), 0.6F);
+        ComposterBlock.CHANCES.put(ORANGE_WILL_O_WISP_FRUIT.get(), 0.6F);
+        ComposterBlock.CHANCES.put(YELLOW_WILL_O_WISP_FRUIT.get(), 0.6F);
+        ComposterBlock.CHANCES.put(BLUE_WILL_O_WISP_FRUIT.get(), 0.6F);
+        ComposterBlock.CHANCES.put(PURPLE_WILL_O_WISP_FRUIT.get(), 0.6F);
     }
 }

@@ -1,9 +1,7 @@
 package pugz.hallows.client.render;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.entity.monster.EndermanEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.api.distmarker.Dist;
@@ -17,7 +15,7 @@ import javax.annotation.Nonnull;
 @OnlyIn(Dist.CLIENT)
 public class HauntRenderer extends MobRenderer<HauntEntity, HauntModel> {
     public HauntRenderer(EntityRendererManager manager) {
-        super(manager, new HauntModel(), 0.9F);
+        super(manager, new HauntModel(), 0.8F);
     }
 
     @Nonnull

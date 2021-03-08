@@ -16,6 +16,6 @@ public class WillOWispVineStemBlock extends AbstractBodyPlantBlock {
 
     @Nonnull
     protected AbstractTopPlantBlock getTopPlantBlock() {
-        return (AbstractTopPlantBlock) HallowsBlocks.WILL_O_WISP_FRUIT.get();
+        return (AbstractTopPlantBlock) HallowsBlocks.ORANGE_WILL_O_WISP_FRUIT.get();
     }
 }

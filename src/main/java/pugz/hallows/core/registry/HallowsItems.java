@@ -35,6 +35,7 @@ public class HallowsItems {
     public static RegistryObject<Item> NECROFIRE_TORCH;
     public static RegistryObject<Item> WITCHS_BREW;
     public static RegistryObject<Item> GHOST_CLOTH;
+    public static RegistryObject<Item> HAUNT_FUR;
 
     public static RegistryObject<Item> ORANGE_WILL_O_WISP_BERRY;
     public static RegistryObject<Item> ORANGE_WILL_O_WISP_CANDY;
@@ -61,8 +62,12 @@ public class HallowsItems {
         HEMLOCK_LEAF = RegistryHelper.createItem("hemlock_leaf", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));
         NECROFIRE_TORCH = RegistryHelper.createItem("necrofire_torch", () -> new WallOrFloorItem(HallowsBlocks.NECROFIRE_TORCH.get(), HallowsBlocks.NECROFIRE_WALL_TORCH.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
         WITCHS_BREW = RegistryHelper.createItem("witch_brew", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));
+        GHOST_CLOTH = RegistryHelper.createItem("ghost_cloth", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));
 
         ORANGE_WILL_O_WISP_BERRY = RegistryHelper.createItem("orange_will_o_wisp_berry", () -> new Item(new Item.Properties().group(ItemGroup.FOOD)));
+        YELLOW_WILL_O_WISP_BERRY = RegistryHelper.createItem("yellow_will_o_wisp_berry", () -> new Item(new Item.Properties().group(ItemGroup.FOOD)));
+        BLUE_WILL_O_WISP_BERRY = RegistryHelper.createItem("blue_will_o_wisp_berry", () -> new Item(new Item.Properties().group(ItemGroup.FOOD)));
+        PURPLE_WILL_O_WISP_BERRY = RegistryHelper.createItem("purple_will_o_wisp_berry", () -> new Item(new Item.Properties().group(ItemGroup.FOOD)));
     }
 
     public static class Foods {
