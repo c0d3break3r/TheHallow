@@ -47,6 +47,7 @@ public class Hallows {
         HallowsStructures.STRUCTURE_FEATURES.register(eventBus);
         HallowsFeatures.TREE_DECORATORS.register(eventBus);
         HallowsDimensions.POINTS_OF_INTEREST.register(eventBus);
+        HallowsParticles.PARTICLES.register(eventBus);
 
         HallowsBlocks.registerBlocks();
         HallowsItems.registerItems();
@@ -61,6 +62,7 @@ public class Hallows {
         HallowsStructures.registerStructures();
         HallowsFeatures.registerDecorators();
         HallowsDimensions.registerPOIs();
+        HallowsParticles.registerParticles();
 
         MinecraftForge.EVENT_BUS.addListener(HallowsBiomes::onBiomeLoading);
         MinecraftForge.EVENT_BUS.addListener(HallowsStructures::onWorldLoad);
@@ -107,6 +109,7 @@ public class Hallows {
         HallowsEntities.registerRenderers();
         HallowsDimensions.registerEffects();
         MinecraftForge.EVENT_BUS.addListener(Events.Charge::onItemTooltip);
+        MinecraftForge.EVENT_BUS.addListener(HallowsParticles::onParticleFactoryRegister);
 
         ScreenManager.registerFactory(HallowsContainers.ANOINTING.get(), AnointingTableScreen::new);
     }

@@ -9,6 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import pugz.hallows.core.registry.HallowsParticles;
 
 import java.util.Random;
 
@@ -25,6 +26,6 @@ public class NecrofireWallTorchBlock extends WallTorchBlock {
         double d2 = (double) pos.getZ() + 0.5D;
         Direction direction1 = direction.getOpposite();
         worldIn.addParticle(ParticleTypes.SMOKE, d0 + 0.27D * (double) direction1.getXOffset(), d1 + 0.22D, d2 + 0.27D * (double) direction1.getZOffset(), 0.0D, 0.0D, 0.0D);
-        worldIn.addParticle(ParticleTypes.FLAME, d0 + 0.27D * (double) direction1.getXOffset(), d1 + 0.22D, d2 + 0.27D * (double) direction1.getZOffset(), 0.0D, 0.0D, 0.0D);
+        worldIn.addParticle(HallowsParticles.NECROFLAME.get(), d0 + 0.27D * (double) direction1.getXOffset(), d1 + 0.22D, d2 + 0.27D * (double) direction1.getZOffset(), 0.0D, 0.0D, 0.0D);
     }
 }

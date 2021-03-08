@@ -57,6 +57,11 @@ public class HauntEntity extends MonsterEntity {
         this.dataManager.register(SCREAMING, false);
     }
 
+    @Nonnull
+    public EntitySize getSize(Pose poseIn) {
+        return super.getSize(poseIn).scale(1.2F);
+    }
+
     public static AttributeModifierMap.MutableAttribute registerAttributes() {
         return MonsterEntity.func_234295_eP_()
                 .createMutableAttribute(Attributes.FOLLOW_RANGE, 30.0D)

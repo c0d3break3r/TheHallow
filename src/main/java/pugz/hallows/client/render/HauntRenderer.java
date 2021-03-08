@@ -1,5 +1,6 @@
 package pugz.hallows.client.render;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
@@ -16,6 +17,10 @@ import javax.annotation.Nonnull;
 public class HauntRenderer extends MobRenderer<HauntEntity, HauntModel> {
     public HauntRenderer(EntityRendererManager manager) {
         super(manager, new HauntModel(), 0.8F);
+    }
+
+    protected void preRenderCallback(HauntEntity haunt, MatrixStack matrixStackIn, float partialTickTime) {
+        matrixStackIn.scale(1.2F, 1.2F, 1.2F);
     }
 
     @Nonnull

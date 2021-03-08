@@ -30,7 +30,7 @@ public class HallowsEntities {
                 .build("ghost"));
 
         HAUNT = RegistryHelper.createEntity("haunt", () -> EntityType.Builder.<HauntEntity>create(
-                HauntEntity::new, EntityClassification.MONSTER).size(1.0F, 2.0F)
+                HauntEntity::new, EntityClassification.MONSTER).size(1.1F, 2.2F)
                 .setTrackingRange(64).setShouldReceiveVelocityUpdates(true).setUpdateInterval(3)
                 .build("haunt"));
     }

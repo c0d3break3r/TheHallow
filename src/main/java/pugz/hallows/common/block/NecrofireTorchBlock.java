@@ -3,11 +3,13 @@ package pugz.hallows.common.block;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.TorchBlock;
+import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import pugz.hallows.core.registry.HallowsParticles;
 
 import java.util.Random;
 
@@ -22,6 +24,6 @@ public class NecrofireTorchBlock extends TorchBlock {
         double d1 = (double) pos.getY() + 0.7D;
         double d2 = (double) pos.getZ() + 0.5D;
         worldIn.addParticle(ParticleTypes.SMOKE, d0, d1, d2, 0.0D, 0.0D, 0.0D);
-        worldIn.addParticle(ParticleTypes.FLAME, d0, d1, d2, 0.0D, 0.0D, 0.0D);
+        worldIn.addParticle(HallowsParticles.NECROFLAME.get(), d0, d1, d2, 0.0D, 0.0D, 0.0D);
     }
 }

@@ -13,6 +13,8 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.particles.BasicParticleType;
+import net.minecraft.particles.ParticleType;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.RegistryKey;
@@ -123,5 +125,9 @@ public class RegistryHelper {
 
     public static RegistryObject<PointOfInterestType> createPOI(String name, Set<BlockState> states, int freeTickets, int range) {
         return HallowsDimensions.POINTS_OF_INTEREST.register(name, () -> new PointOfInterestType(name, states, freeTickets, range));
+    }
+
+    public static <P extends BasicParticleType> RegistryObject<BasicParticleType> createParticle(String name, Supplier<? extends BasicParticleType> supplier) {
+        return HallowsParticles.PARTICLES.register(name, supplier);
     }
 }
