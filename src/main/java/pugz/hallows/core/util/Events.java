@@ -46,7 +46,7 @@ public class Events {
                 BlockState state = entity.world.getBlockState(hitPos);
 
                 if (state.isIn(HallowsBlocks.GIANT_CAULDRON.get())) {
-                    if (state.get(GiantCauldronBlock.ACTIVATED)) {
+                    if (state.get(GiantCauldronBlock.LIQUID) == GiantCauldronBlock.Liquid.PORTAL) {
 
                         Entity thrower = ((EnderPearlEntity)entity).func_234616_v_();
                         if (!thrower.isPassenger() && !thrower.isBeingRidden() && thrower.isNonBoss() && thrower instanceof ServerPlayerEntity) {

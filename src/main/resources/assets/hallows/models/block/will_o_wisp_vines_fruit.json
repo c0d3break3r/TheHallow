@@ -5,29 +5,29 @@
 	},
 	"elements": [
 		{
-			"from": [0.8, 8, 8],
+			"from": [0.8, 0, 8],
 			"to": [15.2, 16, 8],
 			"shade": false,
 			"rotation": {"angle": 45, "axis": "y", "origin": [8, 16, 8], "rescale": true},
 			"faces": {
-				"north": {"uv": [0, 0, 16, 8], "texture": "#vine"},
+				"north": {"uv": [0, 0, 16, 16], "texture": "#vine"},
 				"east": {"uv": [0, 0, 0, 0], "texture": "#vine"},
-				"south": {"uv": [0, 0, 16, 8], "texture": "#vine"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#vine"},
 				"west": {"uv": [0, 0, 0, 0], "texture": "#vine"},
 				"up": {"uv": [0, 0, 0, 0], "texture": "#vine"},
 				"down": {"uv": [0, 0, 0, 0], "texture": "#vine"}
 			}
 		},
 		{
-			"from": [8, 8, 0.8],
+			"from": [8, 0, 0.8],
 			"to": [8, 16, 15.2],
 			"shade": false,
 			"rotation": {"angle": 45, "axis": "y", "origin": [8, 16, 8], "rescale": true},
 			"faces": {
 				"north": {"uv": [0, 0, 0, 0], "texture": "#vine"},
-				"east": {"uv": [0, 0, 16, 8], "texture": "#vine"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#vine"},
 				"south": {"uv": [0, 0, 0, 0], "texture": "#vine"},
-				"west": {"uv": [0, 0, 16, 8], "texture": "#vine"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#vine"},
 				"up": {"uv": [0, 0, 0, 0], "texture": "#vine"},
 				"down": {"uv": [0, 0, 0, 0], "texture": "#vine"}
 			}

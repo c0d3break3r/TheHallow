@@ -17,20 +17,20 @@ public class HauntModel extends EntityModel<HauntEntity> {
 	private final ModelRenderer leftArm;
 
 	public HauntModel() {
-		textureWidth = 64;
-		textureHeight = 64;
+		textureWidth = 128;
+		textureHeight = 128;
 
 		rightLeg = new ModelRenderer(this);
 		rightLeg.setRotationPoint(0.0F, 24.0F, 0.0F);
-		rightLeg.setTextureOffset(0, 0).addBox(-4.0F, -14.0F, 0.0F, 4.0F, 14.0F, 4.0F, 0.0F, false);
+		rightLeg.setTextureOffset(16, 48).addBox(-4.0F, -14.0F, 0.0F, 4.0F, 14.0F, 4.0F, 0.0F, false);
 
 		leftLeg = new ModelRenderer(this);
 		leftLeg.setRotationPoint(7.0F, 12.0F, 2.0F);
-		leftLeg.setTextureOffset(0, 0).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 14.0F, 4.0F, 0.0F, false);
+		leftLeg.setTextureOffset(16, 48).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 14.0F, 4.0F, 0.0F, false);
 
 		body = new ModelRenderer(this);
 		body.setRotationPoint(9.0F, 24.0F, 0.0F);
-		
+
 
 		body_r1 = new ModelRenderer(this);
 		body_r1.setRotationPoint(-9.0F, 0.0F, 4.0F);
@@ -40,16 +40,16 @@ public class HauntModel extends EntityModel<HauntEntity> {
 		head = new ModelRenderer(this);
 		head.setRotationPoint(-6.5F, -27.0F, -6.0F);
 		body.addChild(head);
-		head.setTextureOffset(0, 0).addBox(-5.0F, -10.0F, -4.0F, 10.0F, 10.0F, 10.0F, 0.0F, false);
-		head.setTextureOffset(0, 0).addBox(-5.0F, 0.0F, -4.0F, 10.0F, 6.0F, 4.0F, 0.0F, false);
+		head.setTextureOffset(0, 28).addBox(-5.0F, -10.0F, -4.0F, 10.0F, 10.0F, 10.0F, 0.0F, false);
+		head.setTextureOffset(30, 28).addBox(-5.0F, 0.0F, -4.0F, 10.0F, 6.0F, 4.0F, 0.0F, false);
 
 		rightArm = new ModelRenderer(this);
 		rightArm.setRotationPoint(-8.5F, -2.0F, 2.0F);
-		rightArm.setTextureOffset(0, 0).addBox(-2.0F, -2.0F, -5.0F, 4.0F, 24.0F, 4.0F, 0.0F, false);
+		rightArm.setTextureOffset(0, 48).addBox(-2.0F, -2.0F, -5.0F, 4.0F, 24.0F, 4.0F, 0.0F, false);
 
 		leftArm = new ModelRenderer(this);
 		leftArm.setRotationPoint(13.5F, -2.0F, 2.0F);
-		leftArm.setTextureOffset(0, 0).addBox(-2.0F, -2.0F, -5.0F, 4.0F, 24.0F, 4.0F, 0.0F, false);
+		leftArm.setTextureOffset(0, 48).addBox(-2.0F, -2.0F, -5.0F, 4.0F, 24.0F, 4.0F, 0.0F, false);
 	}
 
 	@Override

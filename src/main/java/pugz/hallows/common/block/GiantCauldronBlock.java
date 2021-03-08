@@ -4,10 +4,16 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.PotionItem;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.PotionUtils;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.EnumProperty;
@@ -21,18 +27,20 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 import java.util.Random;
 
 public class GiantCauldronBlock extends Block {
     public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
     public static final EnumProperty<Half> HALF = BlockStateProperties.HALF;
-    public static final BooleanProperty ACTIVATED = BooleanProperty.create("activated");
+    public static final EnumProperty<Liquid> LIQUID = EnumProperty.create("liquid", Liquid.class);
     private static final VoxelShape SOUTH = VoxelShapes.or(Block.makeCuboidShape(0.0D, 0.0D, 12.0D, 16.0D, 16.0D, 16.0D), Block.makeCuboidShape(12.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D));
     private static final VoxelShape SOUTH_FOOT = Block.makeCuboidShape(12.0D, 0.0D, 12.0D, 16.0D, 4.0D, 16.0D);
     private static final VoxelShape NORTH = VoxelShapes.or(Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 4.0D, 16.0D, 16.0D), Block.makeCuboidShape(4.0D, 0.0D, 0.0D, 16.0D, 16.0D, 4.0D));
@@ -43,19 +51,41 @@ public class GiantCauldronBlock extends Block {
     private static final VoxelShape WEST_FOOT = Block.makeCuboidShape(12.0D, 0.0D, 0.0D, 16.0D, 4.0D, 4.0D);
     private static final VoxelShape BOTTOM = Block.makeCuboidShape(0.0D, 4.0D, 0.0D, 16.0D, 6.0D, 16.0D);
     private static final VoxelShape PORTAL = Block.makeCuboidShape(0.0D, 12.0D, 0.0D, 16.0D, 14.0D, 16.0D);
+    private List<EffectInstance> storedEffects;
 
     public GiantCauldronBlock(AbstractBlock.Properties properties) {
         super(properties);
-        this.setDefaultState(this.getDefaultState().with(FACING, Direction.NORTH).with(HALF, Half.BOTTOM).with(ACTIVATED, false));
+        this.setDefaultState(this.getDefaultState().with(FACING, Direction.NORTH).with(HALF, Half.BOTTOM).with(LIQUID, Liquid.EMPTY));
     }
 
     @Nonnull
     @Override
     @SuppressWarnings("deprecation")
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (player.getHeldItem(handIn).getItem() == Items.FLINT_AND_STEEL) {
-            worldIn.setBlockState(pos, state.with(ACTIVATED, true), 3);
-            return ActionResultType.SUCCESS;
+        ItemStack held = player.getHeldItem(handIn);
+
+        if (state.get(LIQUID) == Liquid.EMPTY) {
+            if (held.getItem() == Items.FLINT_AND_STEEL) {
+                worldIn.setBlockState(pos, state.with(LIQUID, Liquid.PORTAL), 3);
+            } else if (held.getItem() instanceof PotionItem) {
+                this.storedEffects = PotionUtils.getEffectsFromStack(held);
+            } else if (held.getItem() == Items.WATER_BUCKET) {
+                worldIn.setBlockState(pos, state.with(LIQUID, Liquid.WATER), 3);
+            } else if (held.getItem() == Items.LAVA_BUCKET) {
+                //worldIn.setBlockState(pos, state.with(LIQUID, Liquid.LAVA), 3);
+            } else if (held.getItem() == Items.BUCKET) {
+                if (state.get(LIQUID) == Liquid.WATER) {
+                    player.setHeldItem(handIn, new ItemStack(Items.WATER_BUCKET));
+                } else if (state.get(LIQUID) == Liquid.LAVA) {
+                    player.setHeldItem(handIn, new ItemStack(Items.LAVA_BUCKET));
+                }
+                worldIn.setBlockState(pos, state.with(LIQUID, Liquid.EMPTY), 3);
+            } else if (held.getItem() == Items.GLASS_BOTTLE) {
+                ItemStack potion = PotionUtils.appendEffects(new ItemStack(Items.POTION), storedEffects);
+                potion.setDisplayName(new StringTextComponent("Mixed Potion"));
+                player.setHeldItem(handIn, potion);
+            }
+            return ActionResultType.func_233537_a_(worldIn.isRemote);
         } else return ActionResultType.PASS;
     }
 
@@ -66,13 +96,13 @@ public class GiantCauldronBlock extends Block {
         switch (state.get(FACING)) {
             default:
             case SOUTH:
-                return state.get(HALF) == Half.BOTTOM ? VoxelShapes.or(SOUTH, BOTTOM, SOUTH_FOOT) : state.get(ACTIVATED) ? VoxelShapes.or(SOUTH, PORTAL) : SOUTH;
+                return state.get(HALF) == Half.BOTTOM ? VoxelShapes.or(SOUTH, BOTTOM, SOUTH_FOOT) : state.get(LIQUID) != Liquid.EMPTY ? VoxelShapes.or(SOUTH, PORTAL) : SOUTH;
             case NORTH:
-                return state.get(HALF) == Half.BOTTOM ? VoxelShapes.or(NORTH, BOTTOM, NORTH_FOOT) : state.get(ACTIVATED) ? VoxelShapes.or(NORTH, PORTAL) : NORTH;
+                return state.get(HALF) == Half.BOTTOM ? VoxelShapes.or(NORTH, BOTTOM, NORTH_FOOT) : state.get(LIQUID) != Liquid.EMPTY ? VoxelShapes.or(NORTH, PORTAL) : NORTH;
             case WEST:
-                return state.get(HALF) == Half.BOTTOM ? VoxelShapes.or(WEST, BOTTOM, WEST_FOOT) : state.get(ACTIVATED) ? VoxelShapes.or(WEST, PORTAL) : WEST;
+                return state.get(HALF) == Half.BOTTOM ? VoxelShapes.or(WEST, BOTTOM, WEST_FOOT) : state.get(LIQUID) != Liquid.EMPTY ? VoxelShapes.or(WEST, PORTAL) : WEST;
             case EAST:
-                return state.get(HALF) == Half.BOTTOM ? VoxelShapes.or(EAST, BOTTOM, EAST_FOOT) : state.get(ACTIVATED) ? VoxelShapes.or(EAST, PORTAL) : EAST;
+                return state.get(HALF) == Half.BOTTOM ? VoxelShapes.or(EAST, BOTTOM, EAST_FOOT) : state.get(LIQUID) != Liquid.EMPTY ? VoxelShapes.or(EAST, PORTAL) : EAST;
         }
     }
 
@@ -124,9 +154,29 @@ public class GiantCauldronBlock extends Block {
         return this.getDefaultState().with(FACING, getFacing(context)).with(HALF, MathHelper.sin(context.getPlayer().getPitch(1.0F) * ((float) Math.PI / 180.0F)) > 0.0F ? Half.BOTTOM : Half.TOP);
     }
 
+    @Override
+    @SuppressWarnings("deprecation")
+    public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+        if (!worldIn.isRemote) {
+            if (entityIn.isBurning() && state.get(LIQUID) == Liquid.WATER) entityIn.extinguish();
+
+            else if (state.get(LIQUID) == Liquid.LAVA) entityIn.setFire(8);
+
+            else if (state.get(LIQUID) == Liquid.POTION && entityIn instanceof LivingEntity) {
+                for (EffectInstance effect : storedEffects) {
+                    if (effect.getPotion().isInstant()) {
+                        effect.getPotion().affectEntity(entityIn, entityIn, ((LivingEntity)entityIn), effect.getAmplifier(), 1.0D);
+                    } else {
+                        ((LivingEntity)entityIn).addPotionEffect(new EffectInstance(effect));
+                    }
+                }
+            }
+        }
+    }
+
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-        if (stateIn.get(ACTIVATED)) {
+        if (stateIn.get(LIQUID) == Liquid.PORTAL) {
             if (rand.nextInt(100) == 0) {
                 worldIn.playSound((double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, SoundEvents.BLOCK_PORTAL_AMBIENT, SoundCategory.BLOCKS, 0.5F, rand.nextFloat() * 0.4F + 0.8F, false);
             }
@@ -141,10 +191,10 @@ public class GiantCauldronBlock extends Block {
                 int j = rand.nextInt(2) * 2 - 1;
                 if (!worldIn.getBlockState(pos.west()).isIn(this) && !worldIn.getBlockState(pos.east()).isIn(this)) {
                     d0 = (double) pos.getX() + 0.5D + 0.25D * (double) j;
-                    d3 = (double) (rand.nextFloat() * 2.0F * (float) j);
+                    d3 = rand.nextFloat() * 2.0F * (float) j;
                 } else {
                     d2 = (double) pos.getZ() + 0.5D + 0.25D * (double) j;
-                    d5 = (double) (rand.nextFloat() * 2.0F * (float) j);
+                    d5 = rand.nextFloat() * 2.0F * (float) j;
                 }
 
                 worldIn.addParticle(ParticleTypes.PORTAL, d0, d1, d2, d3, d4, d5);
@@ -153,6 +203,26 @@ public class GiantCauldronBlock extends Block {
     }
 
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(FACING, HALF, ACTIVATED);
+        builder.add(FACING, HALF, LIQUID);
+    }
+
+    public enum Liquid implements IStringSerializable {
+        EMPTY("empty"),
+        WATER("water"),
+        PORTAL("portal"),
+        LAVA("lava"),
+        SNOW("snow"),
+        POTION("potion");
+
+        private final String name;
+
+        Liquid(String name) {
+            this.name = name;
+        }
+
+        @Nonnull
+        public String getString() {
+            return this.name;
+        }
     }
 }

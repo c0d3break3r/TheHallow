@@ -4,7 +4,7 @@
       "model": "hallows:block/yellow_will_o_wisp_vines_fruit"
     },
     "fruit=false": {
-      "model": "hallows:block/yellow_will_o_wisp_vines_end"
+      "model": "hallows:block/will_o_wisp_vines"
     }
   }
 }
