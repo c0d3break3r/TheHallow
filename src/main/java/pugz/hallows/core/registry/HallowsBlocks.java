@@ -245,19 +245,19 @@ public class HallowsBlocks {
         MIDNIGHT_MORTIS_BRICK_STAIRS = HELPER.createBlock("midnight_mortis_brick_stairs", () -> new StairsBlock(() -> HallowsBlocks.MIDNIGHT_MORTIS_BRICKS.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);
         MIDNIGHT_MORTIS_BRICK_WALL = HELPER.createBlock("midnight_mortis_brick_wall", () -> new WallBlock(AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.DECORATIONS);
 
-        NECROFIRE = HELPER.createBlock("necrofire", () -> new NecrofireBlock(AbstractBlock.Properties.from(Blocks.FIRE).setLightLevel((s) -> {
+        NECROFIRE = HELPER.createBlockNoItem("necrofire", () -> new NecrofireBlock(AbstractBlock.Properties.from(Blocks.FIRE).setLightLevel((s) -> {
             return 12;
-        })), null);
+        })));
         NECROFIRE_CAMPFIRE = HELPER.createBlock("necrofire_campfire", () -> new NecrofireCampfireBlock(Block.Properties.from(Blocks.CAMPFIRE)), ItemGroup.DECORATIONS);
         NECROFIRE_LANTERN = HELPER.createBlock("necrofire_lantern", () -> new LanternBlock(AbstractBlock.Properties.from(Blocks.LANTERN).setLightLevel((s) -> {
             return 15;
         })), ItemGroup.DECORATIONS);
-        NECROFIRE_TORCH = HELPER.createBlock("necrofire_torch", () -> new NecrofireTorchBlock(AbstractBlock.Properties.from(Blocks.TORCH).setLightLevel((s) -> {
+        NECROFIRE_TORCH = HELPER.createWallOrFloorBlock("necrofire_torch", () -> new NecrofireTorchBlock(AbstractBlock.Properties.from(Blocks.TORCH).setLightLevel((s) -> {
             return 14;
-        })), null);
-        NECROFIRE_WALL_TORCH = HELPER.createBlock("necrofire_wall_torch", () -> new NecrofireWallTorchBlock(AbstractBlock.Properties.from(Blocks.WALL_TORCH).setLightLevel((s) -> {
+        })), NECROFIRE_WALL_TORCH, ItemGroup.DECORATIONS);
+        NECROFIRE_WALL_TORCH = HELPER.createBlockNoItem("necrofire_wall_torch", () -> new NecrofireWallTorchBlock(AbstractBlock.Properties.from(Blocks.WALL_TORCH).setLightLevel((s) -> {
             return 14;
-        })), null);
+        })));
 
         STRIPPED_ASPHODEL_LOG = HELPER.createBlock("stripped_asphodel_log", () -> new RotatedPillarBlock(AbstractBlock.Properties.from(Blocks.STRIPPED_OAK_LOG)), ItemGroup.BUILDING_BLOCKS);
         ASPHODEL_LOG = HELPER.createBlock("asphodel_log", () -> new HallowsLogBlock((RotatedPillarBlock) HallowsBlocks.STRIPPED_ASPHODEL_LOG.get()), ItemGroup.BUILDING_BLOCKS);
@@ -351,18 +351,18 @@ public class HallowsBlocks {
         ANOINTMENT_TABLE = HELPER.createBlock("anointment_table", () -> new AnointmentTableBlock(AbstractBlock.Properties.from(Blocks.END_STONE)), ItemGroup.DECORATIONS);
         GIANT_CAULDRON = HELPER.createBlock("giant_cauldron", () -> new GiantCauldronBlock(AbstractBlock.Properties.from(Blocks.CAULDRON)), ItemGroup.MISC);
 
-        ORANGE_WILL_O_WISP_VINES = HELPER.createBlock("orange_will_o_wisp_vines", () -> new WillOWispVineStemBlock(AbstractBlock.Properties.create(Material.PLANTS, MaterialColor.NETHERRACK).setLightLevel((s) -> {
+        ORANGE_WILL_O_WISP_VINES = HELPER.createBlockNoItem("orange_will_o_wisp_vines", () -> new WillOWispVineStemBlock(AbstractBlock.Properties.create(Material.PLANTS, MaterialColor.NETHERRACK).setLightLevel((s) -> {
             return s.get(WillOWispVineStemBlock.FRUIT) ? 10 : 0;
-        }).tickRandomly().doesNotBlockMovement().zeroHardnessAndResistance().setEmmisiveRendering(HallowsBlocks::needsPostProcessing).setNeedsPostProcessing(HallowsBlocks::needsPostProcessing).sound(SoundType.PLANT), () -> HallowsItems.ORANGE_WILL_O_WISP_BERRY.get(), () -> ORANGE_WILL_O_WISP_VINES_END.get()), null);
-        YELLOW_WILL_O_WISP_VINES = HELPER.createBlock("yellow_will_o_wisp_vines", () -> new WillOWispVineStemBlock(AbstractBlock.Properties.create(Material.PLANTS, MaterialColor.NETHERRACK).setLightLevel((s) -> {
+        }).tickRandomly().doesNotBlockMovement().zeroHardnessAndResistance().setEmmisiveRendering(HallowsBlocks::needsPostProcessing).setNeedsPostProcessing(HallowsBlocks::needsPostProcessing).sound(SoundType.PLANT), () -> HallowsItems.ORANGE_WILL_O_WISP_BERRY.get(), () -> ORANGE_WILL_O_WISP_VINES_END.get()));
+        YELLOW_WILL_O_WISP_VINES = HELPER.createBlockNoItem("yellow_will_o_wisp_vines", () -> new WillOWispVineStemBlock(AbstractBlock.Properties.create(Material.PLANTS, MaterialColor.NETHERRACK).setLightLevel((s) -> {
             return s.get(WillOWispVineStemBlock.FRUIT) ? 10 : 0;
-        }).tickRandomly().doesNotBlockMovement().zeroHardnessAndResistance().setEmmisiveRendering(HallowsBlocks::needsPostProcessing).setNeedsPostProcessing(HallowsBlocks::needsPostProcessing).sound(SoundType.PLANT), () -> HallowsItems.YELLOW_WILL_O_WISP_BERRY.get(), () -> YELLOW_WILL_O_WISP_VINES_END.get()), null);
-        BLUE_WILL_O_WISP_VINES = HELPER.createBlock("blue_will_o_wisp_vines", () -> new WillOWispVineStemBlock(AbstractBlock.Properties.create(Material.PLANTS, MaterialColor.NETHERRACK).setLightLevel((s) -> {
+        }).tickRandomly().doesNotBlockMovement().zeroHardnessAndResistance().setEmmisiveRendering(HallowsBlocks::needsPostProcessing).setNeedsPostProcessing(HallowsBlocks::needsPostProcessing).sound(SoundType.PLANT), () -> HallowsItems.YELLOW_WILL_O_WISP_BERRY.get(), () -> YELLOW_WILL_O_WISP_VINES_END.get()));
+        BLUE_WILL_O_WISP_VINES = HELPER.createBlockNoItem("blue_will_o_wisp_vines", () -> new WillOWispVineStemBlock(AbstractBlock.Properties.create(Material.PLANTS, MaterialColor.NETHERRACK).setLightLevel((s) -> {
             return s.get(WillOWispVineStemBlock.FRUIT) ? 10 : 0;
-        }).tickRandomly().doesNotBlockMovement().zeroHardnessAndResistance().setEmmisiveRendering(HallowsBlocks::needsPostProcessing).setNeedsPostProcessing(HallowsBlocks::needsPostProcessing).sound(SoundType.PLANT), () -> HallowsItems.BLUE_WILL_O_WISP_BERRY.get(), () -> BLUE_WILL_O_WISP_VINES_END.get()), null);
-        PURPLE_WILL_O_WISP_VINES = HELPER.createBlock("purple_will_o_wisp_vines", () -> new WillOWispVineStemBlock(AbstractBlock.Properties.create(Material.PLANTS, MaterialColor.NETHERRACK).setLightLevel((s) -> {
+        }).tickRandomly().doesNotBlockMovement().zeroHardnessAndResistance().setEmmisiveRendering(HallowsBlocks::needsPostProcessing).setNeedsPostProcessing(HallowsBlocks::needsPostProcessing).sound(SoundType.PLANT), () -> HallowsItems.BLUE_WILL_O_WISP_BERRY.get(), () -> BLUE_WILL_O_WISP_VINES_END.get()));
+        PURPLE_WILL_O_WISP_VINES = HELPER.createBlockNoItem("purple_will_o_wisp_vines", () -> new WillOWispVineStemBlock(AbstractBlock.Properties.create(Material.PLANTS, MaterialColor.NETHERRACK).setLightLevel((s) -> {
             return s.get(WillOWispVineStemBlock.FRUIT) ? 10 : 0;
-        }).tickRandomly().doesNotBlockMovement().zeroHardnessAndResistance().setEmmisiveRendering(HallowsBlocks::needsPostProcessing).setNeedsPostProcessing(HallowsBlocks::needsPostProcessing).sound(SoundType.PLANT), () -> HallowsItems.PURPLE_WILL_O_WISP_BERRY.get(), () -> PURPLE_WILL_O_WISP_VINES_END.get()), null);
+        }).tickRandomly().doesNotBlockMovement().zeroHardnessAndResistance().setEmmisiveRendering(HallowsBlocks::needsPostProcessing).setNeedsPostProcessing(HallowsBlocks::needsPostProcessing).sound(SoundType.PLANT), () -> HallowsItems.PURPLE_WILL_O_WISP_BERRY.get(), () -> PURPLE_WILL_O_WISP_VINES_END.get()));
         ORANGE_WILL_O_WISP_VINES_END = HELPER.createBlock("orange_will_o_wisp_vines_end", () -> new WillOWispVineEndBlock(AbstractBlock.Properties.create(Material.PLANTS, MaterialColor.NETHERRACK).setLightLevel((s) -> {
             return s.get(WillOWispVineEndBlock.FRUIT) ? 10 : 0;
         }).tickRandomly().doesNotBlockMovement().zeroHardnessAndResistance().sound(SoundType.PLANT).setEmmisiveRendering(HallowsBlocks::needsPostProcessing).setNeedsPostProcessing(HallowsBlocks::needsPostProcessing), () -> HallowsItems.ORANGE_WILL_O_WISP_BERRY.get(), () -> ORANGE_WILL_O_WISP_VINES.get()), ItemGroup.DECORATIONS);
@@ -389,6 +389,9 @@ public class HallowsBlocks {
         RenderTypeLookup.setRenderLayer(HANGING_BLOOD_EBONY_LEAVES.get(), RenderType.getCutoutMipped());
 
         RenderTypeLookup.setRenderLayer(DEADROOT.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(ASPHODEL_SAPLING.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(EBONY_SAPLING.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BLOOD_EBONY_SAPLING.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(IGNIS_CRYSTAL_FLOWER.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(HEMLOCK.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(NECROFIRE_TORCH.get(), RenderType.getCutout());

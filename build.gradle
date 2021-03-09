@@ -22,7 +22,7 @@ mixin {
 
 version = "${project.minecraft}-${project.modVersion}"
 group = "pugz"
-archivesBaseName = project.modId
+archivesBaseName = project.modName
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = "1.8"
 

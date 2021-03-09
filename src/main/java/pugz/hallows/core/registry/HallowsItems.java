@@ -63,7 +63,6 @@ public class HallowsItems {
 
         OPAL = HELPER.createItem("opal", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));
         HEMLOCK_LEAF = HELPER.createItem("hemlock_leaf", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));
-        NECROFIRE_TORCH = HELPER.createItem("necrofire_torch", () -> new WallOrFloorItem(HallowsBlocks.NECROFIRE_TORCH.get(), HallowsBlocks.NECROFIRE_WALL_TORCH.get(), new Item.Properties().group(ItemGroup.DECORATIONS)));
         WITCHS_BREW = HELPER.createItem("witch_brew", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));
         GHOST_CLOTH = HELPER.createItem("ghost_cloth", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));
         HAUNT_FUR = HELPER.createItem("haunt_fur", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));
