@@ -5,6 +5,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.*;
@@ -17,6 +18,9 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import pugz.hallows.core.registry.HallowsParticles;
 
 import javax.annotation.Nonnull;
 import java.util.Random;
@@ -97,6 +101,16 @@ public class WillOWispVineEndBlock extends AbstractTopPlantBlock {
             worldIn.setBlockState(blockpos, state.with(AGE, i).with(FRUIT, rand.nextFloat() <= fruitChance));
             blockpos = blockpos.offset(this.growthDirection);
             i = Math.min(i + 1, 25);
+        }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+        if (stateIn.get(FRUIT)) {
+            double d0 = (double) pos.getX() + 0.5D;
+            double d1 = (double) pos.getY() + 0.7D;
+            double d2 = (double) pos.getZ() + 0.5D;
+            worldIn.addParticle(HallowsParticles.ORANGE_WILL_O_WISP.get(), d0, d1, d2, 0.0D, 0.0D, 0.0D);
         }
     }
 

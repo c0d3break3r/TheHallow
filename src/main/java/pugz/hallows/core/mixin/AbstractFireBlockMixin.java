@@ -13,13 +13,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import pugz.hallows.common.block.NecrofireBlock;
 import pugz.hallows.core.registry.HallowsBlocks;
 
-@Mixin(AbstractFireBlock.class)
+//@Mixin(AbstractFireBlock.class)
 public final class AbstractFireBlockMixin extends Block {
     private AbstractFireBlockMixin(AbstractBlock.Properties properties) {
         super(properties);
     }
 
-    @Inject(at = @At("HEAD"), method = "getFireForPlacement(Lnet/minecraft/world/IBlockReader;Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;", cancellable = true)
+    //@Inject(at = @At("HEAD"), method = "getFireForPlacement(Lnet/minecraft/world/IBlockReader;Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;", cancellable = true)
     private static void necrofirePlacement(IBlockReader reader, BlockPos pos, CallbackInfoReturnable<BlockState> info) {
         if (NecrofireBlock.shouldLightNecrofire(reader.getBlockState(pos.down()).getBlock())) {
             info.setReturnValue(HallowsBlocks.NECROFIRE.get().getDefaultState());

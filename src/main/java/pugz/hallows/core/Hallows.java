@@ -69,11 +69,11 @@ public class Hallows {
         MinecraftForge.EVENT_BUS.addListener(NecrofireBlock::onRightClickBlock);
         MinecraftForge.EVENT_BUS.addListener(Events.Teleport::onProjectileImpact);
         MinecraftForge.EVENT_BUS.addListener(Events.Charge::onLivingHurt);
-        //MinecraftForge.EVENT_BUS.addListener(HallowsEntities::onEntityAttributeCreation);
 
         eventBus.addListener(EventPriority.NORMAL, this::commonSetup);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
             eventBus.addListener(EventPriority.LOWEST, this::clientSetup);
+            eventBus.addListener(EventPriority.LOWEST, HallowsParticles::onParticleFactoryRegister);
         });
     }
 
@@ -109,8 +109,6 @@ public class Hallows {
         HallowsEntities.registerRenderers();
         HallowsDimensions.registerEffects();
         MinecraftForge.EVENT_BUS.addListener(Events.Charge::onItemTooltip);
-        MinecraftForge.EVENT_BUS.addListener(HallowsParticles::onParticleFactoryRegister);
-
         ScreenManager.registerFactory(HallowsContainers.ANOINTING.get(), AnointingTableScreen::new);
     }
 }

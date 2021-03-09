@@ -1,5 +1,6 @@
 package pugz.hallows.core.registry;
 
+import com.google.common.collect.ImmutableSet;
 import net.minecraft.client.world.DimensionRenderInfo;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
@@ -25,7 +26,7 @@ public class HallowsDimensions {
     public static final RegistryKey<DimensionType> DIMENSION_TYPE = RegistryKey.getOrCreateKey(Registry.DIMENSION_TYPE_KEY, new ResourceLocation(Hallows.MOD_ID, "the_hallows"));
 
     public static void registerPOIs() {
-        //PORTAL = RegistryHelper.createPOI("hallow_portal", PointOfInterestType.getAllStates(HallowsBlocks.GIANT_CAULDRON.get()), 1, 1);
+        //PORTAL = RegistryHelper.createPOI("hallow_portal", ImmutableSet.copyOf(HallowsBlocks.GIANT_CAULDRON.get().getStateContainer().getValidStates()), 1, 1);
     }
 
     public static void registerDimensions() {
