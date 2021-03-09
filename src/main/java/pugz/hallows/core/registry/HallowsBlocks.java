@@ -104,6 +104,7 @@ public class HallowsBlocks {
     public static RegistryObject<Block> ASPHODEL_BUTTON;
     public static RegistryObject<Block> ASPHODEL_PRESSURE_PLATE;
     public static RegistryObject<Block> ASPHODEL_SAPLING;
+    public static RegistryObject<Block> POTTED_ASPHODEL_SAPLING;
     public static RegistryObject<Block> ASPHODEL_DOOR;
     public static RegistryObject<Block> ASPHODEL_TRAPDOOR;
     public static Pair<RegistryObject<AbnormalsStandingSignBlock>, RegistryObject<AbnormalsWallSignBlock>> ASPHODEL_SIGNS;
@@ -252,12 +253,12 @@ public class HallowsBlocks {
         NECROFIRE_LANTERN = HELPER.createBlock("necrofire_lantern", () -> new LanternBlock(AbstractBlock.Properties.from(Blocks.LANTERN).setLightLevel((s) -> {
             return 15;
         })), ItemGroup.DECORATIONS);
-        NECROFIRE_TORCH = HELPER.createWallOrFloorBlock("necrofire_torch", () -> new NecrofireTorchBlock(AbstractBlock.Properties.from(Blocks.TORCH).setLightLevel((s) -> {
-            return 14;
-        })), NECROFIRE_WALL_TORCH, ItemGroup.DECORATIONS);
         NECROFIRE_WALL_TORCH = HELPER.createBlockNoItem("necrofire_wall_torch", () -> new NecrofireWallTorchBlock(AbstractBlock.Properties.from(Blocks.WALL_TORCH).setLightLevel((s) -> {
             return 14;
         })));
+        NECROFIRE_TORCH = HELPER.createWallOrFloorBlock("necrofire_torch", () -> new NecrofireTorchBlock(AbstractBlock.Properties.from(Blocks.TORCH).setLightLevel((s) -> {
+            return 14;
+        })), NECROFIRE_WALL_TORCH, ItemGroup.DECORATIONS);
 
         STRIPPED_ASPHODEL_LOG = HELPER.createBlock("stripped_asphodel_log", () -> new RotatedPillarBlock(AbstractBlock.Properties.from(Blocks.STRIPPED_OAK_LOG)), ItemGroup.BUILDING_BLOCKS);
         ASPHODEL_LOG = HELPER.createBlock("asphodel_log", () -> new HallowsLogBlock((RotatedPillarBlock) HallowsBlocks.STRIPPED_ASPHODEL_LOG.get()), ItemGroup.BUILDING_BLOCKS);
@@ -271,6 +272,7 @@ public class HallowsBlocks {
         ASPHODEL_BUTTON = HELPER.createBlock("asphodel_button", () -> new AbnormalsWoodButtonBlock(AbstractBlock.Properties.from(Blocks.OAK_BUTTON)), ItemGroup.REDSTONE);
         ASPHODEL_PRESSURE_PLATE = HELPER.createBlock("asphodel_pressure_plate", () -> new WoodPressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, AbstractBlock.Properties.from(Blocks.OAK_PRESSURE_PLATE)), ItemGroup.REDSTONE);
         ASPHODEL_SAPLING = HELPER.createBlock("asphodel_sapling", () -> new AbnormalsSaplingBlock(new AsphodelTree(), AbstractBlock.Properties.from(Blocks.OAK_SAPLING)), ItemGroup.DECORATIONS);
+        POTTED_ASPHODEL_SAPLING = HELPER.createBlockNoItem("potted_asphodel_sapling", () -> new FlowerPotBlock(ASPHODEL_SAPLING.get(), AbstractBlock.Properties.from(Blocks.FLOWER_POT)));
         ASPHODEL_DOOR = HELPER.createBlock("asphodel_door", () -> new WoodDoorBlock(AbstractBlock.Properties.from(Blocks.OAK_DOOR)), ItemGroup.REDSTONE);
         ASPHODEL_TRAPDOOR = HELPER.createBlock("asphodel_trapdoor", () -> new WoodTrapDoorBlock(AbstractBlock.Properties.from(Blocks.OAK_TRAPDOOR)), ItemGroup.REDSTONE);
         ASPHODEL_SIGNS = HELPER.createSignBlock("asphodel", MaterialColor.SNOW);

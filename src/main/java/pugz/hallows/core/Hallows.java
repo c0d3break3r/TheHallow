@@ -34,8 +34,8 @@ public class Hallows {
 
     public Hallows() {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        REGISTRY_HELPER.register(eventBus);
 
+        REGISTRY_HELPER.register(eventBus);
         HallowsContainers.CONTAINERS.register(eventBus);
         HallowsRecipes.RECIPE_SERIALIZERS.register(eventBus);
         HallowsBiomes.BIOMES.register(eventBus);
@@ -48,11 +48,11 @@ public class Hallows {
         HallowsParticles.PARTICLES.register(eventBus);
 
         HallowsBlocks.registerBlocks();
-        HallowsItems.registerItems();
         HallowsTileEntities.registerTileEntities();
         HallowsContainers.registerContainers();
         HallowsRecipes.registerRecipeSerializers();
         HallowsEntities.registerEntities();
+        HallowsItems.registerItems();
         HallowsBiomes.registerBiomes();
         HallowsSurfaceBuilders.registerSurfaceBuilders();
         HallowsCarvers.registerCarvers();

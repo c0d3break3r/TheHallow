@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "hallows:asphodel_wall_sign"
+    "hallows:asphodel_wall_sign",
+    "hallows:ebony_wall_sign"
   ]
 }

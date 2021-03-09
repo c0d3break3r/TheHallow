@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "hallows:asphodel_pressure_plate"
+    "hallows:asphodel_pressure_plate",
+    "hallows:ebony_pressure_plate"
   ]
 }

@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "hallows:asphodel_button"
+    "hallows:asphodel_button",
+    "hallows:ebony_button"
   ]
 }

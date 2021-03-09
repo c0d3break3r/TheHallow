@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "hallows:potted_asphodel_sapling"
+    "hallows:potted_asphodel_sapling",
+    "hallows:potted_ebony_sapling",
+    "hallows:potted_blood_ebony_sapling"
   ]
 }

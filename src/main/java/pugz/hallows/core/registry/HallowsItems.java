@@ -30,9 +30,11 @@ public class HallowsItems {
     public static RegistryObject<Item> STYGIAN_SHOVEL;
     public static RegistryObject<Item> STYGIAN_HOE;
 
+    public static RegistryObject<Item> ASPHODEL_BOAT;
+    public static RegistryObject<Item> EBONY_BOAT;
+
     public static RegistryObject<Item> OPAL;
     public static RegistryObject<Item> HEMLOCK_LEAF;
-    public static RegistryObject<Item> NECROFIRE_TORCH;
     public static RegistryObject<Item> WITCHS_BREW;
     public static RegistryObject<Item> GHOST_CLOTH;
     public static RegistryObject<Item> HAUNT_FUR;
@@ -61,6 +63,9 @@ public class HallowsItems {
         STYGIAN_SHOVEL = HELPER.createItem("stygian_shovel", () -> new ShovelItem(STYGIAN_TIER, 1.5F, -3.0F, new Item.Properties().group(ItemGroup.TOOLS)));
         STYGIAN_HOE = HELPER.createItem("stygian_hoe", () -> new HoeItem(STYGIAN_TIER, -4, 0.0F, new Item.Properties().group(ItemGroup.TOOLS)));
 
+        ASPHODEL_BOAT = HELPER.createBoatItem("asphodel", HallowsBlocks.ASPHODEL_PLANKS);
+        EBONY_BOAT = HELPER.createBoatItem("ebony", HallowsBlocks.EBONY_PLANKS);
+
         OPAL = HELPER.createItem("opal", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));
         HEMLOCK_LEAF = HELPER.createItem("hemlock_leaf", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));
         WITCHS_BREW = HELPER.createItem("witch_brew", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));
@@ -76,8 +81,8 @@ public class HallowsItems {
         BLUE_WILL_O_WISP_CANDY = HELPER.createItem("blue_will_o_wisp_candy", () -> new Item(new Item.Properties().group(ItemGroup.FOOD)));
         PURPLE_WILL_O_WISP_CANDY = HELPER.createItem("purple_will_o_wisp_candy", () -> new Item(new Item.Properties().group(ItemGroup.FOOD)));
 
-        GHOST_SPAWN_EGG = HELPER.createSpawnEggItem("ghost", HallowsEntities.GHOST::get, 6263617, 13940616);
-        HAUNT_SPAWN_EGG = HELPER.createSpawnEggItem("haunt", HallowsEntities.HAUNT::get, 6263617, 13940616);
+        GHOST_SPAWN_EGG = HELPER.createSpawnEggItem("ghost", HallowsEntities.GHOST::get, 14474740, 9079978);
+        HAUNT_SPAWN_EGG = HELPER.createSpawnEggItem("haunt", HallowsEntities.HAUNT::get, 4275275, 1972516);
     }
 
     public static class Foods {

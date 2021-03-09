@@ -4,10 +4,10 @@
     "item": "endergetic:booflo_vest"
   },
   "addition": {
-    "item": "endergetic:diamond"
+    "item": "minecraft:diamond"
   },
   "result": {
-    "item": "minecraft:diamond_boots"
+    "item": "endergetic:booflo_vest"
   },
   "attribute": {
     "attribute": "minecraft:generic.armor_toughness"
