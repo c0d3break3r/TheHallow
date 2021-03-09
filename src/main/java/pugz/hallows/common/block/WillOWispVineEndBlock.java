@@ -5,6 +5,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
@@ -20,6 +21,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import pugz.hallows.core.registry.HallowsItems;
 import pugz.hallows.core.registry.HallowsParticles;
 
 import javax.annotation.Nonnull;
@@ -110,7 +112,11 @@ public class WillOWispVineEndBlock extends AbstractTopPlantBlock {
             double d0 = (double) pos.getX() + 0.5D;
             double d1 = (double) pos.getY() + 0.7D;
             double d2 = (double) pos.getZ() + 0.5D;
-            worldIn.addParticle(HallowsParticles.ORANGE_WILL_O_WISP.get(), d0, d1, d2, 0.0D, 0.0D, 0.0D);
+            IParticleData particle = this.fruit == HallowsItems.PURPLE_WILL_O_WISP_BERRY ? HallowsParticles.PURPLE_WILL_O_WISP.get() :
+                    this.fruit == HallowsItems.BLUE_WILL_O_WISP_BERRY ? HallowsParticles.BLUE_WILL_O_WISP.get() :
+                            this.fruit == HallowsItems.YELLOW_WILL_O_WISP_BERRY ? HallowsParticles.YELLOW_WILL_O_WISP.get() : HallowsParticles.ORANGE_WILL_O_WISP.get();
+
+            worldIn.addParticle(particle, d0, d1, d2, 0.0D, 0.0D, 0.0D);
         }
     }
 

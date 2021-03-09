@@ -1,22 +1,12 @@
 package pugz.hallows.core.util;
 
-import com.google.common.collect.Sets;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.particles.BasicParticleType;
-import net.minecraft.particles.ParticleType;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
@@ -43,25 +33,10 @@ import pugz.hallows.core.registry.*;
 import pugz.hallows.core.registry.other.HallowsContainers;
 import pugz.hallows.core.registry.other.HallowsRecipes;
 
-import javax.annotation.Nullable;
 import java.util.Set;
 import java.util.function.Supplier;
 
 public class RegistryHelper {
-    public static <B extends Block> RegistryObject<B> createBlock(String name, Supplier<? extends B> supplier, @Nullable ItemGroup group) {
-        RegistryObject<B> block = HallowsBlocks.BLOCKS.register(name, supplier);
-        if (group != null) HallowsItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().group(group)));
-        return block;
-    }
-
-    public static <I extends Item> RegistryObject<I> createItem(String name, Supplier<? extends I> supplier) {
-        return HallowsItems.ITEMS.register(name, supplier);
-    }
-
-    public static <T extends TileEntity> RegistryObject<TileEntityType<T>> createTileEntity(String name, Supplier<? extends T> supplier, Supplier<Block[]> blocks) {
-        return HallowsTileEntities.TILE_ENTITIES.register(name, () -> new TileEntityType<>(supplier, Sets.newHashSet(blocks.get()), null));
-    }
-
     public static <T extends Container> RegistryObject<ContainerType<T>> createContainer(final String key, ContainerType.IFactory<T> factory) {
         return HallowsContainers.CONTAINERS.register(key, () -> new ContainerType<>(factory));
     }
@@ -76,10 +51,6 @@ public class RegistryHelper {
 
     public static <S extends IRecipeSerializer<T>, T extends IRecipe<?>> RegistryObject<S> createRecipeSerializer(final String name, S recipeSerializer) {
         return HallowsRecipes.RECIPE_SERIALIZERS.register(name, () -> recipeSerializer);
-    }
-
-    public static <E extends Entity> RegistryObject<EntityType<E>> createEntity(String name, Supplier<EntityType<E>> supplier) {
-        return HallowsEntities.ENTITIES.register(name, supplier);
     }
 
     public static RegistryKey<Biome> createBiome(AbstractBiome biome) {

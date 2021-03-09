@@ -1,9 +1,9 @@
 package pugz.hallows.core;
 
 import com.google.common.collect.ImmutableMap;
+import com.minecraftabnormals.abnormals_core.core.util.registry.RegistryHelper;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.util.registry.WorldGenRegistries;
-import net.minecraft.village.PointOfInterestType;
 import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.settings.StructureSeparationSettings;
 import net.minecraftforge.api.distmarker.Dist;
@@ -16,11 +16,11 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.ForgeRegistries;
 import pugz.hallows.client.gui.AnointingTableScreen;
 import pugz.hallows.common.block.NecrofireBlock;
 import pugz.hallows.core.registry.*;
 import pugz.hallows.core.registry.other.HallowsContainers;
+import pugz.hallows.core.registry.other.HallowsData;
 import pugz.hallows.core.registry.other.HallowsRecipes;
 import pugz.hallows.core.util.Events;
 
@@ -30,16 +30,14 @@ import java.util.Map;
 @Mod(Hallows.MOD_ID)
 public class Hallows {
     public static final String MOD_ID = "hallows";
+    public static final RegistryHelper REGISTRY_HELPER = new RegistryHelper(MOD_ID);
 
     public Hallows() {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        REGISTRY_HELPER.register(eventBus);
 
-        HallowsBlocks.BLOCKS.register(eventBus);
-        HallowsItems.ITEMS.register(eventBus);
-        HallowsTileEntities.TILE_ENTITIES.register(eventBus);
         HallowsContainers.CONTAINERS.register(eventBus);
         HallowsRecipes.RECIPE_SERIALIZERS.register(eventBus);
-        HallowsEntities.ENTITIES.register(eventBus);
         HallowsBiomes.BIOMES.register(eventBus);
         HallowsSurfaceBuilders.SURFACE_BUILDERS.register(eventBus);
         HallowsCarvers.CARVERS.register(eventBus);
@@ -69,6 +67,7 @@ public class Hallows {
         MinecraftForge.EVENT_BUS.addListener(NecrofireBlock::onRightClickBlock);
         MinecraftForge.EVENT_BUS.addListener(Events.Teleport::onProjectileImpact);
         MinecraftForge.EVENT_BUS.addListener(Events.Charge::onLivingHurt);
+        MinecraftForge.EVENT_BUS.addListener(Events.Charge::onBlockBreak);
 
         eventBus.addListener(EventPriority.NORMAL, this::commonSetup);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
@@ -90,6 +89,7 @@ public class Hallows {
             HallowsBlocks.registerFlammability();
             HallowsBlocks.registerCompostables();
             HallowsEntities.registerEntityAttributes();
+            HallowsData.registerData();
 
             WorldGenRegistries.NOISE_SETTINGS.getEntries().forEach(settings -> {
                 Map<Structure<?>, StructureSeparationSettings> structureMap = settings.getValue().getStructures().func_236195_a_();

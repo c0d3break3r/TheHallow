@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "hallows:dawn_mortis_vertical_slab",
+    "hallows:dawn_mortis_brick_vertical_slab",
+    "hallows:noon_mortis_vertical_slab",
+    "hallows:noon_mortis_brick_vertical_slab",
+    "hallows:dusk_mortis_vertical_slab",
+    "hallows:dusk_mortis_brick_vertical_slab",
+    "hallows:midnight_mortis_vertical_slab",
+    "hallows:midnight_mortis_brick_vertical_slab"
+  ]
+}

@@ -11,6 +11,6 @@ import java.util.Random;
 public class EbonyTree extends Tree {
     @Nullable
     protected ConfiguredFeature<BaseTreeFeatureConfig, ?> getTreeFeature(Random randomIn, boolean largeHive) {
-        return randomIn.nextInt(6) == 0 ? HallowsFeatures.Configured.BLOOD_EBONY_HANGING_LEAVES : HallowsFeatures.Configured.EBONY_HANGING_LEAVES;
+        return HallowsFeatures.Configured.EBONY_HANGING_LEAVES;
     }
 }
