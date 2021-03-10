@@ -5,6 +5,8 @@ import com.minecraftabnormals.abnormals_core.core.util.registry.ItemSubRegistryH
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
 import net.minecraftforge.fml.RegistryObject;
@@ -72,19 +74,21 @@ public class HallowsItems {
         GHOST_CLOTH = HELPER.createItem("ghost_cloth", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));
         HAUNT_FUR = HELPER.createItem("haunt_fur", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));
 
-        ORANGE_WILL_O_WISP_BERRY = HELPER.createItem("orange_will_o_wisp_berry", () -> new Item(new Item.Properties().group(ItemGroup.FOOD)));
-        YELLOW_WILL_O_WISP_BERRY = HELPER.createItem("yellow_will_o_wisp_berry", () -> new Item(new Item.Properties().group(ItemGroup.FOOD)));
-        BLUE_WILL_O_WISP_BERRY = HELPER.createItem("blue_will_o_wisp_berry", () -> new Item(new Item.Properties().group(ItemGroup.FOOD)));
-        PURPLE_WILL_O_WISP_BERRY = HELPER.createItem("purple_will_o_wisp_berry", () -> new Item(new Item.Properties().group(ItemGroup.FOOD)));
-        ORANGE_WILL_O_WISP_CANDY = HELPER.createItem("orange_will_o_wisp_candy", () -> new Item(new Item.Properties().group(ItemGroup.FOOD)));
-        YELLOW_WILL_O_WISP_CANDY = HELPER.createItem("yellow_will_o_wisp_candy", () -> new Item(new Item.Properties().group(ItemGroup.FOOD)));
-        BLUE_WILL_O_WISP_CANDY = HELPER.createItem("blue_will_o_wisp_candy", () -> new Item(new Item.Properties().group(ItemGroup.FOOD)));
-        PURPLE_WILL_O_WISP_CANDY = HELPER.createItem("purple_will_o_wisp_candy", () -> new Item(new Item.Properties().group(ItemGroup.FOOD)));
+        ORANGE_WILL_O_WISP_BERRY = HELPER.createItem("orange_will_o_wisp_berry", () -> new Item(new Item.Properties().group(ItemGroup.FOOD).food(Foods.WILL_O_WISP_BERRY)));
+        YELLOW_WILL_O_WISP_BERRY = HELPER.createItem("yellow_will_o_wisp_berry", () -> new Item(new Item.Properties().group(ItemGroup.FOOD).food(Foods.WILL_O_WISP_BERRY)));
+        BLUE_WILL_O_WISP_BERRY = HELPER.createItem("blue_will_o_wisp_berry", () -> new Item(new Item.Properties().group(ItemGroup.FOOD).food(Foods.WILL_O_WISP_BERRY)));
+        PURPLE_WILL_O_WISP_BERRY = HELPER.createItem("purple_will_o_wisp_berry", () -> new Item(new Item.Properties().group(ItemGroup.FOOD).food(Foods.WILL_O_WISP_BERRY)));
+        ORANGE_WILL_O_WISP_CANDY = HELPER.createItem("orange_will_o_wisp_candy", () -> new Item(new Item.Properties().group(ItemGroup.FOOD).food(Foods.WILL_O_WISP_CANDY)));
+        YELLOW_WILL_O_WISP_CANDY = HELPER.createItem("yellow_will_o_wisp_candy", () -> new Item(new Item.Properties().group(ItemGroup.FOOD).food(Foods.WILL_O_WISP_CANDY)));
+        BLUE_WILL_O_WISP_CANDY = HELPER.createItem("blue_will_o_wisp_candy", () -> new Item(new Item.Properties().group(ItemGroup.FOOD).food(Foods.WILL_O_WISP_CANDY)));
+        PURPLE_WILL_O_WISP_CANDY = HELPER.createItem("purple_will_o_wisp_candy", () -> new Item(new Item.Properties().group(ItemGroup.FOOD).food(Foods.WILL_O_WISP_CANDY)));
 
-        GHOST_SPAWN_EGG = HELPER.createSpawnEggItem("ghost", HallowsEntities.GHOST::get, 14474740, 9079978);
-        HAUNT_SPAWN_EGG = HELPER.createSpawnEggItem("haunt", HallowsEntities.HAUNT::get, 4275275, 1972516);
+        GHOST_SPAWN_EGG = HELPER.createSpawnEggItem("ghost", HallowsEntities.GHOST::get, 13159139, 9079978);
+        HAUNT_SPAWN_EGG = HELPER.createSpawnEggItem("haunt", HallowsEntities.HAUNT::get, 4275275, 2827571);
     }
 
     public static class Foods {
+        public static final Food WILL_O_WISP_BERRY = new Food.Builder().hunger(2).fastToEat().saturation(0.3F).build();
+        public static final Food WILL_O_WISP_CANDY = new Food.Builder().hunger(3).fastToEat().setAlwaysEdible().effect(() -> new EffectInstance(Effects.SPEED, 25, 0), 1.0F).build();
     }
 }
