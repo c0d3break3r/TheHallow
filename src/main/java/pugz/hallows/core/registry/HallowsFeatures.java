@@ -17,6 +17,7 @@ import net.minecraft.world.gen.placement.*;
 import net.minecraft.world.gen.treedecorator.TreeDecoratorType;
 import net.minecraft.world.gen.trunkplacer.FancyTrunkPlacer;
 import net.minecraft.world.gen.trunkplacer.ForkyTrunkPlacer;
+import net.minecraft.world.gen.trunkplacer.StraightTrunkPlacer;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -53,6 +54,14 @@ public class HallowsFeatures {
         public static ConfiguredFeature<BaseTreeFeatureConfig, ?> BLOOD_EBONY_HANGING_LEAVES;
         public static ConfiguredFeature<?, ?> TREES_EBONY;
         public static ConfiguredFeature<?, ?> TREES_BLOOD_EBONY;
+
+        public static ConfiguredFeature<BaseTreeFeatureConfig, ?> SMALL_EBONY;
+        public static ConfiguredFeature<BaseTreeFeatureConfig, ?> SMALL_BLOOD_EBONY;
+        public static ConfiguredFeature<BaseTreeFeatureConfig, ?> SMALL_EBONY_HANGING_LEAVES;
+        public static ConfiguredFeature<BaseTreeFeatureConfig, ?> SMALL_BLOOD_EBONY_HANGING_LEAVES;
+        public static ConfiguredFeature<?, ?> TREES_SMALL_EBONY;
+        public static ConfiguredFeature<?, ?> TREES_SMALL_BLOOD_EBONY;
+
         public static ConfiguredFeature<?, ?> FLOWER_POPPIES;
         public static ConfiguredFeature<?, ?> PATCH_DEADROOT;
         public static ConfiguredFeature<?, ?> PATCH_DEADROOT_DENSE;
@@ -153,7 +162,7 @@ public class HallowsFeatures {
                         new BlobFoliagePlacer(FeatureSpread.func_242252_a(2), FeatureSpread.func_242252_a(1), 1),
                         new FancyTrunkPlacer(11, 11, 5),
                         new TwoLayerFeature(4, 3, 3))
-                        .func_236702_a_(Heightmap.Type.MOTION_BLOCKING)
+                        .func_236702_a_(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES)
                         .build())));
 
         Configured.BLOOD_EBONY = RegistryHelper.createConfiguredFeature("blood_ebony", Feature.TREE.withConfiguration(
@@ -163,7 +172,7 @@ public class HallowsFeatures {
                         new BlobFoliagePlacer(FeatureSpread.func_242252_a(2), FeatureSpread.func_242252_a(1), 1),
                         new FancyTrunkPlacer(11, 11, 5),
                         new TwoLayerFeature(4, 3, 3))
-                        .func_236702_a_(Heightmap.Type.MOTION_BLOCKING)
+                        .func_236702_a_(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES)
                         .build())));
 
         Configured.EBONY_HANGING_LEAVES = RegistryHelper.createConfiguredFeature("ebony_hanging_leaves", Feature.TREE.withConfiguration(
@@ -187,6 +196,48 @@ public class HallowsFeatures {
                 .withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT)
                 .withPlacement(Placement.COUNT_MULTILAYER.configure(
                         new FeatureSpreadConfig(2))));
+
+        Configured.SMALL_EBONY = RegistryHelper.createConfiguredFeature("ebony", Feature.TREE.withConfiguration(
+                (new BaseTreeFeatureConfig.Builder(
+                        new SimpleBlockStateProvider(HallowsBlocks.EBONY_LOG.get().getDefaultState()),
+                        new SimpleBlockStateProvider(HallowsBlocks.EBONY_LEAVES.get().getDefaultState()),
+                        new BlobFoliagePlacer(FeatureSpread.func_242252_a(3), FeatureSpread.func_242252_a(1), 1),
+                        new StraightTrunkPlacer(6, 4, 2),
+                        new TwoLayerFeature(2, 1, 1))
+                        .func_236702_a_(Heightmap.Type.MOTION_BLOCKING)
+                        .build())));
+
+        Configured.SMALL_BLOOD_EBONY = RegistryHelper.createConfiguredFeature("blood_ebony", Feature.TREE.withConfiguration(
+                (new BaseTreeFeatureConfig.Builder(
+                        new SimpleBlockStateProvider(HallowsBlocks.EBONY_LOG.get().getDefaultState()),
+                        new SimpleBlockStateProvider(HallowsBlocks.BLOOD_EBONY_LEAVES.get().getDefaultState()),
+                        new BlobFoliagePlacer(FeatureSpread.func_242252_a(3), FeatureSpread.func_242252_a(1), 1),
+                        new StraightTrunkPlacer(6, 4, 2),
+                        new TwoLayerFeature(2, 1, 1))
+                        .func_236702_a_(Heightmap.Type.MOTION_BLOCKING)
+                        .build())));
+
+        Configured.SMALL_EBONY_HANGING_LEAVES = RegistryHelper.createConfiguredFeature("ebony_hanging_leaves", Feature.TREE.withConfiguration(
+                Configured.SMALL_EBONY.getConfig().func_236685_a_(
+                        ImmutableList.of(Placements.HANGING_LEAVES_EBONY_PLACEMENT, Placements.BRANCH_EBONY_PLACEMENT, Placements.JACK_O_LANTERN_PLACEMENT))));
+
+        Configured.SMALL_BLOOD_EBONY_HANGING_LEAVES = RegistryHelper.createConfiguredFeature("blood_ebony_hanging_leaves", Feature.TREE.withConfiguration(
+                Configured.SMALL_BLOOD_EBONY.getConfig().func_236685_a_(
+                        ImmutableList.of(Placements.HANGING_LEAVES_BLOOD_EBONY_PLACEMENT, Placements.BRANCH_EBONY_PLACEMENT, Placements.JACK_O_LANTERN_PLACEMENT))));
+
+        Configured.TREES_SMALL_EBONY = RegistryHelper.createConfiguredFeature("trees_ebony", Feature.RANDOM_SELECTOR.withConfiguration(
+                new MultipleRandomFeatureConfig(
+                        ImmutableList.of(Configured.SMALL_EBONY_HANGING_LEAVES.withChance(1.0F)), Configured.SMALL_EBONY_HANGING_LEAVES))
+                .withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT)
+                .withPlacement(Placement.COUNT_MULTILAYER.configure(
+                        new FeatureSpreadConfig(2))));
+
+        Configured.TREES_SMALL_BLOOD_EBONY = RegistryHelper.createConfiguredFeature("trees_blood_ebony", Feature.RANDOM_SELECTOR.withConfiguration(
+                new MultipleRandomFeatureConfig(
+                        ImmutableList.of(Configured.SMALL_BLOOD_EBONY_HANGING_LEAVES.withChance(0.5F)), Configured.SMALL_BLOOD_EBONY_HANGING_LEAVES))
+                .withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT)
+                .withPlacement(Placement.COUNT_MULTILAYER.configure(
+                        new FeatureSpreadConfig(1))));
 
         Configured.FLOWER_POPPIES = RegistryHelper.createConfiguredFeature("flower_poppies", Feature.FLOWER
                 .withConfiguration(POPPY_FLOWER_CONFIG)
@@ -263,7 +314,7 @@ public class HallowsFeatures {
                         new SimpleBlockStateProvider(Blocks.PUMPKIN.getDefaultState()), SimpleBlockPlacer.PLACER)
                         .tries(64)
                         .whitelist(ImmutableSet.of(Blocks.DIRT, Blocks.GRASS_BLOCK, HallowsBlocks.HALLOWED_DIRT.get())).func_227317_b_().build()).withPlacement(
-                                Features.Placements.PATCH_PLACEMENT).chance(12));
+                                Features.Placements.PATCH_PLACEMENT).chance(6));
 
         Configured.IGNIS_CAVE_BIOME = RegistryHelper.createConfiguredFeature("ignis_cave_biome", CAVE_BIOME.get().withConfiguration(
                 new CaveBiomeFeatureConfig(

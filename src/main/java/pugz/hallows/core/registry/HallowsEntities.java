@@ -2,8 +2,11 @@ package pugz.hallows.core.registry;
 
 import com.minecraftabnormals.abnormals_core.core.util.registry.EntitySubRegistryHelper;
 import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
+import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.RegistryObject;
@@ -25,10 +28,16 @@ public class HallowsEntities {
         HAUNT = HELPER.createLivingEntity("haunt", HauntEntity::new, EntityClassification.MONSTER, 1.1F, 2.2F);
     }
 
-    public static void registerEntityAttributes() {
+    public static void registerAttributes() {
         GlobalEntityTypeAttributes.put(GHOST.get(), GhostEntity.registerAttributes().create());
         GlobalEntityTypeAttributes.put(HAUNT.get(), HauntEntity.registerAttributes().create());
     }
+
+    public static void registerSpawns() {
+        EntitySpawnPlacementRegistry.register(GHOST.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, GhostEntity::canGhostSpawn);
+        EntitySpawnPlacementRegistry.register(HAUNT.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawn);
+    }
+
 
     @OnlyIn(Dist.CLIENT)
     public static void registerRenderers() {

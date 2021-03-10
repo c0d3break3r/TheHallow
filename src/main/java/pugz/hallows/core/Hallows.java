@@ -88,7 +88,8 @@ public class Hallows {
             HallowsStructures.Pieces.registerPieces();
             HallowsBlocks.registerFlammability();
             HallowsBlocks.registerCompostables();
-            HallowsEntities.registerEntityAttributes();
+            HallowsEntities.registerAttributes();
+            HallowsEntities.registerSpawns();
             HallowsData.registerData();
 
             WorldGenRegistries.NOISE_SETTINGS.getEntries().forEach(settings -> {
