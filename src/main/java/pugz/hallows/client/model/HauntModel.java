@@ -1,5 +1,7 @@
 package pugz.hallows.client.model;
 
+import com.minecraftabnormals.abnormals_core.core.endimator.entity.EndimatorEntityModel;
+import com.minecraftabnormals.abnormals_core.core.endimator.entity.EndimatorModelRenderer;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.EntityModel;
@@ -7,47 +9,46 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
 import pugz.hallows.common.entity.HauntEntity;
 
-public class HauntModel extends EntityModel<HauntEntity> {
-	private final ModelRenderer rightLeg;
-	private final ModelRenderer leftLeg;
-	private final ModelRenderer body;
-	private final ModelRenderer body_r1;
-	private final ModelRenderer head;
-	private final ModelRenderer rightArm;
-	private final ModelRenderer leftArm;
+public class HauntModel extends EndimatorEntityModel<HauntEntity> {
+	private final EndimatorModelRenderer rightLeg;
+	private final EndimatorModelRenderer leftLeg;
+	private final EndimatorModelRenderer body;
+	private final EndimatorModelRenderer body_r1;
+	private final EndimatorModelRenderer head;
+	private final EndimatorModelRenderer rightArm;
+	private final EndimatorModelRenderer leftArm;
 
 	public HauntModel() {
 		textureWidth = 128;
 		textureHeight = 128;
 
-		rightLeg = new ModelRenderer(this);
+		rightLeg = new EndimatorModelRenderer(this, 0, 0);
 		rightLeg.setRotationPoint(0.0F, 24.0F, 0.0F);
 		rightLeg.setTextureOffset(16, 48).addBox(-6.5F, -14.0F, 0.0F, 4.0F, 14.0F, 4.0F, 0.0F, false);
 
-		leftLeg = new ModelRenderer(this);
+		leftLeg = new EndimatorModelRenderer(this, 0, 0);
 		leftLeg.setRotationPoint(7.0F, 12.0F, 2.0F);
 		leftLeg.setTextureOffset(16, 48).addBox(-4.5F, -2.0F, -2.0F, 4.0F, 14.0F, 4.0F, 0.0F, false);
 
-		body = new ModelRenderer(this);
+		body = new EndimatorModelRenderer(this, 0, 0);
 		body.setRotationPoint(9.0F, 24.0F, 0.0F);
 
-
-		body_r1 = new ModelRenderer(this);
+		body_r1 = new EndimatorModelRenderer(this, 0, 0);
 		body_r1.setRotationPoint(-9.0F, 0.0F, 4.0F);
 		body.addChild(body_r1);
 		body_r1.setTextureOffset(0, 0).addBox(-9.5F, -30.0F, -3.0F, 18.0F, 18.0F, 10.0F, 0.0F, false);
 
-		head = new ModelRenderer(this);
+		head = new EndimatorModelRenderer(this, 0, 0);
 		head.setRotationPoint(-9.0F, -27.0F, -6.0F);
 		body.addChild(head);
 		head.setTextureOffset(0, 28).addBox(-5.0F, -10.0F, -4.0F, 10.0F, 10.0F, 10.0F, 0.0F, false);
 		head.setTextureOffset(30, 28).addBox(-5.0F, 0.0F, -4.0F, 10.0F, 6.0F, 4.0F, 0.0F, false);
 
-		rightArm = new ModelRenderer(this);
+		rightArm = new EndimatorModelRenderer(this, 0, 0);
 		rightArm.setRotationPoint(-8.5F, -2.0F, 2.0F);
 		rightArm.setTextureOffset(0, 48).addBox(-5.0F, -2.0F, -5.0F, 4.0F, 24.0F, 4.0F, 0.0F, false);
 
-		leftArm = new ModelRenderer(this);
+		leftArm = new EndimatorModelRenderer(this, 0, 0);
 		leftArm.setRotationPoint(13.5F, -2.0F, 2.0F);
 		leftArm.setTextureOffset(0, 48).addBox(-5.0F, -2.0F, -5.0F, 4.0F, 24.0F, 4.0F, 0.0F, false);
 	}
@@ -63,9 +64,44 @@ public class HauntModel extends EntityModel<HauntEntity> {
 
 		this.rightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.1681F) * 0.3F * limbSwingAmount;
 		this.leftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.1681F + (float)Math.PI) * 0.3F * limbSwingAmount;
+	}
 
-		if (haunt.isScreaming()) {
+	@Override
+	public void animateModel(HauntEntity haunt) {
+		super.animateModel(haunt);
 
+		if (haunt.isEndimationPlaying(HauntEntity.ANGRY_ANIMATION)) {
+			this.setEndimationToPlay(HauntEntity.ANGRY_ANIMATION);
+
+			this.startKeyframe(25);
+			this.rotate(this.body, -0.2F, 0.0F, 0.0F);
+			this.scale(this.head, 0.2F, 0.2F, 0.2F);
+			this.endKeyframe();
+
+			this.resetKeyframe(5);
+
+			this.startKeyframe(15);
+			this.rotate(head, 0.0F, 0.0F, -0.2F);
+			this.rotate(this.leftArm, -0.2F, 0.0F, -0.2F);
+			this.rotate(this.rightArm, -0.2F, 0.0F, -0.2F);
+			this.endKeyframe();
+
+			this.resetKeyframe(5);
+
+			this.startKeyframe(15);
+			this.rotate(head, 0.0F, 0.0F, 0.2F);
+			this.rotate(this.leftArm, -0.1F, 0.0F, -0.1F);
+			this.rotate(this.rightArm, -0.1F, 0.0F, -0.1F);
+			this.endKeyframe();
+
+			this.resetKeyframe(5);
+
+			this.startKeyframe(25);
+			this.rotate(this.body, 0.0F, 0.0F, 0.0F);
+			this.scale(this.head, 0.1F, 0.1F, 0.1F);
+			this.endKeyframe();
+
+			this.resetKeyframe(5);
 		}
 	}
 
@@ -76,5 +112,7 @@ public class HauntModel extends EntityModel<HauntEntity> {
 		body.render(matrixStack, buffer, packedLight, packedOverlay);
 		rightArm.render(matrixStack, buffer, packedLight, packedOverlay);
 		leftArm.render(matrixStack, buffer, packedLight, packedOverlay);
+
+		this.animateModel(this.entity);
 	}
 }

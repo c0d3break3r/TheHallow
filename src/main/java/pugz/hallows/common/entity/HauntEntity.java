@@ -1,5 +1,8 @@
 package pugz.hallows.common.entity;
 
+import com.minecraftabnormals.abnormals_core.core.endimator.Endimation;
+import com.minecraftabnormals.abnormals_core.core.endimator.entity.IEndimatedEntity;
+import com.minecraftabnormals.abnormals_core.core.util.NetworkUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
@@ -23,14 +26,46 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 
-public class HauntEntity extends MonsterEntity {
+public class HauntEntity extends MonsterEntity implements IEndimatedEntity {
     private static final DataParameter<Boolean> SCREAMING = EntityDataManager.createKey(HauntEntity.class, DataSerializers.BOOLEAN);
+    public static final Endimation ANGRY_ANIMATION = new Endimation(80);
     private int attackTimer;
+    private int animationTick;
+    public int teleportCooldown;
+    private Endimation endimation = BLANK_ANIMATION;
 
     public HauntEntity(EntityType<? extends HauntEntity> entity, World world) {
         super(entity, world);
         this.experienceValue = 4;
         this.setPathPriority(PathNodeType.WATER, -1.0F);
+    }
+
+    @Override
+    public Endimation[] getEndimations() {
+        return new Endimation[] {
+                ANGRY_ANIMATION
+        };
+    }
+
+    @Override
+    public Endimation getPlayingEndimation() {
+        return this.endimation;
+    }
+
+    @Override
+    public void setPlayingEndimation(Endimation endimationToPlay) {
+        this.endimation = endimationToPlay;
+        this.setAnimationTick(0);
+    }
+
+    @Override
+    public int getAnimationTick() {
+        return this.animationTick;
+    }
+
+    @Override
+    public void setAnimationTick(int animationTick) {
+        this.animationTick = animationTick;
     }
 
     @Override
@@ -49,6 +84,7 @@ public class HauntEntity extends MonsterEntity {
 
     public void setAttackTarget(@Nullable LivingEntity living) {
         this.dataManager.set(SCREAMING, living != null);
+        NetworkUtil.setPlayingAnimationMessage(this, HauntEntity.ANGRY_ANIMATION);
         super.setAttackTarget(living);
     }
 
@@ -69,7 +105,7 @@ public class HauntEntity extends MonsterEntity {
                 .createMutableAttribute(Attributes.ATTACK_DAMAGE, 6.0D)
                 .createMutableAttribute(Attributes.ARMOR, 8.0D)
                 .createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 0.5D)
-                .createMutableAttribute(Attributes.MAX_HEALTH, 60.0D);
+                .createMutableAttribute(Attributes.MAX_HEALTH, 80.0D);
     }
 
     @Override
