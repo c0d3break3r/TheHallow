@@ -64,7 +64,6 @@ public class Hallows {
 
         MinecraftForge.EVENT_BUS.addListener(HallowsBiomes::onBiomeLoading);
         MinecraftForge.EVENT_BUS.addListener(HallowsStructures::onWorldLoad);
-        MinecraftForge.EVENT_BUS.addListener(NecrofireBlock::onRightClickBlock);
         MinecraftForge.EVENT_BUS.addListener(Events.Teleport::onProjectileImpact);
         MinecraftForge.EVENT_BUS.addListener(Events.Charge::onLivingHurt);
         MinecraftForge.EVENT_BUS.addListener(Events.Charge::onBlockBreak);

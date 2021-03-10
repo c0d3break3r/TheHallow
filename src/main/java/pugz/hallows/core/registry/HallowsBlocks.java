@@ -85,6 +85,7 @@ public class HallowsBlocks {
     public static RegistryObject<Block> MIDNIGHT_MORTIS_BRICK_VERTICAL_SLAB;
     public static RegistryObject<Block> MIDNIGHT_MORTIS_BRICK_STAIRS;
     public static RegistryObject<Block> MIDNIGHT_MORTIS_BRICK_WALL;
+    //pavements
 
     public static RegistryObject<Block> NECROFIRE;
     public static RegistryObject<Block> NECROFIRE_CAMPFIRE;
@@ -172,6 +173,8 @@ public class HallowsBlocks {
     public static RegistryObject<Block> TENEBRITE_WALL;
     public static RegistryObject<Block> GILDED_TENEBRITE;
     public static RegistryObject<Block> SKULLISH_TENEBRITE;
+    //tenebrite bricks
+    //pavement
 
     public static RegistryObject<Block> ANOINTMENT_TABLE;
     public static RegistryObject<Block> GIANT_CAULDRON;

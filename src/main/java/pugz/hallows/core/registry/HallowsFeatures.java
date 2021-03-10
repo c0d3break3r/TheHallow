@@ -43,11 +43,18 @@ public class HallowsFeatures {
 
     public static class Configured {
         public static ConfiguredFeature<?, ?> PATCH_NECROFIRE;
+
         public static ConfiguredFeature<?, ?> OPAL_ORE;
         public static ConfiguredFeature<?, ?> HALLSTONE_EMERALD_ORE;
+        public static ConfiguredFeature<?, ?> ORE_STYGIAN_RUIN;
+        public static ConfiguredFeature<?, ?> ORE_BLACKSTONE;
+        public static ConfiguredFeature<?, ?> ORE_TENEBRITE;
+        public static ConfiguredFeature<?, ?> ORE_GILDED_TENEBRITE;
+
         public static ConfiguredFeature<BaseTreeFeatureConfig, ?> ASPHODEL;
         public static ConfiguredFeature<BaseTreeFeatureConfig, ?> BIG_ASPHODEL;
         public static ConfiguredFeature<?, ?> TREES_ASPHODEL;
+
         public static ConfiguredFeature<BaseTreeFeatureConfig, ?> EBONY;
         public static ConfiguredFeature<BaseTreeFeatureConfig, ?> BLOOD_EBONY;
         public static ConfiguredFeature<BaseTreeFeatureConfig, ?> EBONY_HANGING_LEAVES;
@@ -63,19 +70,19 @@ public class HallowsFeatures {
         public static ConfiguredFeature<?, ?> TREES_SMALL_BLOOD_EBONY;
 
         public static ConfiguredFeature<?, ?> FLOWER_POPPIES;
+
         public static ConfiguredFeature<?, ?> PATCH_DEADROOT;
         public static ConfiguredFeature<?, ?> PATCH_DEADROOT_DENSE;
         public static ConfiguredFeature<?, ?> PATCH_DEADROOT_WATER;
-        public static ConfiguredFeature<?, ?> VERTICAL_PILLAR;
-        public static ConfiguredFeature<?, ?> WATER_DELTA;
-        public static ConfiguredFeature<?, ?> ORE_STYGIAN_RUIN;
-        public static ConfiguredFeature<?, ?> ORE_BLACKSTONE;
-        public static ConfiguredFeature<?, ?> ORE_TENEBRITE;
-        public static ConfiguredFeature<?, ?> ORE_GILDED_TENEBRITE;
-        public static ConfiguredFeature<?, ?> PETRIFIED_SANDSTONE_ROCK;
-        public static ConfiguredFeature<?, ?> DISK_PETRIFIED_SAND;
         public static ConfiguredFeature<?, ?> PATCH_HEMLOCK;
         public static ConfiguredFeature<?, ?> PATCH_PUMPKIN_COMMON;
+
+        public static ConfiguredFeature<?, ?> VERTICAL_PILLAR;
+        public static ConfiguredFeature<?, ?> WATER_DELTA;
+
+        public static ConfiguredFeature<?, ?> PETRIFIED_SANDSTONE_ROCK;
+        public static ConfiguredFeature<?, ?> DISK_PETRIFIED_SAND;
+
         public static ConfiguredFeature<?, ?> IGNIS_CAVE_BIOME;
     }
 
@@ -296,7 +303,7 @@ public class HallowsFeatures {
 
         Configured.PETRIFIED_SANDSTONE_ROCK = RegistryHelper.createConfiguredFeature("petrified_sandstone_rock", Feature.FOREST_ROCK.withConfiguration(
                 new BlockStateFeatureConfig(HallowsBlocks.PETRIFIED_SANDSTONE.get().getDefaultState())).withPlacement(
-                        Placement.COUNT_MULTILAYER.configure(new FeatureSpreadConfig(10)))
+                        Placement.COUNT_MULTILAYER.configure(new FeatureSpreadConfig(10)).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT))
                 .func_242732_c(4));
 
         Configured.DISK_PETRIFIED_SAND = RegistryHelper.createConfiguredFeature("petrified_sandstone_rock", Feature.DISK.withConfiguration(

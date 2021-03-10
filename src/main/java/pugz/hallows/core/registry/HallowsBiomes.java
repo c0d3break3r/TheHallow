@@ -6,6 +6,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.feature.Features;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.common.world.MobSpawnInfoBuilder;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
@@ -128,6 +129,7 @@ public class HallowsBiomes {
             gen.withCarver(GenerationStage.Carving.AIR, HallowsCarvers.Configured.HALLOWS_CAVE);
             gen.getStructures().add(() -> HallowsStructures.Configured.PETRIFIED_PYRAMID);
             gen.withFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, HallowsFeatures.Configured.VERTICAL_PILLAR);
+            gen.withFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, HallowsFeatures.Configured.PETRIFIED_SANDSTONE_ROCK);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.PATCH_NECROFIRE);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.OPAL_ORE);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_STYGIAN_RUIN);

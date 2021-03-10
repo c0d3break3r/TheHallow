@@ -21,7 +21,7 @@ public final class AbstractFireBlockMixin extends Block {
 
     @Inject(at = @At("HEAD"), method = "getFireForPlacement(Lnet/minecraft/world/IBlockReader;Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;", cancellable = true)
     private static void necrofirePlacement(IBlockReader reader, BlockPos pos, CallbackInfoReturnable<BlockState> info) {
-        if (NecrofireBlock.shouldLightNecrofire(reader.getBlockState(pos.down()).getBlock())) {
+        if (NecrofireBlock.isNecrofireBase(reader.getBlockState(pos.down()).getBlock())) {
             info.setReturnValue(HallowsBlocks.NECROFIRE.get().getDefaultState());
         }
     }
