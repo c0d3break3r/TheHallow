@@ -1,7 +1,0 @@
-{
-  "parent": "hallows:block/branch",
-  "textures": {
-    "side": "hallows:block/ebony_log",
-    "end": "hallows:block/ebony_log_top"
-  }
-}

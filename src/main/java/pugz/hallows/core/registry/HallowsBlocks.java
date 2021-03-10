@@ -121,8 +121,6 @@ public class HallowsBlocks {
     public static RegistryObject<Block> STRIPPED_EBONY_LOG;
     public static RegistryObject<Block> EBONY_WOOD;
     public static RegistryObject<Block> STRIPPED_EBONY_WOOD;
-    public static RegistryObject<Block> EBONY_BRANCH;
-    public static RegistryObject<Block> STRIPPED_EBONY_BRANCH;
     public static RegistryObject<Block> EBONY_PLANKS;
     public static RegistryObject<Block> EBONY_SLAB;
     public static RegistryObject<Block> EBONY_STAIRS;
@@ -289,8 +287,6 @@ public class HallowsBlocks {
         EBONY_LOG = HELPER.createBlock("ebony_log", () -> new HallowsLogBlock((RotatedPillarBlock) HallowsBlocks.STRIPPED_EBONY_LOG.get()), ItemGroup.BUILDING_BLOCKS);
         STRIPPED_EBONY_WOOD = HELPER.createBlock("stripped_ebony_wood", () -> new RotatedPillarBlock(AbstractBlock.Properties.from(Blocks.STRIPPED_OAK_WOOD)), ItemGroup.BUILDING_BLOCKS);
         EBONY_WOOD = HELPER.createBlock("ebony_wood", () -> new HallowsLogBlock((RotatedPillarBlock) HallowsBlocks.STRIPPED_EBONY_WOOD.get()), ItemGroup.BUILDING_BLOCKS);
-        STRIPPED_EBONY_BRANCH = HELPER.createBlock("stripped_ebony_branch", () -> new BranchBlock(null), ItemGroup.DECORATIONS);
-        EBONY_BRANCH = HELPER.createBlock("ebony_branch", () -> new BranchBlock((RotatedPillarBlock) HallowsBlocks.STRIPPED_EBONY_BRANCH.get()), ItemGroup.DECORATIONS);
         EBONY_PLANKS = HELPER.createBlock("ebony_planks", () -> new Block(AbstractBlock.Properties.from(Blocks.OAK_PLANKS)), ItemGroup.BUILDING_BLOCKS);
         EBONY_SLAB = HELPER.createBlock("ebony_slab", () -> new SlabBlock(AbstractBlock.Properties.from(Blocks.OAK_PLANKS)), ItemGroup.BUILDING_BLOCKS);
         EBONY_STAIRS = HELPER.createBlock("ebony_stairs", () -> new StairsBlock(() -> HallowsBlocks.EBONY_PLANKS.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.STONE)), ItemGroup.BUILDING_BLOCKS);

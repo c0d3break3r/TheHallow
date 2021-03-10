@@ -1,7 +1,0 @@
-{
-    "variants": {
-        "axis=y": { "model": "hallows:block/stripped_ebony_branch" },
-        "axis=z": { "model": "hallows:block/stripped_ebony_branch", "x": 90 },
-        "axis=x": { "model": "hallows:block/stripped_ebony_branch", "x": 90, "y": 90 }
-    }
-}

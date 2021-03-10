@@ -79,7 +79,7 @@ public class HallowsFeatures {
     public static class Placements {
         public static HangingLeavesTreeDecorator HANGING_LEAVES_EBONY_PLACEMENT = new HangingLeavesTreeDecorator(HallowsBlocks.HANGING_EBONY_LEAVES.get().getDefaultState(), 0.8F);
         public static HangingLeavesTreeDecorator HANGING_LEAVES_BLOOD_EBONY_PLACEMENT = new HangingLeavesTreeDecorator(HallowsBlocks.HANGING_BLOOD_EBONY_LEAVES.get().getDefaultState(), 0.8F);
-        public static BranchTreeDecorator BRANCH_EBONY_PLACEMENT = new BranchTreeDecorator(HallowsBlocks.EBONY_BRANCH.get().getDefaultState(), 0.8F, 2, 0.4F);
+        public static BranchTreeDecorator BRANCH_EBONY_PLACEMENT = new BranchTreeDecorator(HallowsBlocks.EBONY_POST.get().getDefaultState(), 0.8F, 2, 0.4F);
         public static JackOLanternTreeDecorator JACK_O_LANTERN_PLACEMENT = new JackOLanternTreeDecorator(0.2F);
 
         public static class Configured {

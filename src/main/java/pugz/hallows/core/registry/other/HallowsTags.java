@@ -14,13 +14,11 @@ public class HallowsTags {
         public static final ITag.INamedTag<Block> INFINIBURN_HALLOWS = BlockTags.makeWrapperTag(Hallows.MOD_ID + ":infiniburn_hallows");
         public static final ITag.INamedTag<Block> NECROFIRE_BASE_BLOCKS = BlockTags.makeWrapperTag(Hallows.MOD_ID + ":necrofire_base_blocks");
         public static final ITag.INamedTag<Block> BASE_STONE_HALLOWS = BlockTags.makeWrapperTag(Hallows.MOD_ID + ":base_stone_hallows");
-        public static final ITag.INamedTag<Block> BRANCHES = BlockTags.makeWrapperTag(Hallows.MOD_ID + ":branches");
     }
 
     public static class Items {
         public static final ITag.INamedTag<Item> ASPHODEL_LOGS = ItemTags.makeWrapperTag(Hallows.MOD_ID + ":asphodel_logs");
         public static final ITag.INamedTag<Item> EBONY_LOGS = ItemTags.makeWrapperTag(Hallows.MOD_ID + ":ebony_logs");
         public static final ITag.INamedTag<Item> NECROFIRE_BASE_BLOCKS = ItemTags.makeWrapperTag(Hallows.MOD_ID + ":necrofire_base_blocks");
-        public static final ITag.INamedTag<Item> BRANCHES = ItemTags.makeWrapperTag(Hallows.MOD_ID + ":branches");
     }
 }
