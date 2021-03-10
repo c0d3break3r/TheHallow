@@ -110,33 +110,22 @@ public class NecromantleCrackCarver extends WorldCarver<ProbabilityConfig> {
         }
     }
 
-    private boolean isNextToNecromantle(IChunk chunk, BlockPos pos) {
-        BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable();
-        for(Direction direction : Direction.values()) {
-            blockpos$mutable.setAndMove(pos, direction);
-            if (chunk.getBlockState(blockpos$mutable).getBlock() == Blocks.EMERALD_BLOCK) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private void func_227204_a_(IChunk chunk, Function<BlockPos, Biome> biomePos, long seed, int seaLevel, int chunkX, int chunkZ, double randOffsetXCoord, double startY, double randOffsetZCoord, float p_227204_14_, float p_227204_15_, float p_227204_16_, int p_227204_17_, int p_227204_18_, double p_227204_19_, BitSet carvingMask) {
+    private void func_227204_a_(IChunk chunk, Function<BlockPos, Biome> biomePos, long seed, int seaLevel, int chunkX, int chunkZ, double randOffsetXCoord, double startY, double randOffsetZCoord, float caveRadius, float p_227204_15_, float p_227204_16_, int p_227204_17_, int p_227204_18_, double p_227204_19_, BitSet carvingMask) {
         Random random = new Random(seed);
-        float f = 1.0F;
+        float height = 2.0F;
 
         for(int i = 0; i < 256; ++i) {
             if (i == 0 || random.nextInt(3) == 0) {
-                f = 1.0F + random.nextFloat() * random.nextFloat();
+                height = 2.0F + random.nextFloat() * random.nextFloat();
             }
-            this.field_202536_i[i] = f * f;
+            this.field_202536_i[i] = height * height;
         }
 
         float f4 = 0.0F;
         float f1 = 0.0F;
 
         for(int j = p_227204_17_; j < p_227204_18_; ++j) {
-            double d0 = 1.5D + (double)(MathHelper.sin((float)j * (float)Math.PI / (float)p_227204_18_) * p_227204_14_);
+            double d0 = 1.5D + (double)(MathHelper.sin((float)j * (float)Math.PI / (float)p_227204_18_) * (caveRadius / 2.0F));
             double d1 = d0 * p_227204_19_;
             d0 = d0 * ((double)random.nextFloat() * 0.25D + 0.75D);
             d1 = d1 * ((double)random.nextFloat() * 0.25D + 0.75D);
@@ -153,7 +142,7 @@ public class NecromantleCrackCarver extends WorldCarver<ProbabilityConfig> {
             f1 = f1 + (random.nextFloat() - random.nextFloat()) * random.nextFloat() * 2.0F;
             f4 = f4 + (random.nextFloat() - random.nextFloat()) * random.nextFloat() * 4.0F;
             if (random.nextInt(4) != 0) {
-                if (!this.func_222702_a(chunkX, chunkZ, randOffsetXCoord, randOffsetZCoord, j, p_227204_18_, p_227204_14_)) {
+                if (!this.func_222702_a(chunkX, chunkZ, randOffsetXCoord, randOffsetZCoord, j, p_227204_18_, caveRadius)) {
                     return;
                 }
 
