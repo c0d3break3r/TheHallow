@@ -102,15 +102,4 @@ public class HauntModel<E extends HauntEntity> extends EndimatorEntityModel<E> {
 			this.resetKeyframe(5);
 		}
 	}
-
-	@Override
-	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
-		//rightLeg.render(matrixStack, buffer, packedLight, packedOverlay);
-		//leftLeg.render(matrixStack, buffer, packedLight, packedOverlay);
-		//body.render(matrixStack, buffer, packedLight, packedOverlay);
-		//rightArm.render(matrixStack, buffer, packedLight, packedOverlay);
-		//leftArm.render(matrixStack, buffer, packedLight, packedOverlay);
-
-		this.animateModel(this.entity);
-	}
 }

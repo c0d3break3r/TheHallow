@@ -89,6 +89,6 @@ public class HallowsItems {
 
     public static class Foods {
         public static final Food WILL_O_WISP_BERRY = new Food.Builder().hunger(2).fastToEat().saturation(0.3F).build();
-        public static final Food WILL_O_WISP_CANDY = new Food.Builder().hunger(3).fastToEat().setAlwaysEdible().effect(() -> new EffectInstance(Effects.SPEED, 40, 0), 1.0F).build();
+        public static final Food WILL_O_WISP_CANDY = new Food.Builder().hunger(3).fastToEat().setAlwaysEdible().effect(() -> new EffectInstance(Effects.SPEED, 45, 0), 1.0F).build();
     }
 }
