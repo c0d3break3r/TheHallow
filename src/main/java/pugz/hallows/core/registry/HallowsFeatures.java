@@ -93,8 +93,8 @@ public class HallowsFeatures {
     }
 
     public static class Placements {
-        public static HangingLeavesTreeDecorator HANGING_LEAVES_EBONY_PLACEMENT = new HangingLeavesTreeDecorator(HallowsBlocks.HANGING_EBONY_LEAVES.get().getDefaultState(), 0.8F);
-        public static HangingLeavesTreeDecorator HANGING_LEAVES_BLOOD_EBONY_PLACEMENT = new HangingLeavesTreeDecorator(HallowsBlocks.HANGING_BLOOD_EBONY_LEAVES.get().getDefaultState(), 0.8F);
+        public static HangingLeavesTreeDecorator HANGING_LEAVES_EBONY_PLACEMENT = new HangingLeavesTreeDecorator(HallowsBlocks.HANGING_EBONY_LEAVES.get().getDefaultState(), 1.0F);
+        public static HangingLeavesTreeDecorator HANGING_LEAVES_BLOOD_EBONY_PLACEMENT = new HangingLeavesTreeDecorator(HallowsBlocks.HANGING_BLOOD_EBONY_LEAVES.get().getDefaultState(), 1.0F);
         public static BranchTreeDecorator BRANCH_EBONY_PLACEMENT = new BranchTreeDecorator(HallowsBlocks.EBONY_POST.get().getDefaultState(), 0.8F, 2, 0.4F);
         public static JackOLanternTreeDecorator JACK_O_LANTERN_PLACEMENT = new JackOLanternTreeDecorator(0.2F);
 
@@ -208,7 +208,7 @@ public class HallowsFeatures {
                 (new BaseTreeFeatureConfig.Builder(
                         new SimpleBlockStateProvider(HallowsBlocks.EBONY_LOG.get().getDefaultState()),
                         new SimpleBlockStateProvider(HallowsBlocks.EBONY_LEAVES.get().getDefaultState()),
-                        new BlobFoliagePlacer(FeatureSpread.func_242252_a(3), FeatureSpread.func_242252_a(1), 1),
+                        new BlobFoliagePlacer(FeatureSpread.func_242252_a(3), FeatureSpread.func_242252_a(2), 2),
                         new StraightTrunkPlacer(6, 4, 2),
                         new TwoLayerFeature(2, 1, 1))
                         .func_236702_a_(Heightmap.Type.MOTION_BLOCKING)
@@ -218,7 +218,7 @@ public class HallowsFeatures {
                 (new BaseTreeFeatureConfig.Builder(
                         new SimpleBlockStateProvider(HallowsBlocks.EBONY_LOG.get().getDefaultState()),
                         new SimpleBlockStateProvider(HallowsBlocks.BLOOD_EBONY_LEAVES.get().getDefaultState()),
-                        new BlobFoliagePlacer(FeatureSpread.func_242252_a(3), FeatureSpread.func_242252_a(1), 1),
+                        new BlobFoliagePlacer(FeatureSpread.func_242252_a(3), FeatureSpread.func_242252_a(2), 2),
                         new StraightTrunkPlacer(6, 4, 2),
                         new TwoLayerFeature(2, 1, 1))
                         .func_236702_a_(Heightmap.Type.MOTION_BLOCKING)
@@ -302,8 +302,10 @@ public class HallowsFeatures {
         ).withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(0, 10, 37))).func_242731_b(4));
 
         Configured.PETRIFIED_SANDSTONE_ROCK = RegistryHelper.createConfiguredFeature("petrified_sandstone_rock", Feature.FOREST_ROCK.withConfiguration(
-                new BlockStateFeatureConfig(HallowsBlocks.PETRIFIED_SANDSTONE.get().getDefaultState())).withPlacement(
-                        Placement.COUNT_MULTILAYER.configure(new FeatureSpreadConfig(10)).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT))
+                new BlockStateFeatureConfig(HallowsBlocks.PETRIFIED_SANDSTONE.get().getDefaultState()))
+                .withPlacement(Placement.COUNT_MULTILAYER.configure(new FeatureSpreadConfig(10)))
+                .withPlacement(Placement.HEIGHTMAP_WORLD_SURFACE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG))
+                .withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(63, 0, 256)))
                 .func_242732_c(4));
 
         Configured.DISK_PETRIFIED_SAND = RegistryHelper.createConfiguredFeature("petrified_sandstone_rock", Feature.DISK.withConfiguration(

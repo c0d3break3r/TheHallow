@@ -52,6 +52,17 @@ public class HauntModel<E extends HauntEntity> extends EndimatorEntityModel<E> {
 	}
 
 	@Override
+	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
+		//this.animateModel(this.entity);
+
+		rightLeg.render(matrixStack, buffer, packedLight, packedOverlay);
+		leftLeg.render(matrixStack, buffer, packedLight, packedOverlay);
+		body.render(matrixStack, buffer, packedLight, packedOverlay);
+		rightArm.render(matrixStack, buffer, packedLight, packedOverlay);
+		leftArm.render(matrixStack, buffer, packedLight, packedOverlay);
+	}
+
+	@Override
 	public void setRotationAngles(E haunt, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
 		body_r1.rotateAngleX = 0.2618F;
 

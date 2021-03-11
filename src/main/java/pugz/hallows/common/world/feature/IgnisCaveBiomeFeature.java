@@ -72,7 +72,7 @@ public class IgnisCaveBiomeFeature extends AbstractCaveBiomeFeature {
 
     private boolean isAir(ISeedReader reader, BlockPos.Mutable pos, int maxHeight) {
         while (pos.getY() <= maxHeight) {
-            if (!reader.getBlockState(pos).isAir() && pos.getY() < maxHeight) return false;
+            if (!reader.isAirBlock(pos) && pos.getY() < maxHeight) return false;
         }
         return true;
     }
