@@ -19,10 +19,10 @@ public final class AbstractFireBlockMixin extends Block {
         super(properties);
     }
 
-    @Inject(at = @At("HEAD"), method = "getFireForPlacement(Lnet/minecraft/world/IBlockReader;Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "getState(Lnet/minecraft/world/IBlockReader;Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;", cancellable = true)
     private static void necrofirePlacement(IBlockReader reader, BlockPos pos, CallbackInfoReturnable<BlockState> info) {
-        if (NecrofireBlock.isNecrofireBase(reader.getBlockState(pos.down()).getBlock())) {
-            info.setReturnValue(HallowsBlocks.NECROFIRE.get().getDefaultState());
+        if (NecrofireBlock.isNecrofireBase(reader.getBlockState(pos.below()).getBlock())) {
+            info.setReturnValue(HallowsBlocks.NECROFIRE.get().defaultBlockState());
         }
     }
 }

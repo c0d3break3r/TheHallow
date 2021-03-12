@@ -6,7 +6,6 @@ import net.minecraft.block.CraftingTableBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.inventory.container.SimpleNamedContainerProvider;
-import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -25,7 +24,8 @@ public class AnointmentTableBlock extends CraftingTableBlock {
         super(properties);
     }
 
-    public INamedContainerProvider getContainer(BlockState state, World worldIn, BlockPos pos) {
+    @Override
+    public INamedContainerProvider getMenuProvider(BlockState state, World world, BlockPos pos) {
         return new SimpleNamedContainerProvider((id, inventory, player) -> {
             return new AnointingTableContainer(id, inventory);
         }, CONTAINER_NAME);
@@ -33,11 +33,10 @@ public class AnointmentTableBlock extends CraftingTableBlock {
 
     @Nonnull
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (worldIn.isRemote) {
+        if (worldIn.isClientSide) {
             return ActionResultType.SUCCESS;
         } else {
-            player.openContainer(state.getContainer(worldIn, pos));
-            player.addStat(Stats.field_232864_aE_);
+            player.openMenu(state.getMenuProvider(worldIn, pos));
             return ActionResultType.CONSUME;
         }
     }

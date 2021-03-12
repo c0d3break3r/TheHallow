@@ -19,14 +19,14 @@ public class GhostRenderer extends MobRenderer<GhostEntity, GhostModel> {
         super(manager, new GhostModel(), 0.9F);
     }
 
-    protected void preRenderCallback(GhostEntity ghost, MatrixStack matrixStackIn, float partialTickTime) {
+    protected void scale(GhostEntity ghost, MatrixStack matrixStackIn, float partialTickTime) {
         matrixStackIn.scale(1.2F, 1.2F, 1.2F);
     }
 
     @Nonnull
     public Vector3d getRenderOffset(GhostEntity ghost, float partialTicks) {
         if (ghost.isCharging()) {
-            return new Vector3d(ghost.getRNG().nextGaussian() * 0.02D, 0.0D, ghost.getRNG().nextGaussian() * 0.02D);
+            return new Vector3d(ghost.getRandom().nextGaussian() * 0.02D, 0.0D, ghost.getRandom().nextGaussian() * 0.02D);
         } else {
             return super.getRenderOffset(ghost, partialTicks);
         }
@@ -34,7 +34,7 @@ public class GhostRenderer extends MobRenderer<GhostEntity, GhostModel> {
 
     @Nonnull
     @Override
-    public ResourceLocation getEntityTexture(GhostEntity ghost) {
+    public ResourceLocation getTextureLocation(GhostEntity ghost) {
         return new ResourceLocation(Hallows.MOD_ID, "textures/entity/ghost.png");
     }
 }

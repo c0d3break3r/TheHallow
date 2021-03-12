@@ -40,13 +40,13 @@ public class HallowingRecipe implements IRecipe<IInventory> {
     }
 
     public boolean matches(IInventory inv, World worldIn) {
-        return this.base.test(inv.getStackInSlot(0)) && this.addition.test(inv.getStackInSlot(1));
+        return this.base.test(inv.getItem(0)) && this.addition.test(inv.getItem(1));
     }
 
     @Nonnull
-    public ItemStack getCraftingResult(IInventory inv) {
+    public ItemStack assemble(IInventory inv) {
         ItemStack itemstack = this.result.copy();
-        CompoundNBT compoundnbt = inv.getStackInSlot(0).getTag();
+        CompoundNBT compoundnbt = inv.getItem(0).getTag();
         if (compoundnbt != null) {
             itemstack.setTag(compoundnbt.copy());
         }
@@ -54,7 +54,7 @@ public class HallowingRecipe implements IRecipe<IInventory> {
         return itemstack;
     }
 
-    public boolean canFit(int width, int height) {
+    public boolean canCraftInDimensions(int width, int height) {
         return width * height >= 2;
     }
 
@@ -68,7 +68,7 @@ public class HallowingRecipe implements IRecipe<IInventory> {
     //}
 
     @Nonnull
-    public ItemStack getRecipeOutput() {
+    public ItemStack getResultItem() {
         return this.result;
     }
 
@@ -82,7 +82,7 @@ public class HallowingRecipe implements IRecipe<IInventory> {
     }
 
     @Nonnull
-    public ItemStack getIcon() {
+    public ItemStack getToastSymbol() {
         return new ItemStack(HallowsBlocks.ANOINTMENT_TABLE.get());
     }
 
@@ -103,44 +103,44 @@ public class HallowingRecipe implements IRecipe<IInventory> {
 
     public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<HallowingRecipe> {
         @Nonnull
-        public HallowingRecipe read(ResourceLocation recipeId, JsonObject json) {
-            Ingredient ingredient = Ingredient.deserialize(JSONUtils.getJsonObject(json, "base"));
-            Ingredient ingredient1 = Ingredient.deserialize(JSONUtils.getJsonObject(json, "addition"));
-            ItemStack itemstack = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "result"));
-            Attribute attribute = deserializeAttribute(JSONUtils.getJsonObject(json, "attribute"));
+        public HallowingRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+            Ingredient ingredient = Ingredient.fromJson(JSONUtils.getAsJsonArray(json, "base"));
+            Ingredient ingredient1 = Ingredient.fromJson(JSONUtils.getAsJsonArray(json, "addition"));
+            ItemStack itemstack = ShapedRecipe.itemFromJson(JSONUtils.getAsJsonObject(json, "result"));
+            Attribute attribute = deserializeAttribute(JSONUtils.getAsJsonObject(json, "attribute"));
             return new HallowingRecipe(recipeId, ingredient, ingredient1, itemstack, attribute);
         }
 
-        public HallowingRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
-            Ingredient ingredient = Ingredient.read(buffer);
-            Ingredient ingredient1 = Ingredient.read(buffer);
-            ItemStack itemstack = buffer.readItemStack();
-            Attribute attribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(buffer.readString()));
+        public HallowingRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+            Ingredient ingredient = Ingredient.fromNetwork(buffer);
+            Ingredient ingredient1 = Ingredient.fromNetwork(buffer);
+            ItemStack itemstack = buffer.readItem();
+            Attribute attribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(buffer.readUtf()));
             return new HallowingRecipe(recipeId, ingredient, ingredient1, itemstack, attribute);
         }
 
-        public void write(PacketBuffer buffer, HallowingRecipe recipe) {
-            recipe.base.write(buffer);
-            recipe.addition.write(buffer);
-            buffer.writeItemStack(recipe.result);
+        public void toNetwork(PacketBuffer buffer, HallowingRecipe recipe) {
+            recipe.base.toNetwork(buffer);
+            recipe.addition.toNetwork(buffer);
+            buffer.writeItem(recipe.result);
         }
 
         @SuppressWarnings("deprecation")
         public static Attribute deserializeAttribute(JsonObject object) {
-            String s = JSONUtils.getString(object, "attribute");
+            String s = JSONUtils.getAsString(object, "attribute");
             Attribute attribute = Registry.ATTRIBUTE.getOptional(new ResourceLocation(s)).orElseThrow(() -> {
                 return new JsonSyntaxException("Unknown attribute '" + s + "'");
             });
             if (object.has("data")) {
                 throw new JsonParseException("Disallowed data tag found");
             } else {
-                int i = JSONUtils.getInt(object, "amount", 1);
-                return getAttribute(object, true);
+                int i = JSONUtils.getAsInt(object, "amount", 1);
+                return getAttribute(object);
             }
         }
 
-        public static Attribute getAttribute(JsonObject json, boolean readNBT) {
-            String attributeName = JSONUtils.getString(json, "attribute");
+        public static Attribute getAttribute(JsonObject json) {
+            String attributeName = JSONUtils.getAsString(json, "attribute");
 
             Attribute attribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(attributeName));
 

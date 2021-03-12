@@ -22,12 +22,12 @@ mixin {
 
 version = "${project.minecraft}-${project.modVersion}"
 group = "pugz"
-archivesBaseName = project.modId
+archivesBaseName = project.modName
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = "1.8"
 
 minecraft {
-    mappings channel: project.mappingsChannel, version: project.mappings
+    mappings channel: project.mappingsChannel, version: project.mappingsVersion
     accessTransformer = file("src/main/resources/META-INF/accesstransformer.cfg")
     runs {
         client {

@@ -20,14 +20,15 @@ public class NecrofireCampfireBlock extends CampfireBlock {
         super(false, 3, properties);
     }
 
-    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+    @Override
+    public TileEntity newBlockEntity(IBlockReader p_196283_1_) {
         return new NecrofireCampfireTileEntity();
     }
 
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-        if (stateIn.get(LIT)) {
-            if (rand.nextInt(10) == 0) worldIn.playSound((float) pos.getX() + 0.5F, (float) pos.getY() + 0.5F, (float) pos.getZ() + 0.5F, SoundEvents.BLOCK_CAMPFIRE_CRACKLE, SoundCategory.BLOCKS, 0.5F + rand.nextFloat(), rand.nextFloat() * 0.7F + 0.6F, false);
+        if (stateIn.getValue(LIT)) {
+            if (rand.nextInt(10) == 0) worldIn.playLocalSound((float) pos.getX() + 0.5F, (float) pos.getY() + 0.5F, (float) pos.getZ() + 0.5F, SoundEvents.CAMPFIRE_CRACKLE, SoundCategory.BLOCKS, 0.5F + rand.nextFloat(), rand.nextFloat() * 0.7F + 0.6F, false);
         }
     }
 }

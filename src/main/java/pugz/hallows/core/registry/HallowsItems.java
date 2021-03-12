@@ -17,8 +17,8 @@ import pugz.hallows.core.Hallows;
 public class HallowsItems {
     public static final ItemSubRegistryHelper HELPER = Hallows.REGISTRY_HELPER.getItemSubHelper();
 
-    public static final HallowsArmorMaterial STYGIAN_MATERIAL = new HallowsArmorMaterial(new ResourceLocation(Hallows.MOD_ID, "stygian"), 40, new int[]{4, 7, 9, 4}, 18, SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE, 3.5F, 0.0F, new int[]{1, 3, 4, 2}, () -> Ingredient.fromItems(HallowsItems.STYGIAN_INGOT.get()));
-    public static final HallowsItemTier STYGIAN_TIER = new HallowsItemTier(5, 2231, 9.5F, 4.5F, 18, () -> Ingredient.fromItems(HallowsItems.STYGIAN_INGOT.get()), 3);
+    public static final HallowsArmorMaterial STYGIAN_MATERIAL = new HallowsArmorMaterial(new ResourceLocation(Hallows.MOD_ID, "stygian"), 40, new int[]{4, 7, 9, 4}, 18, SoundEvents.ARMOR_EQUIP_NETHERITE, 3.5F, 0.0F, new int[]{1, 3, 4, 2}, () -> Ingredient.of(HallowsItems.STYGIAN_INGOT.get()));
+    public static final HallowsItemTier STYGIAN_TIER = new HallowsItemTier(5, 2231, 9.5F, 4.5F, 18, () -> Ingredient.of(HallowsItems.STYGIAN_INGOT.get()), 3);
 
     public static RegistryObject<Item> STYGIAN_INGOT;
     public static RegistryObject<Item> STYGIAN_HELMET;
@@ -53,41 +53,41 @@ public class HallowsItems {
     public static RegistryObject<AbnormalsSpawnEggItem> HAUNT_SPAWN_EGG;
 
     public static void registerItems() {
-        STYGIAN_INGOT = HELPER.createItem("stygian_ingot", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));
-        STYGIAN_HELMET = HELPER.createItem("stygian_helmet", () -> new ArmorItem(STYGIAN_MATERIAL, EquipmentSlotType.HEAD, new Item.Properties().group(ItemGroup.COMBAT)));
-        STYGIAN_CHESTPLATE = HELPER.createItem("stygian_chestplate", () -> new ArmorItem(STYGIAN_MATERIAL, EquipmentSlotType.CHEST, new Item.Properties().group(ItemGroup.COMBAT)));
-        STYGIAN_LEGGINGS = HELPER.createItem("stygian_leggings", () -> new ArmorItem(STYGIAN_MATERIAL, EquipmentSlotType.LEGS, new Item.Properties().group(ItemGroup.COMBAT)));
-        STYGIAN_BOOTS = HELPER.createItem("stygian_boots", () -> new ArmorItem(STYGIAN_MATERIAL, EquipmentSlotType.FEET, new Item.Properties().group(ItemGroup.COMBAT)));
-        STYGIAN_SWORD = HELPER.createItem("stygian_sword", () -> new SwordItem(STYGIAN_TIER, 3, -2.4F, new Item.Properties().group(ItemGroup.COMBAT)));
-        STYGIAN_PICKAXE = HELPER.createItem("stygian_pickaxe", () -> new PickaxeItem(STYGIAN_TIER, 1, -2.8F, new Item.Properties().group(ItemGroup.TOOLS)));
-        STYGIAN_AXE = HELPER.createItem("stygian_axe", () -> new AxeItem(STYGIAN_TIER, 5.0F, -3.0F, new Item.Properties().group(ItemGroup.TOOLS)));
-        STYGIAN_SHOVEL = HELPER.createItem("stygian_shovel", () -> new ShovelItem(STYGIAN_TIER, 1.5F, -3.0F, new Item.Properties().group(ItemGroup.TOOLS)));
-        STYGIAN_HOE = HELPER.createItem("stygian_hoe", () -> new HoeItem(STYGIAN_TIER, -4, 0.0F, new Item.Properties().group(ItemGroup.TOOLS)));
+        STYGIAN_INGOT = HELPER.createItem("stygian_ingot", () -> new Item(new Item.Properties().tab(ItemGroup.TAB_MATERIALS)));
+        STYGIAN_HELMET = HELPER.createItem("stygian_helmet", () -> new ArmorItem(STYGIAN_MATERIAL, EquipmentSlotType.HEAD, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
+        STYGIAN_CHESTPLATE = HELPER.createItem("stygian_chestplate", () -> new ArmorItem(STYGIAN_MATERIAL, EquipmentSlotType.CHEST, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
+        STYGIAN_LEGGINGS = HELPER.createItem("stygian_leggings", () -> new ArmorItem(STYGIAN_MATERIAL, EquipmentSlotType.LEGS, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
+        STYGIAN_BOOTS = HELPER.createItem("stygian_boots", () -> new ArmorItem(STYGIAN_MATERIAL, EquipmentSlotType.FEET, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
+        STYGIAN_SWORD = HELPER.createItem("stygian_sword", () -> new SwordItem(STYGIAN_TIER, 3, -2.4F, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
+        STYGIAN_PICKAXE = HELPER.createItem("stygian_pickaxe", () -> new PickaxeItem(STYGIAN_TIER, 1, -2.8F, new Item.Properties().tab(ItemGroup.TAB_TOOLS)));
+        STYGIAN_AXE = HELPER.createItem("stygian_axe", () -> new AxeItem(STYGIAN_TIER, 5.0F, -3.0F, new Item.Properties().tab(ItemGroup.TAB_TOOLS)));
+        STYGIAN_SHOVEL = HELPER.createItem("stygian_shovel", () -> new ShovelItem(STYGIAN_TIER, 1.5F, -3.0F, new Item.Properties().tab(ItemGroup.TAB_TOOLS)));
+        STYGIAN_HOE = HELPER.createItem("stygian_hoe", () -> new HoeItem(STYGIAN_TIER, -4, 0.0F, new Item.Properties().tab(ItemGroup.TAB_TOOLS)));
 
         ASPHODEL_BOAT = HELPER.createBoatItem("asphodel", HallowsBlocks.ASPHODEL_PLANKS);
         EBONY_BOAT = HELPER.createBoatItem("ebony", HallowsBlocks.EBONY_PLANKS);
 
-        OPAL = HELPER.createItem("opal", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));
-        HEMLOCK_LEAF = HELPER.createItem("hemlock_leaf", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));
-        WITCHS_BREW = HELPER.createItem("witch_brew", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));
-        GHOST_CLOTH = HELPER.createItem("ghost_cloth", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));
-        HAUNT_FUR = HELPER.createItem("haunt_fur", () -> new Item(new Item.Properties().group(ItemGroup.MATERIALS)));
+        OPAL = HELPER.createItem("opal", () -> new Item(new Item.Properties().tab(ItemGroup.TAB_MATERIALS)));
+        HEMLOCK_LEAF = HELPER.createItem("hemlock_leaf", () -> new Item(new Item.Properties().tab(ItemGroup.TAB_MATERIALS)));
+        WITCHS_BREW = HELPER.createItem("witch_brew", () -> new Item(new Item.Properties().tab(ItemGroup.TAB_MATERIALS)));
+        GHOST_CLOTH = HELPER.createItem("ghost_cloth", () -> new Item(new Item.Properties().tab(ItemGroup.TAB_MATERIALS)));
+        HAUNT_FUR = HELPER.createItem("haunt_fur", () -> new Item(new Item.Properties().tab(ItemGroup.TAB_MATERIALS)));
 
-        ORANGE_WILL_O_WISP_BERRY = HELPER.createItem("orange_will_o_wisp_berry", () -> new Item(new Item.Properties().group(ItemGroup.FOOD).food(Foods.WILL_O_WISP_BERRY)));
-        YELLOW_WILL_O_WISP_BERRY = HELPER.createItem("yellow_will_o_wisp_berry", () -> new Item(new Item.Properties().group(ItemGroup.FOOD).food(Foods.WILL_O_WISP_BERRY)));
-        BLUE_WILL_O_WISP_BERRY = HELPER.createItem("blue_will_o_wisp_berry", () -> new Item(new Item.Properties().group(ItemGroup.FOOD).food(Foods.WILL_O_WISP_BERRY)));
-        PURPLE_WILL_O_WISP_BERRY = HELPER.createItem("purple_will_o_wisp_berry", () -> new Item(new Item.Properties().group(ItemGroup.FOOD).food(Foods.WILL_O_WISP_BERRY)));
-        ORANGE_WILL_O_WISP_CANDY = HELPER.createItem("orange_will_o_wisp_candy", () -> new Item(new Item.Properties().group(ItemGroup.FOOD).food(Foods.WILL_O_WISP_CANDY)));
-        YELLOW_WILL_O_WISP_CANDY = HELPER.createItem("yellow_will_o_wisp_candy", () -> new Item(new Item.Properties().group(ItemGroup.FOOD).food(Foods.WILL_O_WISP_CANDY)));
-        BLUE_WILL_O_WISP_CANDY = HELPER.createItem("blue_will_o_wisp_candy", () -> new Item(new Item.Properties().group(ItemGroup.FOOD).food(Foods.WILL_O_WISP_CANDY)));
-        PURPLE_WILL_O_WISP_CANDY = HELPER.createItem("purple_will_o_wisp_candy", () -> new Item(new Item.Properties().group(ItemGroup.FOOD).food(Foods.WILL_O_WISP_CANDY)));
+        ORANGE_WILL_O_WISP_BERRY = HELPER.createItem("orange_will_o_wisp_berry", () -> new Item(new Item.Properties().tab(ItemGroup.TAB_FOOD).food(Foods.WILL_O_WISP_BERRY)));
+        YELLOW_WILL_O_WISP_BERRY = HELPER.createItem("yellow_will_o_wisp_berry", () -> new Item(new Item.Properties().tab(ItemGroup.TAB_FOOD).food(Foods.WILL_O_WISP_BERRY)));
+        BLUE_WILL_O_WISP_BERRY = HELPER.createItem("blue_will_o_wisp_berry", () -> new Item(new Item.Properties().tab(ItemGroup.TAB_FOOD).food(Foods.WILL_O_WISP_BERRY)));
+        PURPLE_WILL_O_WISP_BERRY = HELPER.createItem("purple_will_o_wisp_berry", () -> new Item(new Item.Properties().tab(ItemGroup.TAB_FOOD).food(Foods.WILL_O_WISP_BERRY)));
+        ORANGE_WILL_O_WISP_CANDY = HELPER.createItem("orange_will_o_wisp_candy", () -> new Item(new Item.Properties().tab(ItemGroup.TAB_FOOD).food(Foods.WILL_O_WISP_CANDY)));
+        YELLOW_WILL_O_WISP_CANDY = HELPER.createItem("yellow_will_o_wisp_candy", () -> new Item(new Item.Properties().tab(ItemGroup.TAB_FOOD).food(Foods.WILL_O_WISP_CANDY)));
+        BLUE_WILL_O_WISP_CANDY = HELPER.createItem("blue_will_o_wisp_candy", () -> new Item(new Item.Properties().tab(ItemGroup.TAB_FOOD).food(Foods.WILL_O_WISP_CANDY)));
+        PURPLE_WILL_O_WISP_CANDY = HELPER.createItem("purple_will_o_wisp_candy", () -> new Item(new Item.Properties().tab(ItemGroup.TAB_FOOD).food(Foods.WILL_O_WISP_CANDY)));
 
         GHOST_SPAWN_EGG = HELPER.createSpawnEggItem("ghost", HallowsEntities.GHOST::get, 13159139, 9079978);
         HAUNT_SPAWN_EGG = HELPER.createSpawnEggItem("haunt", HallowsEntities.HAUNT::get, 4275275, 2827571);
     }
 
     public static class Foods {
-        public static final Food WILL_O_WISP_BERRY = new Food.Builder().hunger(2).fastToEat().saturation(0.3F).build();
-        public static final Food WILL_O_WISP_CANDY = new Food.Builder().hunger(3).fastToEat().setAlwaysEdible().effect(() -> new EffectInstance(Effects.SPEED, 45, 0), 1.0F).build();
+        public static final Food WILL_O_WISP_BERRY = new Food.Builder().nutrition(2).fast().saturationMod(0.3F).build();
+        public static final Food WILL_O_WISP_CANDY = new Food.Builder().nutrition(3).fast().alwaysEat().effect(() -> new EffectInstance(Effects.MOVEMENT_SPEED, 75, 0), 1.0F).build();
     }
 }

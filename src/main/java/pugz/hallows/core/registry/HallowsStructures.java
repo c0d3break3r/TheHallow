@@ -36,7 +36,7 @@ public class HallowsStructures {
         public static StructureFeature<NoFeatureConfig, ? extends Structure<NoFeatureConfig>> PETRIFIED_PYRAMID;
 
         public static void registerConfiguredStructures() {
-            Configured.PETRIFIED_PYRAMID = RegistryHelper.createConfiguredStructure("petrified_pyramid", HallowsStructures.PETRIFIED_PYRAMID.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
+            Configured.PETRIFIED_PYRAMID = RegistryHelper.createConfiguredStructure("petrified_pyramid", HallowsStructures.PETRIFIED_PYRAMID.get().configured(IFeatureConfig.NONE));
         }
     }
 
@@ -57,21 +57,21 @@ public class HallowsStructures {
     }
 
     public static <F extends Structure<?>> void setup(F structure, StructureSeparationSettings structureSeparationSettings, boolean transformLand) {
-        Structure.NAME_STRUCTURE_BIMAP.put(structure.getRegistryName().toString().toLowerCase(Locale.ROOT), structure);
-        DimensionStructuresSettings.field_236191_b_ = ImmutableMap.<Structure<?>, StructureSeparationSettings>builder().putAll(DimensionStructuresSettings.field_236191_b_).put(structure, structureSeparationSettings).build();
+        Structure.STRUCTURES_REGISTRY.put(structure.getRegistryName().toString().toLowerCase(Locale.ROOT), structure);
+        DimensionStructuresSettings.DEFAULTS = ImmutableMap.<Structure<?>, StructureSeparationSettings>builder().putAll(DimensionStructuresSettings.DEFAULTS).put(structure, structureSeparationSettings).build();
         HALLOWS_STRUCTURES.put(structure, structureSeparationSettings);
-        if (transformLand) Structure.field_236384_t_ = ImmutableList.<Structure<?>>builder().addAll(Structure.field_236384_t_).add(structure).build();
+        if (transformLand) Structure.NOISE_AFFECTING_FEATURES = ImmutableList.<Structure<?>>builder().addAll(Structure.NOISE_AFFECTING_FEATURES).add(structure).build();
     }
 
     public static void onWorldLoad(final WorldEvent.Load event) {
         if (event.getWorld() instanceof ServerWorld) {
             ServerWorld serverWorld = (ServerWorld) event.getWorld();
 
-            if (serverWorld.getChunkProvider().getChunkGenerator() instanceof FlatChunkGenerator && serverWorld.getDimensionKey().equals(World.OVERWORLD)) return;
+            if (serverWorld.getChunkSource().getGenerator() instanceof FlatChunkGenerator && serverWorld.dimension().equals(World.OVERWORLD)) return;
 
-            Map<Structure<?>, StructureSeparationSettings> temp = new HashMap<>(serverWorld.getChunkProvider().generator.func_235957_b_().func_236195_a_());
-            temp.put(PETRIFIED_PYRAMID.get(), DimensionStructuresSettings.field_236191_b_.get(PETRIFIED_PYRAMID.get()));
-            serverWorld.getChunkProvider().generator.func_235957_b_().field_236193_d_ = temp;
+            Map<Structure<?>, StructureSeparationSettings> temp = new HashMap<>(serverWorld.getChunkSource().getGenerator().getSettings().structureConfig);
+            temp.put(PETRIFIED_PYRAMID.get(), DimensionStructuresSettings.DEFAULTS.get(PETRIFIED_PYRAMID.get()));
+            serverWorld.getChunkSource().getGenerator().getSettings().structureConfig = temp;
         }
     }
 }

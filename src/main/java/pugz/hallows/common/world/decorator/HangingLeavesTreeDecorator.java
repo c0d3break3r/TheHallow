@@ -33,24 +33,24 @@ public class HangingLeavesTreeDecorator extends TreeDecorator {
     }
 
     @Nonnull
-    protected TreeDecoratorType<?> func_230380_a_() {
+    protected TreeDecoratorType<?> type() {
         return HallowsFeatures.Decorators.HANGING_LEAVES.get();
     }
 
-    public void func_225576_a_(ISeedReader world, Random random, List<BlockPos> logPositions, List<BlockPos> leavesPositions, Set<BlockPos> changedBlocks, MutableBoundingBox boundingBox) {
+    public void place(ISeedReader world, Random random, List<BlockPos> logPositions, List<BlockPos> leavesPositions, Set<BlockPos> changedBlocks, MutableBoundingBox boundingBox) {
         if (!(random.nextFloat() >= this.probability)) {
             for (BlockPos pos : leavesPositions) {
-                if (world.isAirBlock(pos.down()) && state.getBlock() instanceof HangingLeavesBlock) {
-                    BlockState blockstate = this.state.with(HangingLeavesBlock.HALF, HangingLeavesBlock.Half.LARGE);
+                if (world.isEmptyBlock(pos.below()) && state.getBlock() instanceof HangingLeavesBlock) {
+                    BlockState blockstate = this.state.setValue(HangingLeavesBlock.HALF, HangingLeavesBlock.Half.LARGE);
                     int length = random.nextInt(3) + 2;
-                    for (int j = pos.down().getY(); j >= pos.down().getY() - length; --j) {
-                        if (j == pos.down().getY() - length) blockstate = blockstate.with(HangingLeavesBlock.HALF, HangingLeavesBlock.Half.SMALL);
-                        if (blockstate.isValidPosition(world, pos)) {
+                    for (int j = pos.below().getY(); j >= pos.below().getY() - length; --j) {
+                        if (j == pos.below().getY() - length) blockstate = blockstate.setValue(HangingLeavesBlock.HALF, HangingLeavesBlock.Half.SMALL);
+                        if (blockstate.canSurvive(world, pos)) {
                             BlockPos place = new BlockPos(pos.getX(), j, pos.getZ());
-                            if (world.isAirBlock(place)) {
-                                world.setBlockState(place, blockstate, 19);
+                            if (world.isEmptyBlock(place)) {
+                                world.setBlock(place, blockstate, 19);
                                 changedBlocks.add(place);
-                                boundingBox.expandTo(new MutableBoundingBox(place, place));
+                                boundingBox.expand(new MutableBoundingBox(place, place));
                             }
                         }
                     }

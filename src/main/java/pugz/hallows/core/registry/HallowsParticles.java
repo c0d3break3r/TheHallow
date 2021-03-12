@@ -30,10 +30,10 @@ public class HallowsParticles {
     }
 
     public static void onParticleFactoryRegister(ParticleFactoryRegisterEvent event) {
-        if (NECROFLAME.isPresent()) Minecraft.getInstance().particles.registerFactory(NECROFLAME.get(), FlameParticle.Factory::new);
-        if (ORANGE_WILL_O_WISP.isPresent()) Minecraft.getInstance().particles.registerFactory(ORANGE_WILL_O_WISP.get(), WillOWispParticle.Factory::new);
-        if (YELLOW_WILL_O_WISP.isPresent()) Minecraft.getInstance().particles.registerFactory(YELLOW_WILL_O_WISP.get(), WillOWispParticle.Factory::new);
-        if (BLUE_WILL_O_WISP.isPresent()) Minecraft.getInstance().particles.registerFactory(BLUE_WILL_O_WISP.get(), WillOWispParticle.Factory::new);
-        if (PURPLE_WILL_O_WISP.isPresent()) Minecraft.getInstance().particles.registerFactory(PURPLE_WILL_O_WISP.get(), WillOWispParticle.Factory::new);
+        if (NECROFLAME.isPresent()) Minecraft.getInstance().particleEngine.register(NECROFLAME.get(), FlameParticle.Factory::new);
+        if (ORANGE_WILL_O_WISP.isPresent()) Minecraft.getInstance().particleEngine.register(ORANGE_WILL_O_WISP.get(), WillOWispParticle.Factory::new);
+        if (YELLOW_WILL_O_WISP.isPresent()) Minecraft.getInstance().particleEngine.register(YELLOW_WILL_O_WISP.get(), WillOWispParticle.Factory::new);
+        if (BLUE_WILL_O_WISP.isPresent()) Minecraft.getInstance().particleEngine.register(BLUE_WILL_O_WISP.get(), WillOWispParticle.Factory::new);
+        if (PURPLE_WILL_O_WISP.isPresent()) Minecraft.getInstance().particleEngine.register(PURPLE_WILL_O_WISP.get(), WillOWispParticle.Factory::new);
     }
 }

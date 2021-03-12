@@ -31,23 +31,23 @@ public class JackOLanternTreeDecorator extends TreeDecorator {
     }
 
     @Nonnull
-    protected TreeDecoratorType<?> func_230380_a_() {
+    protected TreeDecoratorType<?> type() {
         return HallowsFeatures.Decorators.JACK_O_LANTERN.get();
     }
 
-    public void func_225576_a_(ISeedReader reader, Random random, List<BlockPos> logPositions, List<BlockPos> leafPositions, Set<BlockPos> p_225576_5_, MutableBoundingBox boundingBox) {
+    public void place(ISeedReader reader, Random random, List<BlockPos> logPositions, List<BlockPos> leafPositions, Set<BlockPos> p_225576_5_, MutableBoundingBox boundingBox) {
         if (!(random.nextFloat() >= this.probability)) {
-            Direction direction = Util.getRandomObject(new Direction[]{Direction.WEST, Direction.EAST, Direction.SOUTH}, random);
+            Direction direction = Util.getRandom(new Direction[]{Direction.WEST, Direction.EAST, Direction.SOUTH}, random);
             int i = !leafPositions.isEmpty() ? Math.max(leafPositions.get(0).getY() - 1, logPositions.get(0).getY()) : Math.min(logPositions.get(0).getY() + 1 + random.nextInt(3), logPositions.get(logPositions.size() - 1).getY());
             List<BlockPos> list = logPositions.stream().filter((pos) -> {
                 return pos.getY() == i;
             }).collect(Collectors.toList());
             if (!list.isEmpty()) {
                 BlockPos blockpos = list.get(random.nextInt(list.size()));
-                BlockPos blockpos1 = blockpos.offset(direction);
-                if (Feature.isAirAt(reader, blockpos1) && Feature.isAirAt(reader, blockpos1.offset(Direction.SOUTH))) {
-                    BlockState blockstate = Blocks.JACK_O_LANTERN.getDefaultState().with(CarvedPumpkinBlock.FACING, Direction.SOUTH);
-                    this.func_227423_a_(reader, blockpos1, blockstate, p_225576_5_, boundingBox);
+                BlockPos blockpos1 = blockpos.relative(direction);
+                if (Feature.isAir(reader, blockpos1) && Feature.isAir(reader, blockpos1.relative(Direction.SOUTH))) {
+                    BlockState blockstate = Blocks.JACK_O_LANTERN.defaultBlockState().setValue(CarvedPumpkinBlock.FACING, Direction.SOUTH);
+                    this.setBlock(reader, blockpos1, blockstate, p_225576_5_, boundingBox);
                 }
             }
         }

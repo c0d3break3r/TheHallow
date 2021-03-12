@@ -43,14 +43,14 @@ public class Events {
             Entity entity = event.getEntity();
             RayTraceResult result = event.getRayTraceResult();
             if (entity instanceof EnderPearlEntity && result.getType() == RayTraceResult.Type.BLOCK) {
-                BlockPos hitPos = new BlockPos(result.getHitVec());
-                BlockState state = entity.world.getBlockState(hitPos);
+                BlockPos hitPos = new BlockPos(result.getLocation());
+                BlockState state = entity.level.getBlockState(hitPos);
 
-                if (state.isIn(HallowsBlocks.GIANT_CAULDRON.get())) {
-                    if (state.get(GiantCauldronBlock.LIQUID) == GiantCauldronBlock.Liquid.PORTAL) {
+                if (state.is(HallowsBlocks.GIANT_CAULDRON.get())) {
+                    if (state.getValue(GiantCauldronBlock.LIQUID) == GiantCauldronBlock.Liquid.PORTAL) {
 
-                        Entity thrower = ((EnderPearlEntity)entity).func_234616_v_();
-                        if (!thrower.isPassenger() && !thrower.isBeingRidden() && thrower.isNonBoss() && thrower instanceof ServerPlayerEntity) {
+                        Entity thrower = ((EnderPearlEntity)entity).getOwner();
+                        if (!thrower.isPassenger() && !thrower.hasOnePlayerPassenger() && thrower instanceof ServerPlayerEntity) {
                             teleportPlayer((ServerPlayerEntity)thrower, hitPos);
                         }
                     }
@@ -59,13 +59,13 @@ public class Events {
         }
 
         public static void teleportPlayer(ServerPlayerEntity player, BlockPos pos) {
-            if (player.getRidingEntity() != null || player.isBeingRidden()) return;
+            if (player.getVehicle() != null || player.hasOnePlayerPassenger()) return;
 
-            if (player.world.getDimensionKey().equals(HallowsDimensions.DIMENSION)) {
-                ServerWorld teleportWorld = player.server.func_241755_D_();
+            if (player.level.dimension().equals(HallowsDimensions.DIMENSION)) {
+                ServerWorld teleportWorld = player.server.overworld();
                 player.changeDimension(teleportWorld, new HallowsTeleporter(pos));
             } else {
-                ServerWorld server = player.server.getWorld(HallowsDimensions.DIMENSION);
+                ServerWorld server = player.server.getLevel(HallowsDimensions.DIMENSION);
                 if (server == null) return;
                 player.changeDimension(server, new HallowsTeleporter(pos));
             }
@@ -76,33 +76,33 @@ public class Events {
         public static void onItemTooltip(ItemTooltipEvent event) {
             ItemStack stack = event.getItemStack();
             if (stack.getItem() instanceof ArmorItem) {
-                if (((ArmorItem)stack.getItem()).getArmorMaterial() == HallowsItems.STYGIAN_MATERIAL) {
-                    HallowsArmorMaterial material = (HallowsArmorMaterial)((ArmorItem)stack.getItem()).getArmorMaterial();
+                if (((ArmorItem)stack.getItem()).getMaterial() == HallowsItems.STYGIAN_MATERIAL) {
+                    HallowsArmorMaterial material = (HallowsArmorMaterial)((ArmorItem)stack.getItem()).getMaterial();
                     List<ITextComponent> tooltip = event.getToolTip();
-                    tooltip.add(new StringTextComponent("+" + material.getCharge(MobEntity.getSlotForItemStack(stack)) + " Charge").mergeStyle(TextFormatting.BLUE));
+                    tooltip.add(new StringTextComponent("+" + material.getCharge(MobEntity.getEquipmentSlotForItem(stack)) + " Charge").withStyle(TextFormatting.BLUE));
                 }
             } else if (stack.getItem() instanceof ToolItem) {
                 if (((ToolItem)stack.getItem()).getTier() == HallowsItems.STYGIAN_TIER) {
                     HallowsItemTier material = (HallowsItemTier)((ToolItem)stack.getItem()).getTier();
                     List<ITextComponent> tooltip = event.getToolTip();
-                    tooltip.add(new StringTextComponent("+" + material.getCharge() + " Charge").mergeStyle(TextFormatting.BLUE));
+                    tooltip.add(new StringTextComponent("+" + material.getCharge() + " Charge").withStyle(TextFormatting.BLUE));
                 }
             }
         }
 
         public static void onBlockBreak(BlockEvent.BreakEvent event) {
             PlayerEntity player = event.getPlayer();
-            World world = player.getEntityWorld();
-            ItemStack held = player.getHeldItem(player.getActiveHand());
+            World world = player.level;
+            ItemStack held = player.getItemInHand(player.getUsedItemHand());
             if (held.getItem() instanceof ToolItem) {
                 if (((ToolItem)held.getItem()).getTier() == HallowsItems.STYGIAN_TIER) {
                     IDataManager manager = ((IDataManager) player);
                     HallowsItemTier material = (HallowsItemTier)((ToolItem)held.getItem()).getTier();
                     manager.setValue(HallowsData.PLAYER_CHARGE, manager.getValue(HallowsData.PLAYER_CHARGE) + material.getCharge() * world.getRandom().nextInt());
                     if (manager.getValue(HallowsData.PLAYER_CHARGE) >= 100) {
-                        world.playSound(player, player.getPosition(), SoundEvents.ENTITY_GHAST_SCREAM, SoundCategory.BLOCKS, 2.0F, 1.0F);
-                        for (BlockPos pos : (BlockPos[]) BlockPos.getAllInBox(new AxisAlignedBB(player.getPosX() - 5.0D, player.getPosY() - 5.0D, player.getPosZ() - 5.0D, player.getPosX() + 5.0D, player.getPosY() + 5.0D, player.getPosZ() + 5.0D)).toArray()) {
-                            world.sendBlockBreakProgress(player.getEntityId(), pos, 10 * (int)world.getBlockState(pos).getBlockHardness(world, pos));
+                        world.playSound(player, player.blockPosition(), SoundEvents.GHAST_SCREAM, SoundCategory.BLOCKS, 2.0F, 1.0F);
+                        for (BlockPos pos : (BlockPos[]) BlockPos.betweenClosedStream(new AxisAlignedBB(player.getX() - 5.0D, player.getY() - 5.0D, player.getZ() - 5.0D, player.getX() + 5.0D, player.getY() + 5.0D, player.getZ() + 5.0D)).toArray()) {
+                            //world.destroyBlockProgress(player.getUUID(), pos, 10 * (int) world.getBlockState(pos).getBlockHardness(world, pos));
                         }
                         manager.setValue(HallowsData.PLAYER_CHARGE, 0);
                     }
@@ -115,22 +115,22 @@ public class Events {
 
             if (living instanceof PlayerEntity && event.getSource() == DamageSource.GENERIC) {
                 PlayerEntity player = (PlayerEntity)event.getEntityLiving();
-                World world = player.getEntityWorld();
+                World world = player.level;
                 IDataManager manager = ((IDataManager) player);
 
-                for (ItemStack stack : player.getArmorInventoryList()) {
+                for (ItemStack stack : player.getArmorSlots()) {
                     if (stack.getItem() instanceof ArmorItem) {
-                        if (((ArmorItem)stack.getItem()).getArmorMaterial() == HallowsItems.STYGIAN_MATERIAL) {
-                            HallowsArmorMaterial material = (HallowsArmorMaterial)((ArmorItem)stack.getItem()).getArmorMaterial();
-                            manager.setValue(HallowsData.PLAYER_CHARGE, manager.getValue(HallowsData.PLAYER_CHARGE) + material.getCharge(((ArmorItem) stack.getItem()).getEquipmentSlot()) * world.getRandom().nextInt());
+                        if (((ArmorItem)stack.getItem()).getMaterial() == HallowsItems.STYGIAN_MATERIAL) {
+                            HallowsArmorMaterial material = (HallowsArmorMaterial)((ArmorItem)stack.getItem()).getMaterial();
+                            manager.setValue(HallowsData.PLAYER_CHARGE, manager.getValue(HallowsData.PLAYER_CHARGE) + material.getCharge(((ArmorItem) stack.getItem()).getSlot()) * world.getRandom().nextInt());
                         }
                     }
                 }
 
                 if (manager.getValue(HallowsData.PLAYER_CHARGE) >= 100) {
-                    world.playSound(player, player.getPosition(), SoundEvents.ENTITY_GHAST_SCREAM, SoundCategory.BLOCKS, 2.0F, 1.0F);
-                    for (Entity entity : world.getEntitiesInAABBexcluding(player, new AxisAlignedBB(player.getPosX() - 5.0D, player.getPosY() - 5.0D, player.getPosZ() - 5.0D, player.getPosX() + 5.0D, player.getPosY() + 5.0D, player.getPosZ() + 5.0D), Entity::isAlive)) {
-                        entity.attackEntityFrom(DamageSource.MAGIC, 6.0F);
+                    world.playSound(player, player.blockPosition(), SoundEvents.GHAST_SCREAM, SoundCategory.BLOCKS, 2.0F, 1.0F);
+                    for (Entity entity : world.getEntities(player, new AxisAlignedBB(player.getX() - 5.0D, player.getY() - 5.0D, player.getZ() - 5.0D, player.getX() + 5.0D, player.getY() + 5.0D, player.getZ() + 5.0D), Entity::isAlive)) {
+                        entity.hurt(DamageSource.MAGIC, 6.0F);
                     }
                     manager.setValue(HallowsData.PLAYER_CHARGE, 0);
                 }

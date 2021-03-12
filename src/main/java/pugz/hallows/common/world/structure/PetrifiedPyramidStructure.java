@@ -22,13 +22,13 @@ import javax.annotation.Nonnull;
 public class PetrifiedPyramidStructure extends Structure<NoFeatureConfig> {
 
     public PetrifiedPyramidStructure() {
-        super(NoFeatureConfig.field_236558_a_);
+        super(NoFeatureConfig.CODEC);
         HallowsStructures.HALLOWS_STRUCTURE_START_PIECES.add(new ResourceLocation(Hallows.MOD_ID, "petrified_pyramid"));
     }
 
     @Nonnull
     @Override
-    public String getStructureName() {
+    public String getFeatureName() {
         return Hallows.MOD_ID + ":petrified_pyramid";
     }
 
@@ -40,7 +40,7 @@ public class PetrifiedPyramidStructure extends Structure<NoFeatureConfig> {
 
     @Nonnull
     @Override
-    public GenerationStage.Decoration getDecorationStage() {
+    public GenerationStage.Decoration step() {
         return GenerationStage.Decoration.SURFACE_STRUCTURES;
     }
 
@@ -49,15 +49,15 @@ public class PetrifiedPyramidStructure extends Structure<NoFeatureConfig> {
             super(structure, p_i225806_2_, p_i225806_3_, boundingBox, p_i225806_5_, p_i225806_6_);
         }
 
-        public void func_230364_a_(DynamicRegistries dynamicRegistries, ChunkGenerator chunkGenerator, TemplateManager manager, int p_230364_4_, int p_230364_5_, Biome biome, NoFeatureConfig config) {
+        public void generatePieces(DynamicRegistries dynamicRegistries, ChunkGenerator chunkGenerator, TemplateManager manager, int p_230364_4_, int p_230364_5_, Biome biome, NoFeatureConfig config) {
             int i = p_230364_4_ * 16;
             int j = p_230364_5_ * 16;
-            BlockPos.Mutable mutable = new BlockPos(i, 90, j).toMutable().setPos(this.bounds.func_215126_f().getX(), chunkGenerator.getSeaLevel() + 3, this.bounds.func_215126_f().getZ());
-            IBlockReader reader = chunkGenerator.func_230348_a_(mutable.getX(), mutable.getZ());
-            Rotation rotation = Rotation.randomRotation(this.rand);
+            BlockPos.Mutable mutable = new BlockPos(i, 90, j).mutable().set(this.boundingBox.getCenter().getX(), chunkGenerator.getSeaLevel() + 3, this.boundingBox.getCenter().getZ());
+            IBlockReader reader = chunkGenerator.getBaseColumn(mutable.getX(), mutable.getZ());
+            Rotation rotation = Rotation.getRandom(this.random);
 
-            while (mutable.getY() <= chunkGenerator.getMaxBuildHeight() - 20) {
-                if (reader.getBlockState(mutable).getMaterial() != Material.AIR && reader.getBlockState(mutable.up()).getMaterial() == Material.AIR && reader.getBlockState(mutable.up(5)).getMaterial() == Material.AIR) {
+            while (mutable.getY() <= chunkGenerator.getGenDepth() - 20) {
+                if (reader.getBlockState(mutable).getMaterial() != Material.AIR && reader.getBlockState(mutable.above()).getMaterial() == Material.AIR && reader.getBlockState(mutable.above(5)).getMaterial() == Material.AIR) {
                     mutable.move(Direction.UP);
                     break;
                 }
@@ -65,8 +65,8 @@ public class PetrifiedPyramidStructure extends Structure<NoFeatureConfig> {
             }
 
             BlockPos pos = new BlockPos(mutable);
-            PetrifiedPyramidPieces.func_236991_a_(manager, pos, rotation, this.components);
-            this.recalculateStructureSize();
+            PetrifiedPyramidPieces.func_236991_a_(manager, pos, rotation, this.pieces);
+            this.calculateBoundingBox();
         }
     }
 }

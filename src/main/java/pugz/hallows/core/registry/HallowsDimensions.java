@@ -22,28 +22,28 @@ public class HallowsDimensions {
     public static final DeferredRegister<PointOfInterestType> POINTS_OF_INTEREST = DeferredRegister.create(ForgeRegistries.POI_TYPES, Hallows.MOD_ID);
 
     //public static RegistryObject<PointOfInterestType> PORTAL;
-    public static final RegistryKey<World> DIMENSION = RegistryKey.getOrCreateKey(Registry.WORLD_KEY, new ResourceLocation(Hallows.MOD_ID, "the_hallows"));
-    public static final RegistryKey<DimensionType> DIMENSION_TYPE = RegistryKey.getOrCreateKey(Registry.DIMENSION_TYPE_KEY, new ResourceLocation(Hallows.MOD_ID, "the_hallows"));
+    public static final RegistryKey<World> DIMENSION = RegistryKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(Hallows.MOD_ID, "the_hallows"));
+    public static final RegistryKey<DimensionType> DIMENSION_TYPE = RegistryKey.create(Registry.DIMENSION_TYPE_REGISTRY, new ResourceLocation(Hallows.MOD_ID, "the_hallows"));
 
     public static void registerPOIs() {
         //PORTAL = RegistryHelper.createPOI("hallow_portal", ImmutableSet.copyOf(HallowsBlocks.GIANT_CAULDRON.get().getStateContainer().getValidStates()), 1, 1);
     }
 
     public static void registerDimensions() {
-        Registry.register(Registry.BIOME_PROVIDER_CODEC, new ResourceLocation(Hallows.MOD_ID, "biome_source"), HallowsBiomeProvider.CODEC);
+        Registry.register(Registry.BIOME_SOURCE, new ResourceLocation(Hallows.MOD_ID, "biome_source"), HallowsBiomeProvider.CODEC);
     }
 
     public static void registerEffects() {
-        DimensionRenderInfo.field_239208_a_.put(DIMENSION.getLocation(), new DimensionRenderInfo(Float.NaN, false, DimensionRenderInfo.FogType.NORMAL, false, true) {
+        DimensionRenderInfo.EFFECTS.put(DIMENSION.getRegistryName(), new DimensionRenderInfo(Float.NaN, false, DimensionRenderInfo.FogType.NORMAL, false, true) {
             @Nonnull
             @Override
-            public Vector3d func_230494_a_(Vector3d vector3d, float sun) {
+            public Vector3d getBrightnessDependentFogColor(Vector3d vector3d, float p_230494_2_) {
                 return vector3d;
             }
 
             @Override
-            public boolean func_230493_a_(int x, int y) {
-                return true;
+            public boolean isFoggyAt(int x, int y) {
+                return false;
             }
         });
     }

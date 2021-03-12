@@ -30,85 +30,85 @@ import java.util.function.Supplier;
 
 public class WillOWispVineEndBlock extends AbstractTopPlantBlock {
     public static final BooleanProperty FRUIT = BooleanProperty.create("fruit");
-    protected static final VoxelShape SHAPE = Block.makeCuboidShape(4.0D, 14.0D, 4.0D, 12.0D, 16.0D, 12.0D);
-    protected static final VoxelShape FRUIT_SHAPE = Block.makeCuboidShape(4.0D, 6.0D, 4.0D, 12.0D, 14.0D, 12.0D);
+    protected static final VoxelShape SHAPE = Block.box(4.0D, 14.0D, 4.0D, 12.0D, 16.0D, 12.0D);
+    protected static final VoxelShape FRUIT_SHAPE = Block.box(4.0D, 6.0D, 4.0D, 12.0D, 14.0D, 12.0D);
     private final Supplier<Item> fruit;
     private final Supplier<Block> bodyPlant;
 
     public WillOWispVineEndBlock(AbstractBlock.Properties properties, Supplier<Item> fruit, Supplier<Block> bodyPlant) {
         super(properties, Direction.DOWN, SHAPE, false, 0.1D);
-        this.setDefaultState(this.getDefaultState().with(FRUIT, false));
+        this.registerDefaultState(this.defaultBlockState().setValue(FRUIT, false));
         this.fruit = fruit;
         this.bodyPlant = bodyPlant;
     }
 
     @Nonnull
     public BlockState grow(IWorld world) {
-        return this.getDefaultState().with(FRUIT, world.getRandom().nextFloat() <= 0.2F).with(AGE, world.getRandom().nextInt(25));
+        return this.defaultBlockState().setValue(FRUIT, world.getRandom().nextFloat() <= 0.2F).setValue(AGE, world.getRandom().nextInt(25));
     }
 
     @Nonnull
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return VoxelShapes.or(SHAPE, state.get(FRUIT) ? FRUIT_SHAPE : VoxelShapes.empty());
+        return VoxelShapes.or(SHAPE, state.getValue(FRUIT) ? FRUIT_SHAPE : VoxelShapes.empty());
     }
 
-    protected int getGrowthAmount(Random rand) {
-        return PlantBlockHelper.getGrowthAmount(rand);
+    protected int getBlocksToGrowWhenBonemealed(Random rand) {
+        return PlantBlockHelper.getBlocksToGrowWhenBonemealed(rand);
     }
 
     @Nonnull
-    protected Block getBodyPlantBlock() {
+    protected Block getBodyBlock() {
         return bodyPlant.get();
     }
 
-    protected boolean canGrowIn(BlockState state) {
-        return PlantBlockHelper.isAir(state);
+    protected boolean canGrowInto(BlockState state) {
+        return PlantBlockHelper.isValidGrowthState(state);
     }
 
     @Nonnull
     @Override
     @SuppressWarnings("deprecation")
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        ItemStack held = player.getHeldItem(handIn);
+    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+        ItemStack held = player.getItemInHand(handIn);
         if (held.getItem() instanceof BlockItem) {
             Block block = ((BlockItem) held.getItem()).getBlock();
             if (block instanceof WillOWispVineStemBlock || block instanceof WillOWispVineEndBlock) return ActionResultType.PASS;
-            else if (state.get(FRUIT)) {
+            else if (state.getValue(FRUIT)) {
                 ItemStack stack = new ItemStack(fruit.get());
                 if (held.isEmpty()) {
-                    player.setHeldItem(handIn, stack);
-                } else if (!player.addItemStackToInventory(stack)) {
-                    player.dropItem(stack, false);
+                    player.setItemInHand(handIn, stack);
+                } else if (!player.addItem(stack)) {
+                    player.drop(stack, false);
                 }
 
-                worldIn.setBlockState(pos, state.with(FRUIT, false));
-                worldIn.playSound(null, (double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, SoundEvents.BLOCK_NETHER_WART_BREAK, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                worldIn.setBlockAndUpdate(pos, state.setValue(FRUIT, false));
+                worldIn.playSound(null, (double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, SoundEvents.NETHER_WART_BREAK, SoundCategory.BLOCKS, 1.0F, 1.0F);
             }
         }
-        return ActionResultType.func_233537_a_(worldIn.isRemote);
+        return ActionResultType.sidedSuccess(worldIn.isClientSide);
     }
 
     @Override
-    public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
-        BlockPos blockpos = pos.offset(this.growthDirection);
-        int i = Math.min(state.get(AGE) + 1, 25);
-        int j = this.getGrowthAmount(rand);
+    public void performBonemeal(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
+        BlockPos blockpos = pos.relative(this.growthDirection);
+        int i = Math.min(state.getValue(AGE) + 1, 25);
+        int j = this.getBlocksToGrowWhenBonemealed(rand);
 
-        for (int k = 0; k < j && this.canGrowIn(worldIn.getBlockState(blockpos)); ++k) {
-            BlockState up = worldIn.getBlockState(blockpos.up());
+        for (int k = 0; k < j && this.canGrowInto(worldIn.getBlockState(blockpos)); ++k) {
+            BlockState up = worldIn.getBlockState(blockpos.above());
             boolean flag = up.getBlock() instanceof WillOWispVineStemBlock;
-            float fruitChance = 0.1F + (flag ? up.get(FRUIT) ? 0.25F : 0.0F : 0.0F);
+            float fruitChance = 0.1F + (flag ? up.getValue(FRUIT) ? 0.25F : 0.0F : 0.0F);
 
-            worldIn.setBlockState(blockpos, state.with(AGE, i).with(FRUIT, rand.nextFloat() <= fruitChance));
-            blockpos = blockpos.offset(this.growthDirection);
+            worldIn.setBlockAndUpdate(blockpos, state.setValue(AGE, i).setValue(FRUIT, rand.nextFloat() <= fruitChance));
+            blockpos = blockpos.relative(this.growthDirection);
             i = Math.min(i + 1, 25);
         }
     }
 
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-        if (stateIn.get(FRUIT)) {
+        if (stateIn.getValue(FRUIT)) {
             double d0 = (double) pos.getX() + 0.5D;
             double d1 = (double) pos.getY() + 0.7D;
             double d2 = (double) pos.getZ() + 0.5D;
@@ -121,7 +121,7 @@ public class WillOWispVineEndBlock extends AbstractTopPlantBlock {
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(AGE, FRUIT);
     }
 }

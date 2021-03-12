@@ -31,73 +31,73 @@ public class AnointingTableContainer extends AbstractRepairContainer {
     private final PlayerEntity player;
 
     public AnointingTableContainer(int id, PlayerInventory inventory) {
-        this(id, inventory, IWorldPosCallable.DUMMY);
+        this(id, inventory, IWorldPosCallable.NULL);
     }
 
     public AnointingTableContainer(int id, PlayerInventory inventory, IWorldPosCallable pos) {
         super(HallowsContainers.ANOINTING.get(), id, inventory, pos);
-        this.world = inventory.player.world;
+        this.world = inventory.player.level;
         this.player = inventory.player;
-        this.recipes = this.world.getRecipeManager().getRecipesForType(HallowsRecipes.Recipes.HALLOWING);
+        this.recipes = this.world.getRecipeManager().getAllRecipesFor(HallowsRecipes.Recipes.HALLOWING);
         //this.addSlot(new Slot(this.field_234643_d_, 0, 76, 67));
     }
 
-    protected boolean func_230302_a_(BlockState state) {
-        return state.isIn(HallowsBlocks.ANOINTMENT_TABLE.get());
+    protected boolean isValidBlock(BlockState state) {
+        return state.is(HallowsBlocks.ANOINTMENT_TABLE.get());
     }
 
-    protected boolean func_230303_b_(PlayerEntity player, boolean p_230303_2_) {
-        return this.recipe != null && this.recipe.matches(this.field_234643_d_, this.world);
+    protected boolean mayPickup(PlayerEntity player, boolean p_230303_2_) {
+        return this.recipe != null && this.recipe.matches(this.inputSlots, this.world);
     }
 
     @Nonnull
-    protected ItemStack func_230301_a_(PlayerEntity player, ItemStack stack) {
-        stack.onCrafting(player.world, player, stack.getCount());
-        this.field_234642_c_.onCrafting(player);
-        this.func_234654_d_(0);
-        this.func_234654_d_(1);
-        this.field_234644_e_.consume((world, pos) -> {
-            world.playEvent(1044, pos, 0);
+    protected ItemStack onTake(PlayerEntity player, ItemStack stack) {
+        stack.onCraftedBy(player.level, player, stack.getCount());
+        this.resultSlots.awardUsedRecipes(player);
+        this.shrinkStackInSlot(0);
+        this.shrinkStackInSlot(1);
+        this.access.execute((level, pos) -> {
+            level.levelEvent(1044, pos, 0);
         });
         return stack;
     }
 
-    private void func_234654_d_(int index) {
-        ItemStack itemstack = this.field_234643_d_.getStackInSlot(index);
+    private void shrinkStackInSlot(int index) {
+        ItemStack itemstack = this.inputSlots.getItem(index);
         itemstack.shrink(1);
-        this.field_234643_d_.setInventorySlotContents(index, itemstack);
+        this.inputSlots.setItem(index, itemstack);
     }
 
-    public void updateRepairOutput() {
-        List<HallowingRecipe> list = this.world.getRecipeManager().getRecipes(HallowsRecipes.Recipes.HALLOWING, this.field_234643_d_, this.world);
+    public void createResult() {
+        List<HallowingRecipe> list = this.world.getRecipeManager().getRecipesFor(HallowsRecipes.Recipes.HALLOWING, this.inputSlots, this.world);
         if (list.isEmpty()) {
-            this.field_234642_c_.setInventorySlotContents(0, ItemStack.EMPTY);
+            this.resultSlots.setItem(0, ItemStack.EMPTY);
         } else {
             this.recipe = list.get(0);
             Attribute attribute = this.recipe.getAttribute();
             if (attribute == Attributes.FLYING_SPEED ||
-                    attribute == Attributes.ZOMBIE_SPAWN_REINFORCEMENTS ||
-                    attribute == Attributes.HORSE_JUMP_STRENGTH ||
+                    attribute == Attributes.SPAWN_REINFORCEMENTS_CHANCE ||
+                    attribute == Attributes.JUMP_STRENGTH ||
                     attribute == Attributes.FOLLOW_RANGE) return;
 
-            ItemStack itemstack = this.recipe.getCraftingResult(this.field_234643_d_);
+            ItemStack itemstack = this.recipe.getResultItem();
             if (itemstack.getOrCreateTag().getBoolean("Anointed")) return;
 
-            EquipmentSlotType slot = MobEntity.getSlotForItemStack(itemstack);
+            EquipmentSlotType slot = MobEntity.getEquipmentSlotForItem(itemstack);
             Multimap<Attribute, AttributeModifier> multimap = HashMultimap.create();
             double amount = 0;
 
             for (Map.Entry<Attribute, AttributeModifier> entry : itemstack.getAttributeModifiers(slot).entries()) {
-                if (entry.getKey().getAttributeName().equals(attribute.getAttributeName())) {
+                if (entry.getKey().getDescriptionId().equals(attribute.getDescriptionId())) {
                     amount = entry.getValue().getAmount();
-                    amount += player.getBaseAttributeValue(attribute);
+                    amount += player.getAttributeBaseValue(attribute);
                 } else {
                     AttributeModifier modifier = new AttributeModifier(UUID.randomUUID(), "Anointment bonus", entry.getValue().getAmount() + player.getAttributeValue(entry.getKey()), AttributeModifier.Operation.ADDITION);
                     multimap.put(entry.getKey(), modifier);
                 }
             }
 
-            switch (attribute.getAttributeName()) {
+            switch (attribute.getDescriptionId()) {
                 default:
                 case "attribute.name.generic.armor":
                 case "attribute.name.generic.max_health":
@@ -132,32 +132,31 @@ public class AnointingTableContainer extends AbstractRepairContainer {
 
             for (Map.Entry<Attribute, AttributeModifier> entry : multimap.entries()) {
                 for (Map.Entry<Attribute, AttributeModifier> entry1 : itemstack.getAttributeModifiers(slot).entries()) {
-                    if (!entry.getKey().getAttributeName().equals(entry1.getKey().getAttributeName())) itemstack.addAttributeModifier(entry.getKey(), entry.getValue(), slot);
+                    if (!entry.getKey().getDescriptionId().equals(entry1.getKey().getDescriptionId())) itemstack.addAttributeModifier(entry.getKey(), entry.getValue(), slot);
                 }
             }
 
             itemstack.getOrCreateTag().putBoolean("Anointed", true);
 
-            this.field_234642_c_.setRecipeUsed(this.recipe);
-            this.field_234642_c_.setInventorySlotContents(0, itemstack);
+            this.resultSlots.setRecipeUsed(this.recipe);
+            this.resultSlots.setItem(0, itemstack);
         }
     }
 
-    public void onContainerClosed(PlayerEntity playerIn) {
-        PlayerInventory playerinventory = playerIn.inventory;
-        if (!playerinventory.getItemStack().isEmpty()) {
-            playerIn.dropItem(playerinventory.getItemStack(), false);
-            playerinventory.setItemStack(ItemStack.EMPTY);
-        }
+    public void removed(PlayerEntity playerIn) {
+        super.removed(playerIn);
+        this.access.execute((world, pos) -> {
+            this.clearContainer(playerIn, world, this.inputSlots);
+        });
     }
 
-    protected boolean func_241210_a_(ItemStack stack) {
+    protected boolean shouldQuickMoveToAdditionalSlot(ItemStack stack) {
         return this.recipes.stream().anyMatch((recipe) -> {
             return recipe.isValidAdditionItem(stack);
         }) || stack.getItem() == HallowsItems.WITCHS_BREW.get();
     }
 
-    public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
-        return slotIn.inventory != this.field_234642_c_ && super.canMergeSlot(stack, slotIn);
+    public boolean canTakeItemForPickAll(ItemStack stack, Slot slotIn) {
+        return slotIn.container != this.resultSlots && super.canTakeItemForPickAll(stack, slotIn);
     }
 }

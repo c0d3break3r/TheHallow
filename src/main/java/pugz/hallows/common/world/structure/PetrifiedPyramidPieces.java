@@ -44,7 +44,7 @@ public class PetrifiedPyramidPieces {
             super(HallowsStructures.Pieces.PETRIFIED_PYRAMID_PIECE, 0);
             this.resourceLocation = location;
             BlockPos blockpos = PetrifiedPyramidPieces.PIECES.get(location);
-            this.templatePosition = pos.add(blockpos.getX(), blockpos.getY() - yOffset, blockpos.getZ());
+            this.templatePosition = pos.offset(blockpos.getX(), blockpos.getY() - yOffset, blockpos.getZ());
             this.rotation = rotation;
             this.func_207614_a(manager);
         }
@@ -57,13 +57,13 @@ public class PetrifiedPyramidPieces {
         }
 
         private void func_207614_a(TemplateManager manager) {
-            Template template = manager.getTemplateDefaulted(this.resourceLocation);
-            PlacementSettings placementsettings = (new PlacementSettings()).setRotation(this.rotation).setMirror(Mirror.NONE).setCenterOffset(PetrifiedPyramidPieces.PIECES.get(this.resourceLocation)).addProcessor(BlockIgnoreStructureProcessor.STRUCTURE_BLOCK);
+            Template template = manager.get(this.resourceLocation);
+            PlacementSettings placementsettings = (new PlacementSettings()).setRotation(this.rotation).setMirror(Mirror.NONE).setRotationPivot(PetrifiedPyramidPieces.PIECES.get(this.resourceLocation)).addProcessor(BlockIgnoreStructureProcessor.STRUCTURE_BLOCK);
             this.setup(template, this.templatePosition, placementsettings);
         }
 
-        protected void readAdditional(CompoundNBT tagCompound) {
-            super.readAdditional(tagCompound);
+        protected void addAdditionalSaveData(CompoundNBT tagCompound) {
+            super.addAdditionalSaveData(tagCompound);
             tagCompound.putString("Template", this.resourceLocation.toString());
             tagCompound.putString("Rot", this.rotation.name());
         }
@@ -71,16 +71,16 @@ public class PetrifiedPyramidPieces {
         protected void handleDataMarker(String function, BlockPos pos, IServerWorld worldIn, Random rand, MutableBoundingBox sbb) {
         }
 
-        public boolean func_230383_a_(ISeedReader reader, StructureManager manager, ChunkGenerator generator, Random random, MutableBoundingBox boundingBox, ChunkPos chunkPos, BlockPos pos) {
-            PlacementSettings placementsettings = (new PlacementSettings()).setRotation(this.rotation).setMirror(Mirror.NONE).setCenterOffset(PetrifiedPyramidPieces.PIECES.get(this.resourceLocation)).addProcessor(BlockIgnoreStructureProcessor.STRUCTURE_BLOCK);
+        public boolean postProcess(ISeedReader reader, StructureManager manager, ChunkGenerator generator, Random random, MutableBoundingBox boundingBox, ChunkPos chunkPos, BlockPos pos) {
+            PlacementSettings placementsettings = (new PlacementSettings()).setRotation(this.rotation).setMirror(Mirror.NONE).setRotationPivot(PetrifiedPyramidPieces.PIECES.get(this.resourceLocation)).addProcessor(BlockIgnoreStructureProcessor.STRUCTURE_BLOCK);
             BlockPos blockpos = PetrifiedPyramidPieces.PIECES.get(this.resourceLocation);
-            BlockPos blockpos1 = this.templatePosition.add(Template.transformedBlockPos(placementsettings, new BlockPos(3 - blockpos.getX(), 0, 0 - blockpos.getZ())));
-            int i = reader.getHeight(Heightmap.Type.WORLD_SURFACE_WG, blockpos1.getX(), blockpos1.getZ());
+            //BlockPos blockpos1 = this.templatePosition.offset(Template.transformedVec3d(placementsettings, new BlockPos(3 - blockpos.getX(), 0, 0 - blockpos.getZ())));
+            //int i = reader.getHeight(Heightmap.Type.WORLD_SURFACE_WG, blockpos1.getX(), blockpos1.getZ());
             BlockPos blockpos2 = this.templatePosition;
-            this.templatePosition = this.templatePosition.add(0, i - 90 - 1, 0);
-            boolean flag = super.func_230383_a_(reader, manager, generator, random, boundingBox, chunkPos, pos);
+            //this.templatePosition = this.templatePosition.offset(0, i - 90 - 1, 0);
+            boolean flag = super.postProcess(reader, manager, generator, random, boundingBox, chunkPos, pos);
             this.templatePosition = blockpos2;
-            return flag;
+            return false;
         }
     }
 }

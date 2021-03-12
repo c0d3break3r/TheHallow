@@ -25,62 +25,62 @@ import net.minecraft.world.World;
 import javax.annotation.Nonnull;
 
 public class IgnisCrystalBlock extends Block implements IWaterLoggable {
-    protected static final VoxelShape STEM_SHAPE = Block.makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
-    protected static final VoxelShape FLOWER_SHAPE = Block.makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 6.0D, 14.0D);
+    protected static final VoxelShape STEM_SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
+    protected static final VoxelShape FLOWER_SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 6.0D, 14.0D);
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
     public IgnisCrystalBlock(AbstractBlock.Properties properties) {
         super(properties);
-        this.setDefaultState(this.getDefaultState().with(HALF, DoubleBlockHalf.UPPER).with(WATERLOGGED, false));
+        this.registerDefaultState(this.defaultBlockState().setValue(HALF, DoubleBlockHalf.UPPER).setValue(WATERLOGGED, false));
     }
 
     @Nonnull
     @SuppressWarnings("deprecation")
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return state.get(HALF) == DoubleBlockHalf.UPPER ? FLOWER_SHAPE : STEM_SHAPE;
+        return state.getValue(HALF) == DoubleBlockHalf.UPPER ? FLOWER_SHAPE : STEM_SHAPE;
     }
 
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-        if (worldIn.getBlockState(pos.down()).getBlock() == this) {
-            if (worldIn.getBlockState(pos.down()).get(HALF) == DoubleBlockHalf.UPPER) worldIn.setBlockState(pos.down(), worldIn.getBlockState(pos.down()).with(HALF, DoubleBlockHalf.LOWER), 3);
+    public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+        if (worldIn.getBlockState(pos.below()).getBlock() == this) {
+            if (worldIn.getBlockState(pos.below()).getValue(HALF) == DoubleBlockHalf.UPPER) worldIn.setBlock(pos.below(), worldIn.getBlockState(pos.below()).setValue(HALF, DoubleBlockHalf.LOWER), 3);
         }
     }
 
     @Override
-    public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
-        super.onBlockHarvested(worldIn, pos, state, player);
+    public void playerWillDestroy(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
+        super.playerWillDestroy(worldIn, pos, state, player);
 
-        if (worldIn.getBlockState(pos.down()).getBlock() == this) {
-            if (worldIn.getBlockState(pos.down()).get(HALF) == DoubleBlockHalf.LOWER) worldIn.setBlockState(pos.down(), worldIn.getBlockState(pos.down()).with(HALF, DoubleBlockHalf.UPPER), 3);
+        if (worldIn.getBlockState(pos.below()).getBlock() == this) {
+            if (worldIn.getBlockState(pos.below()).getValue(HALF) == DoubleBlockHalf.LOWER) worldIn.setBlock(pos.below(), worldIn.getBlockState(pos.below()).setValue(HALF, DoubleBlockHalf.UPPER), 3);
         }
     }
 
     @Nonnull
     @SuppressWarnings("deprecation")
     public FluidState getFluidState(BlockState state) {
-        return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.getDefaultState().with(WATERLOGGED, context.getWorld().getFluidState(context.getPos()).isTagged(FluidTags.WATER));
+        return this.defaultBlockState().setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).is(FluidTags.WATER));
     }
 
     @Nonnull
     @SuppressWarnings("deprecation")
-    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-        if (!stateIn.isValidPosition(worldIn, currentPos)) {
-            worldIn.getPendingBlockTicks().scheduleTick(currentPos, this, 1);
-        } return worldIn.isAirBlock(currentPos.down()) ? Blocks.AIR.getDefaultState() : super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+        if (!stateIn.canSurvive(worldIn, currentPos)) {
+            worldIn.getBlockTicks().scheduleTick(currentPos, this, 1);
+        } return worldIn.isEmptyBlock(currentPos.below()) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
     }
 
     @SuppressWarnings("deprecation")
-    public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-        return hasEnoughSolidSide(worldIn, pos.down(), Direction.UP) || worldIn.getBlockState(pos.down()).getBlock() == this;
+    public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) {
+        return canSupportCenter(worldIn, pos.below(), Direction.UP) || worldIn.getBlockState(pos.below()).getBlock() == this;
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(HALF, WATERLOGGED);
     }
 }

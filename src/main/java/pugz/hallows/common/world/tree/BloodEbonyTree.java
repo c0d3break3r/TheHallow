@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class BloodEbonyTree extends Tree {
     @Nullable
-    protected ConfiguredFeature<BaseTreeFeatureConfig, ?> getTreeFeature(Random randomIn, boolean largeHive) {
+    protected ConfiguredFeature<BaseTreeFeatureConfig, ?> getConfiguredFeature(Random randomIn, boolean largeHive) {
         return HallowsFeatures.Configured.BLOOD_EBONY_HANGING_LEAVES;
     }
 }

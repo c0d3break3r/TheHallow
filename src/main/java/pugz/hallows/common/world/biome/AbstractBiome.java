@@ -18,27 +18,27 @@ public abstract class AbstractBiome implements IBaseBiome {
     public AbstractBiome(String name) {
         this.name = name;
         this.biome = new Biome.Builder()
-                .category(this.getCategory())
+                .biomeCategory(this.getCategory())
                 .depth(this.getDepth())
                 .downfall(this.getDownfall())
                 .precipitation(this.getRainType())
                 .scale(this.getScale())
                 .temperature(this.getTemperature())
-                .setEffects(new BiomeAmbience.Builder()
-                        .setFogColor(this.getFogColor())
-                        .setWaterColor(this.getWaterColor())
-                        .setWaterFogColor(this.getWaterFogColor())
-                        .setMoodSound(MoodSoundAmbience.DEFAULT_CAVE)
-                        .withSkyColor(this.getSkyColor())
-                        .withGrassColor(this.getGrassColor())
-                        .withFoliageColor(this.getFoliageColor())
-                        .setParticle(this.getParticleEffect())
+                .specialEffects(new BiomeAmbience.Builder()
+                        .fogColor(this.getFogColor())
+                        .waterColor(this.getWaterColor())
+                        .waterFogColor(this.getWaterFogColor())
+                        .ambientMoodSound(MoodSoundAmbience.LEGACY_CAVE_SETTINGS)
+                        .skyColor(this.getSkyColor())
+                        .grassColorOverride(this.getGrassColor())
+                        .foliageColorOverride(this.getFoliageColor())
+                        .ambientParticle(this.getParticleEffect())
                         .build())
-                .withGenerationSettings(this.getGenerationSettings())
-                .withMobSpawnSettings(this.getMobSpawns())
+                .generationSettings(this.getGenerationSettings())
+                .mobSpawnSettings(this.getMobSpawns())
                 .build();
 
-        this.key = RegistryKey.getOrCreateKey(Registry.BIOME_KEY, new ResourceLocation(Hallows.MOD_ID, this.name));
+        this.key = RegistryKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Hallows.MOD_ID, this.name));
 
         //BiomeManager.addBiome(this.getBiomeType(), new BiomeManager.BiomeEntry(this.getKey(), this.getWeight()));
         BiomeDictionary.addTypes(this.getKey(), this.getBiomeDictionaryTypes());
@@ -69,6 +69,6 @@ public abstract class AbstractBiome implements IBaseBiome {
     public static int getSkyColorWithTemperatureModifier(float temperature) {
         float lvt_1_1_ = temperature / 3.0F;
         lvt_1_1_ = MathHelper.clamp(lvt_1_1_, -1.0F, 1.0F);
-        return MathHelper.hsvToRGB(0.62222224F - lvt_1_1_ * 0.05F, 0.5F + lvt_1_1_ * 0.1F, 1.0F);
+        return MathHelper.hsvToRgb(0.62222224F - lvt_1_1_ * 0.05F, 0.5F + lvt_1_1_ * 0.1F, 1.0F);
     }
 }

@@ -19,7 +19,7 @@ public abstract class AbstractCaveBiomeFeature extends Feature<CaveBiomeFeatureC
     }
 
     @Override
-    public boolean generate(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, CaveBiomeFeatureConfig config) {
+    public boolean place(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, CaveBiomeFeatureConfig config) {
         float f = rand.nextFloat() * (float)Math.PI;
         float f1 = (float)config.size / 8.0F;
         int i = MathHelper.ceil(((float)config.size / 16.0F * 2.0F + 1.0F) / 2.0F);
@@ -110,9 +110,9 @@ public abstract class AbstractCaveBiomeFeature extends Feature<CaveBiomeFeatureC
                                         int l2 = i2 - p_207803_16_ + (j2 - p_207803_17_) * p_207803_19_ + (k2 - p_207803_18_) * p_207803_19_ * p_207803_20_;
                                         if (!bitset.get(l2)) {
                                             bitset.set(l2);
-                                            blockpos$mutable.setPos(i2, j2, k2);
+                                            blockpos$mutable.set(i2, j2, k2);
                                             if (config.target.test(worldIn.getBlockState(blockpos$mutable), random)) {
-                                                this.place(worldIn, generator, random, blockpos$mutable, config);
+                                                this.placeCave(worldIn, generator, random, blockpos$mutable, config);
                                                 ++i;
                                             }
                                         }
@@ -127,7 +127,7 @@ public abstract class AbstractCaveBiomeFeature extends Feature<CaveBiomeFeatureC
         return i > 0;
     }
 
-    public void place(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos, CaveBiomeFeatureConfig config) {
+    public void placeCave(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos, CaveBiomeFeatureConfig config) {
         for (Direction direction : Direction.values()) {
             if (direction == Direction.DOWN) {
                 this.placeCeiling(world, generator, rand, pos, direction, config);

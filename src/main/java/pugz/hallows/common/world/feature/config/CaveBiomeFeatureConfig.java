@@ -20,7 +20,7 @@ public class CaveBiomeFeatureConfig implements IFeatureConfig {
             return config.size;
         }), Codec.floatRange(0.0F, 1.0F).fieldOf("featureChance").forGetter((config) -> {
             return config.featureChance;
-        }), RuleTest.field_237127_c_.fieldOf("target").forGetter((config) -> {
+        }), RuleTest.CODEC.fieldOf("target").forGetter((config) -> {
             return config.target;
         }), Codec.BOOL.fieldOf("ridgedFloor").orElse(false).forGetter((config) -> {
             return config.ridged;

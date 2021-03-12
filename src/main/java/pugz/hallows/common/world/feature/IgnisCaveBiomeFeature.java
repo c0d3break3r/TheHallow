@@ -21,42 +21,42 @@ public class IgnisCaveBiomeFeature extends AbstractCaveBiomeFeature {
 
     @Override
     public void placeCeiling(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos, Direction direction, CaveBiomeFeatureConfig config) {
-        if (world.getBlockState(pos.offset(direction)).getBlock() == Blocks.CAVE_AIR && world.getBlockState(pos.offset(direction.getOpposite())).getBlock() != Blocks.CAVE_AIR) {
-            if (config.ceilingState != null) world.setBlockState(pos, config.ceilingState, 2);
-            if (config.fillerState != null) world.setBlockState(pos.offset(direction.getOpposite()), config.fillerState, 2);
+        if (world.getBlockState(pos.relative(direction)).getBlock() == Blocks.CAVE_AIR && world.getBlockState(pos.relative(direction.getOpposite())).getBlock() != Blocks.CAVE_AIR) {
+            if (config.ceilingState != null) world.setBlock(pos, config.ceilingState, 2);
+            if (config.fillerState != null) world.setBlock(pos.relative(direction.getOpposite()), config.fillerState, 2);
         }
     }
 
     @Override
     public void placeWall(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos, Direction direction, CaveBiomeFeatureConfig config) {
-        if (world.getBlockState(pos.offset(direction)).getBlock() == Blocks.CAVE_AIR && world.getBlockState(pos.offset(Direction.UP)).getBlock() != Blocks.CAVE_AIR) {
-            if (config.wallState != null) world.setBlockState(pos, config.wallState, 2);
-            if (config.fillerState != null) world.setBlockState(pos.offset(direction.getOpposite()), config.fillerState, 2);
+        if (world.getBlockState(pos.relative(direction)).getBlock() == Blocks.CAVE_AIR && world.getBlockState(pos.relative(Direction.UP)).getBlock() != Blocks.CAVE_AIR) {
+            if (config.wallState != null) world.setBlock(pos, config.wallState, 2);
+            if (config.fillerState != null) world.setBlock(pos.relative(direction.getOpposite()), config.fillerState, 2);
 
             if (rand.nextFloat() <= config.featureChance / 1.5F) {
-                HallowsFeatures.Configured.ORE_GILDED_TENEBRITE.generate(world, generator, rand, pos);
+                HallowsFeatures.Configured.ORE_GILDED_TENEBRITE.place(world, generator, rand, pos);
             }
         }
     }
 
     @Override
     public void placeFloor(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos, Direction direction, CaveBiomeFeatureConfig config) {
-        if (world.getBlockState(pos.offset(direction)).getBlock() == Blocks.CAVE_AIR && world.getBlockState(pos.offset(direction.getOpposite())).getBlock() != Blocks.CAVE_AIR) {
-            if (config.floorState != null) world.setBlockState(pos, config.floorState, 2);
-            if (config.fillerState != null) world.setBlockState(pos.offset(direction.getOpposite()), config.fillerState, 2);
+        if (world.getBlockState(pos.relative(direction)).getBlock() == Blocks.CAVE_AIR && world.getBlockState(pos.relative(direction.getOpposite())).getBlock() != Blocks.CAVE_AIR) {
+            if (config.floorState != null) world.setBlock(pos, config.floorState, 2);
+            if (config.fillerState != null) world.setBlock(pos.relative(direction.getOpposite()), config.fillerState, 2);
 
             if (rand.nextFloat() <= config.featureChance * 1.5F) {
-                if (rand.nextFloat() <= 0.75F) generateColumn(world, rand, pos.up());
-                else world.setBlockState(pos.up(), HallowsBlocks.IGNIS_CRYSTAL_FLOWER.get().getDefaultState().with(IgnisCrystalBlock.HALF, DoubleBlockHalf.UPPER), 2);
+                if (rand.nextFloat() <= 0.75F) generateColumn(world, rand, pos.above());
+                else world.setBlock(pos.above(), HallowsBlocks.IGNIS_CRYSTAL_FLOWER.get().defaultBlockState().setValue(IgnisCrystalBlock.HALF, DoubleBlockHalf.UPPER), 2);
             } else if (rand.nextFloat() <= config.featureChance) {
-                for (BlockPos p : BlockPos.getRandomPositions(rand, rand.nextInt(11) + 6, pos.getX() - 2, pos.getY(), pos.getZ() - 2, pos.getX() + 2, pos.getY() + 1, pos.getZ() + 2)) {
-                    if (world.isAirBlock(p.up()) && !world.isAirBlock(p.down())) {
+                for (BlockPos p : BlockPos.randomBetweenClosed(rand, rand.nextInt(11) + 6, pos.getX() - 2, pos.getY(), pos.getZ() - 2, pos.getX() + 2, pos.getY() + 1, pos.getZ() + 2)) {
+                    if (world.isEmptyBlock(p.above()) && !world.isEmptyBlock(p.below())) {
                         AtomicBoolean flag = new AtomicBoolean(true);
-                        Direction.Plane.HORIZONTAL.getDirectionValues().forEach((d) -> {
-                            if (world.isAirBlock(p.offset(d))) flag.set(false);
+                        Direction.Plane.HORIZONTAL.iterator().forEachRemaining((d) -> {
+                            if (world.isEmptyBlock(p.relative(d))) flag.set(false);
                         });
 
-                        if (flag.get()) world.setBlockState(p, Blocks.LAVA.getDefaultState(), 2);
+                        if (flag.get()) world.setBlock(p, Blocks.LAVA.defaultBlockState(), 2);
                     }
                 }
             }
@@ -66,13 +66,13 @@ public class IgnisCaveBiomeFeature extends AbstractCaveBiomeFeature {
     private void generateColumn(ISeedReader reader, Random rand, BlockPos pos) {
         int height = rand.nextInt(rand.nextInt(6) + 6) + 2;
 
-        BlockPos.Mutable place = pos.toMutable();
+        BlockPos.Mutable place = pos.mutable();
         int maxHeight = place.getY() + height;
 
         while (place.getY() <= maxHeight) {
-            if (!reader.isAirBlock(place.up())) maxHeight = place.getY();
+            if (!reader.isEmptyBlock(place.above())) maxHeight = place.getY();
 
-            reader.setBlockState(place, HallowsBlocks.IGNIS_CRYSTAL_BLOCK.get().getDefaultState(), 2);
+            reader.setBlock(place, HallowsBlocks.IGNIS_CRYSTAL_BLOCK.get().defaultBlockState(), 2);
             place.move(Direction.UP);
         }
     }

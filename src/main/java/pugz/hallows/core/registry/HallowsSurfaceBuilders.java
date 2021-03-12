@@ -18,12 +18,12 @@ public class HallowsSurfaceBuilders {
     public static RegistryObject<SurfaceBuilder<SurfaceBuilderConfig>> GLACIERS;
 
     public static void registerSurfaceBuilders() {
-        HALLOWED = RegistryHelper.createSurfaceBuilder("hallowed", () -> new HallowedSurfaceBuilder(SurfaceBuilderConfig.field_237203_a_));
-        GLACIERS = RegistryHelper.createSurfaceBuilder("glaciers", () -> new GlaciersSurfaceBuilder(SurfaceBuilderConfig.field_237203_a_));
+        HALLOWED = RegistryHelper.createSurfaceBuilder("hallowed", () -> new HallowedSurfaceBuilder(SurfaceBuilderConfig.CODEC));
+        GLACIERS = RegistryHelper.createSurfaceBuilder("glaciers", () -> new GlaciersSurfaceBuilder(SurfaceBuilderConfig.CODEC));
     }
 
     public static class Configured {
-        public static final ConfiguredSurfaceBuilder<SurfaceBuilderConfig> HALLOWED = RegistryHelper.createConfiguredSurfaceBuilder("hallowed", HallowsSurfaceBuilders.HALLOWED.get().func_242929_a(SurfaceBuilder.GRASS_DIRT_SAND_CONFIG));
-        public static final ConfiguredSurfaceBuilder<SurfaceBuilderConfig> GLACIERS = RegistryHelper.createConfiguredSurfaceBuilder("glaciers", HallowsSurfaceBuilders.GLACIERS.get().func_242929_a(SurfaceBuilder.GRASS_DIRT_SAND_CONFIG));
+        public static final ConfiguredSurfaceBuilder<SurfaceBuilderConfig> HALLOWED = RegistryHelper.createConfiguredSurfaceBuilder("hallowed", HallowsSurfaceBuilders.HALLOWED.get().configured(SurfaceBuilder.CONFIG_OCEAN_SAND));
+        public static final ConfiguredSurfaceBuilder<SurfaceBuilderConfig> GLACIERS = RegistryHelper.createConfiguredSurfaceBuilder("glaciers", HallowsSurfaceBuilders.GLACIERS.get().configured(SurfaceBuilder.CONFIG_OCEAN_SAND));
     }
 }

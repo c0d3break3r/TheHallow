@@ -29,13 +29,13 @@ public class HallowsEntities {
     }
 
     public static void registerAttributes() {
-        GlobalEntityTypeAttributes.put(GHOST.get(), GhostEntity.registerAttributes().create());
-        GlobalEntityTypeAttributes.put(HAUNT.get(), HauntEntity.registerAttributes().create());
+        GlobalEntityTypeAttributes.put(GHOST.get(), GhostEntity.registerAttributes().build());
+        GlobalEntityTypeAttributes.put(HAUNT.get(), HauntEntity.registerAttributes().build());
     }
 
     public static void registerSpawns() {
         EntitySpawnPlacementRegistry.register(GHOST.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, GhostEntity::canGhostSpawn);
-        EntitySpawnPlacementRegistry.register(HAUNT.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawn);
+        EntitySpawnPlacementRegistry.register(HAUNT.get(), EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::checkAnyLightMonsterSpawnRules);
     }
 
 

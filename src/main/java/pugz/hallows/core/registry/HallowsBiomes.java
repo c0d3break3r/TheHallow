@@ -44,110 +44,110 @@ public class HallowsBiomes {
         assert name != null;
 
         if (name.getPath().equals("perished_valley") || name.getPath().equals("pumpkin_valley")) {
-            gen.withCarver(GenerationStage.Carving.AIR, HallowsCarvers.Configured.HALLOWS_CAVE);
-            gen.withFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, HallowsFeatures.Configured.VERTICAL_PILLAR);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.PATCH_NECROFIRE);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.IGNIS_CAVE_BIOME);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.OPAL_ORE);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_STYGIAN_RUIN);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_BLACKSTONE);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_TENEBRITE);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_GILDED_TENEBRITE);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.TREES_ASPHODEL);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.FLOWER_POPPIES);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_DENSE);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_WATER);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_PUMPKIN_COMMON);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.WILL_O_WISP_VINES);
-            spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(HallowsEntities.GHOST.get(), 30, 1, 1));
-            spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(HallowsEntities.HAUNT.get(), 3, 1, 1));
+            gen.addCarver(GenerationStage.Carving.AIR, HallowsCarvers.Configured.HALLOWS_CAVE);
+            gen.addFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, HallowsFeatures.Configured.VERTICAL_PILLAR);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.PATCH_NECROFIRE);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.IGNIS_CAVE_BIOME);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.OPAL_ORE);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_STYGIAN_RUIN);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_BLACKSTONE);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_TENEBRITE);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_GILDED_TENEBRITE);
+            gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.TREES_ASPHODEL);
+            gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.FLOWER_POPPIES);
+            gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT);
+            gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_DENSE);
+            gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_WATER);
+            gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_PUMPKIN_COMMON);
+            gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.WILL_O_WISP_VINES);
+            spawns.addSpawn(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(HallowsEntities.GHOST.get(), 30, 1, 1));
+            spawns.addSpawn(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(HallowsEntities.HAUNT.get(), 3, 1, 1));
 
             if (name.getPath().equals("pumpkin_valley")) {
             }
         }
 
         if (name.getPath().equals("necrotic_glaciers")) {
-            gen.withCarver(GenerationStage.Carving.AIR, HallowsCarvers.Configured.HALLOWS_CAVE);
-            gen.withCarver(GenerationStage.Carving.AIR, HallowsCarvers.Configured.NECROMANTLE_CRACK);
-            gen.withFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, HallowsFeatures.Configured.VERTICAL_PILLAR);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.PATCH_NECROFIRE);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.IGNIS_CAVE_BIOME);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.OPAL_ORE);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.HALLSTONE_EMERALD_ORE);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_STYGIAN_RUIN);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_BLACKSTONE);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_TENEBRITE);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_GILDED_TENEBRITE);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_DENSE);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_WATER);
-            spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(HallowsEntities.HAUNT.get(), 5, 1, 1));
+            gen.addCarver(GenerationStage.Carving.AIR, HallowsCarvers.Configured.HALLOWS_CAVE);
+            gen.addCarver(GenerationStage.Carving.AIR, HallowsCarvers.Configured.NECROMANTLE_CRACK);
+            gen.addFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, HallowsFeatures.Configured.VERTICAL_PILLAR);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.PATCH_NECROFIRE);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.IGNIS_CAVE_BIOME);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.OPAL_ORE);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.HALLSTONE_EMERALD_ORE);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_STYGIAN_RUIN);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_BLACKSTONE);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_TENEBRITE);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_GILDED_TENEBRITE);
+            gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT);
+            gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_DENSE);
+            gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_WATER);
+            spawns.addSpawn(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(HallowsEntities.HAUNT.get(), 5, 1, 1));
         }
 
         if (name.getPath().equals("hanging_woods")) {
-            gen.withCarver(GenerationStage.Carving.AIR, HallowsCarvers.Configured.HALLOWS_CAVE);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.PATCH_NECROFIRE);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.IGNIS_CAVE_BIOME);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.OPAL_ORE);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_STYGIAN_RUIN);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_BLACKSTONE);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_TENEBRITE);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_GILDED_TENEBRITE);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.TREES_EBONY);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.TREES_SMALL_EBONY);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.TREES_BLOOD_EBONY);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.TREES_SMALL_EBONY);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_DENSE);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_WATER);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.WILL_O_WISP_VINES);
-            spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(HallowsEntities.GHOST.get(), 30, 1, 1));
-            spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(HallowsEntities.HAUNT.get(), 4, 1, 1));
+            gen.addCarver(GenerationStage.Carving.AIR, HallowsCarvers.Configured.HALLOWS_CAVE);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.PATCH_NECROFIRE);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.IGNIS_CAVE_BIOME);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.OPAL_ORE);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_STYGIAN_RUIN);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_BLACKSTONE);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_TENEBRITE);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_GILDED_TENEBRITE);
+            gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.TREES_EBONY);
+            gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.TREES_SMALL_EBONY);
+            gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.TREES_BLOOD_EBONY);
+            gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.TREES_SMALL_EBONY);
+            gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT);
+            gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_DENSE);
+            gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_WATER);
+            gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.WILL_O_WISP_VINES);
+            spawns.addSpawn(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(HallowsEntities.GHOST.get(), 30, 1, 1));
+            spawns.addSpawn(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(HallowsEntities.HAUNT.get(), 4, 1, 1));
         }
 
         if (name.getPath().equals("hemlock_swamp")) {
-            gen.withCarver(GenerationStage.Carving.AIR, HallowsCarvers.Configured.HALLOWS_CAVE);
-            gen.withFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, HallowsFeatures.Configured.WATER_DELTA);
-            gen.withFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, HallowsFeatures.Configured.VERTICAL_PILLAR);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.PATCH_NECROFIRE);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.IGNIS_CAVE_BIOME);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.OPAL_ORE);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_STYGIAN_RUIN);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_BLACKSTONE);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_TENEBRITE);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.DISK_PETRIFIED_SAND);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_GILDED_TENEBRITE);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.TREES_ASPHODEL);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.TREES_SMALL_EBONY);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.TREES_SMALL_BLOOD_EBONY);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.FLOWER_POPPIES);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_DENSE);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_WATER);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.WILL_O_WISP_VINES);
+            gen.addCarver(GenerationStage.Carving.AIR, HallowsCarvers.Configured.HALLOWS_CAVE);
+            gen.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, HallowsFeatures.Configured.WATER_DELTA);
+            gen.addFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, HallowsFeatures.Configured.VERTICAL_PILLAR);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.PATCH_NECROFIRE);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.IGNIS_CAVE_BIOME);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.OPAL_ORE);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_STYGIAN_RUIN);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_BLACKSTONE);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_TENEBRITE);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.DISK_PETRIFIED_SAND);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_GILDED_TENEBRITE);
+            gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.TREES_ASPHODEL);
+            gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.TREES_SMALL_EBONY);
+            gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.TREES_SMALL_BLOOD_EBONY);
+            gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.FLOWER_POPPIES);
+            gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT);
+            gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_DENSE);
+            gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_WATER);
+            gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.WILL_O_WISP_VINES);
             //gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_HEMLOCK);
-            spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(HallowsEntities.GHOST.get(), 25, 1, 1));
-            spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(HallowsEntities.HAUNT.get(), 4, 1, 1));
+            spawns.addSpawn(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(HallowsEntities.GHOST.get(), 25, 1, 1));
+            spawns.addSpawn(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(HallowsEntities.HAUNT.get(), 4, 1, 1));
         }
 
         if (name.getPath().equals("petrified_sands") || name.getPath().equals("petrified_boneyard")) {
-            gen.withCarver(GenerationStage.Carving.AIR, HallowsCarvers.Configured.HALLOWS_CAVE);
+            gen.addCarver(GenerationStage.Carving.AIR, HallowsCarvers.Configured.HALLOWS_CAVE);
             gen.getStructures().add(() -> HallowsStructures.Configured.PETRIFIED_PYRAMID);
-            gen.withFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, HallowsFeatures.Configured.VERTICAL_PILLAR);
-            gen.withFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, HallowsFeatures.Configured.PETRIFIED_SANDSTONE_ROCK);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.PATCH_NECROFIRE);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.IGNIS_CAVE_BIOME);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.OPAL_ORE);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_STYGIAN_RUIN);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_BLACKSTONE);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_TENEBRITE);
-            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_GILDED_TENEBRITE);
+            gen.addFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, HallowsFeatures.Configured.VERTICAL_PILLAR);
+            gen.addFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, HallowsFeatures.Configured.PETRIFIED_SANDSTONE_ROCK);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.PATCH_NECROFIRE);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.IGNIS_CAVE_BIOME);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.OPAL_ORE);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_STYGIAN_RUIN);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_BLACKSTONE);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_TENEBRITE);
+            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_GILDED_TENEBRITE);
             //gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PETRIFIED_SANDSTONE_ROCK);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.TREES_ASPHODEL);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT);
-            gen.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_WATER);
-            spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(HallowsEntities.GHOST.get(), 25, 1, 1));
+            gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.TREES_ASPHODEL);
+            gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT);
+            gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, HallowsFeatures.Configured.PATCH_DEADROOT_WATER);
+            spawns.addSpawn(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(HallowsEntities.GHOST.get(), 25, 1, 1));
         }
     }
 }

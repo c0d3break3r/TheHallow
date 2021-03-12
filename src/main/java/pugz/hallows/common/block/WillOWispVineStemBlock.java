@@ -26,42 +26,42 @@ import java.util.function.Supplier;
 
 public class WillOWispVineStemBlock extends AbstractBodyPlantBlock {
     public static final BooleanProperty FRUIT = BooleanProperty.create("fruit");
-    public static final VoxelShape SHAPE = Block.makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
+    public static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
     private final Supplier<Item> fruit;
     private final Supplier<Block> topPlant;
 
     public WillOWispVineStemBlock(AbstractBlock.Properties properties, Supplier<Item> fruit, Supplier<Block> topPlant) {
         super(properties, Direction.DOWN, SHAPE, false);
-        this.setDefaultState(this.getDefaultState().with(FRUIT, false));
+        this.registerDefaultState(this.defaultBlockState().setValue(FRUIT, false));
         this.fruit = fruit;
         this.topPlant = topPlant;
     }
 
     @Nonnull
-    protected AbstractTopPlantBlock getTopPlantBlock() {
+    protected AbstractTopPlantBlock getHeadBlock() {
         return (AbstractTopPlantBlock) topPlant.get();
     }
 
     @Nonnull
     @Override
     @SuppressWarnings("deprecation")
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (state.get(FRUIT)) {
+    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+        if (state.getValue(FRUIT)) {
             ItemStack stack = new ItemStack(fruit.get());
-            if (player.getHeldItem(handIn).isEmpty()) {
-                player.setHeldItem(handIn, stack);
-            } else if (!player.addItemStackToInventory(stack)) {
-                player.dropItem(stack, false);
+            if (player.getItemInHand(handIn).isEmpty()) {
+                player.setItemInHand(handIn, stack);
+            } else if (!player.addItem(stack)) {
+                player.drop(stack, false);
             }
 
-            worldIn.setBlockState(pos, state.with(FRUIT, false));
+            worldIn.setBlockAndUpdate(pos, state.setValue(FRUIT, false));
         }
-        return ActionResultType.func_233537_a_(worldIn.isRemote);
+        return ActionResultType.sidedSuccess(worldIn.isClientSide);
     }
 
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-        if (stateIn.get(FRUIT)) {
+        if (stateIn.getValue(FRUIT)) {
             double d0 = (double) pos.getX() + 0.5D;
             double d1 = (double) pos.getY() + 0.7D;
             double d2 = (double) pos.getZ() + 0.5D;
@@ -74,7 +74,7 @@ public class WillOWispVineStemBlock extends AbstractBodyPlantBlock {
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(FRUIT);
     }
 }

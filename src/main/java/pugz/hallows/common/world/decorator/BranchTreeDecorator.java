@@ -43,21 +43,21 @@ public class BranchTreeDecorator extends TreeDecorator {
     }
 
     @Nonnull
-    protected TreeDecoratorType<?> func_230380_a_() {
+    protected TreeDecoratorType<?> type() {
         return HallowsFeatures.Decorators.BRANCH.get();
     }
 
-    public void func_225576_a_(ISeedReader world, Random random, List<BlockPos> logPositions, List<BlockPos> leavesPositions, Set<BlockPos> changedBlocks, MutableBoundingBox boundingBox) {
+    public void place(ISeedReader world, Random random, List<BlockPos> logPositions, List<BlockPos> leavesPositions, Set<BlockPos> changedBlocks, MutableBoundingBox boundingBox) {
         if (!(random.nextFloat() >= this.probability) && state.getBlock() instanceof WoodPostBlock) {
             for (BlockPos pos : logPositions) {
-                BlockPos.Mutable blockpos$mutable = pos.toMutable();
-                Direction direction = Direction.Plane.HORIZONTAL.random(random);
+                BlockPos.Mutable blockpos$mutable = pos.mutable();
+                Direction direction = Direction.Plane.HORIZONTAL.getRandomDirection(random);
                 for (int length = random.nextInt(maxLength) + 1; length > 0; --length) {
-                    blockpos$mutable.setAndMove(blockpos$mutable, direction);
-                    if (world.isAirBlock(blockpos$mutable) && world.isAirBlock(blockpos$mutable.down()) && random.nextFloat() <= branchDensity) {
-                        world.setBlockState(blockpos$mutable, this.state.with(BlockStateProperties.AXIS, direction.getAxis()), 19);
+                    blockpos$mutable.setWithOffset(blockpos$mutable, direction);
+                    if (world.isEmptyBlock(blockpos$mutable) && world.isEmptyBlock(blockpos$mutable.below()) && random.nextFloat() <= branchDensity) {
+                        world.setBlock(blockpos$mutable, this.state.setValue(BlockStateProperties.AXIS, direction.getAxis()), 19);
                         changedBlocks.add(blockpos$mutable);
-                        boundingBox.expandTo(new MutableBoundingBox(blockpos$mutable, blockpos$mutable));
+                        boundingBox.expand(new MutableBoundingBox(blockpos$mutable, blockpos$mutable));
                     } else break;
                 }
             }

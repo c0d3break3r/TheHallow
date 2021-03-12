@@ -39,7 +39,7 @@ public class HallowsBiomeProvider extends BiomeProvider {
         return builder.group(Codec.LONG.fieldOf("seed").forGetter((hallowsProvider) -> {
             return hallowsProvider.seed;
         }), RecordCodecBuilder.<Pair<Biome.Attributes, Supplier<Biome>>>create((biomeAttributes) -> {
-            return biomeAttributes.group(Biome.Attributes.CODEC.fieldOf("parameters").forGetter(Pair::getFirst), Biome.BIOME_CODEC.fieldOf("biome").forGetter(Pair::getSecond)).apply(biomeAttributes, Pair::of);
+            return biomeAttributes.group(Biome.Attributes.CODEC.fieldOf("parameters").forGetter(Pair::getFirst), Biome.CODEC.fieldOf("biome").forGetter(Pair::getSecond)).apply(biomeAttributes, Pair::of);
         }).listOf().fieldOf("biomes").forGetter((hallowsProvider) -> {
             return hallowsProvider.biomeAttributes;
         }), HallowsBiomeProvider.Noise.CODEC.fieldOf("temperature_noise").forGetter((hallowsProvider) -> {
@@ -89,10 +89,10 @@ public class HallowsBiomeProvider extends BiomeProvider {
         this.humidityNoise = humidityNoise;
         this.altitudeNoise = altitudeNoise;
         this.weirdnessNoise = weirdnessNoise;
-        this.temperatureNoiseMixer = MaxMinNoiseMixer.func_242930_a(new SharedSeedRandom(seed), temperatureNoise.getNumberOfOctaves(), temperatureNoise.getAmplitudes());
-        this.humidityNoiseMixer = MaxMinNoiseMixer.func_242930_a(new SharedSeedRandom(seed + 1L), humidityNoise.getNumberOfOctaves(), humidityNoise.getAmplitudes());
-        this.altitudeNoiseMixer = MaxMinNoiseMixer.func_242930_a(new SharedSeedRandom(seed + 2L), altitudeNoise.getNumberOfOctaves(), altitudeNoise.getAmplitudes());
-        this.weirdnessNoiseMixer = MaxMinNoiseMixer.func_242930_a(new SharedSeedRandom(seed + 3L), weirdnessNoise.getNumberOfOctaves(), weirdnessNoise.getAmplitudes());
+        this.temperatureNoiseMixer = MaxMinNoiseMixer.create(new SharedSeedRandom(seed), temperatureNoise.getNumberOfOctaves(), temperatureNoise.getAmplitudes());
+        this.humidityNoiseMixer = MaxMinNoiseMixer.create(new SharedSeedRandom(seed + 1L), humidityNoise.getNumberOfOctaves(), humidityNoise.getAmplitudes());
+        this.altitudeNoiseMixer = MaxMinNoiseMixer.create(new SharedSeedRandom(seed + 2L), altitudeNoise.getNumberOfOctaves(), altitudeNoise.getAmplitudes());
+        this.weirdnessNoiseMixer = MaxMinNoiseMixer.create(new SharedSeedRandom(seed + 3L), weirdnessNoise.getNumberOfOctaves(), weirdnessNoise.getAmplitudes());
         this.biomeAttributes = biomeAttributes;
         this.useHeightForNoise = false;
     }
@@ -100,7 +100,7 @@ public class HallowsBiomeProvider extends BiomeProvider {
     @Nonnull
     @Override
     @OnlyIn(Dist.CLIENT)
-    public BiomeProvider getBiomeProvider(long seed) {
+    public BiomeProvider withSeed(long seed) {
         return new HallowsBiomeProvider(seed, this.biomeAttributes, this.hallowsProviderPreset);
     }
 
@@ -112,16 +112,16 @@ public class HallowsBiomeProvider extends BiomeProvider {
 
     @Nonnull
     @Override
-    protected Codec<? extends BiomeProvider> getBiomeProviderCodec() {
+    protected Codec<? extends BiomeProvider> codec() {
         return CODEC;
     }
 
     @Nonnull
     public Biome getNoiseBiome(int x, int y, int z) {
         int i = this.useHeightForNoise ? y : 0;
-        Biome.Attributes biome$attributes = new Biome.Attributes((float)this.temperatureNoiseMixer.func_237211_a_((double)x, (double)i, (double)z), (float)this.humidityNoiseMixer.func_237211_a_((double)x, (double)i, (double)z), (float)this.altitudeNoiseMixer.func_237211_a_((double)x, (double)i, (double)z), (float)this.weirdnessNoiseMixer.func_237211_a_((double)x, (double)i, (double)z), 0.0F);
+        Biome.Attributes biome$attributes = new Biome.Attributes((float)this.temperatureNoiseMixer.getValue((double)x, (double)i, (double)z), (float)this.humidityNoiseMixer.getValue((double)x, (double)i, (double)z), (float)this.altitudeNoiseMixer.getValue((double)x, (double)i, (double)z), (float)this.weirdnessNoiseMixer.getValue((double)x, (double)i, (double)z), 0.0F);
         return this.biomeAttributes.stream().min(Comparator.comparing((attributeBiomePair) -> {
-            return attributeBiomePair.getFirst().getAttributeDifference(biome$attributes);
+            return attributeBiomePair.getFirst().fitness(biome$attributes);
         })).map(Pair::getSecond).map(Supplier::get).orElse(BiomeRegistry.THE_VOID);
     }
 
@@ -133,7 +133,7 @@ public class HallowsBiomeProvider extends BiomeProvider {
                 });
             }, (preset) -> {
                 return DataResult.success(preset.id);
-            }).fieldOf("preset").stable().forGetter(HallowsBiomeProvider.DefaultBuilder::getPreset), RegistryLookupCodec.getLookUpCodec(Registry.BIOME_KEY).forGetter(HallowsBiomeProvider.DefaultBuilder::getLookupRegistry), Codec.LONG.fieldOf("seed").stable().forGetter(HallowsBiomeProvider.DefaultBuilder::getSeed)).apply(builder, builder.stable(HallowsBiomeProvider.DefaultBuilder::new));
+            }).fieldOf("preset").stable().forGetter(HallowsBiomeProvider.DefaultBuilder::getPreset), RegistryLookupCodec.create(Registry.BIOME_REGISTRY).forGetter(HallowsBiomeProvider.DefaultBuilder::getLookupRegistry), Codec.LONG.fieldOf("seed").stable().forGetter(HallowsBiomeProvider.DefaultBuilder::getSeed)).apply(builder, builder.stable(HallowsBiomeProvider.DefaultBuilder::new));
         });
         private final HallowsBiomeProvider.Preset preset;
         private final Registry<Biome> lookupRegistry;

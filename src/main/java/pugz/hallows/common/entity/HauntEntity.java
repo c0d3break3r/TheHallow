@@ -27,7 +27,7 @@ import javax.annotation.Nullable;
 import java.util.EnumSet;
 
 public class HauntEntity extends MonsterEntity implements IEndimatedEntity {
-    private static final DataParameter<Boolean> SCREAMING = EntityDataManager.createKey(HauntEntity.class, DataSerializers.BOOLEAN);
+    private static final DataParameter<Boolean> SCREAMING = EntityDataManager.defineId(HauntEntity.class, DataSerializers.BOOLEAN);
     public static final Endimation ANGRY_ANIMATION = new Endimation(80);
     private int attackTimer;
     private int animationTick;
@@ -36,8 +36,8 @@ public class HauntEntity extends MonsterEntity implements IEndimatedEntity {
 
     public HauntEntity(EntityType<? extends HauntEntity> entity, World world) {
         super(entity, world);
-        this.experienceValue = 4;
-        this.setPathPriority(PathNodeType.WATER, -1.0F);
+        this.xpReward = 4;
+        this.setPathfindingMalus(PathNodeType.WATER, -1.0F);
     }
 
     @Override
@@ -83,54 +83,56 @@ public class HauntEntity extends MonsterEntity implements IEndimatedEntity {
     }
 
     public void setAttackTarget(@Nullable LivingEntity living) {
-        this.dataManager.set(SCREAMING, living != null);
+        this.entityData.set(SCREAMING, living != null);
         NetworkUtil.setPlayingAnimationMessage(this, HauntEntity.ANGRY_ANIMATION);
-        super.setAttackTarget(living);
+        super.setTarget(living);
     }
 
-    protected void registerData() {
-        super.registerData();
-        this.dataManager.register(SCREAMING, false);
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.set(SCREAMING, false);
     }
 
     @Nonnull
-    public EntitySize getSize(Pose poseIn) {
-        return super.getSize(poseIn).scale(1.2F);
+    @Override
+    public EntitySize getDimensions(Pose poseIn) {
+        return super.getDimensions(poseIn).scale(1.2F);
     }
 
     public static AttributeModifierMap.MutableAttribute registerAttributes() {
-        return MonsterEntity.func_234295_eP_()
-                .createMutableAttribute(Attributes.FOLLOW_RANGE, 30.0D)
-                .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
-                .createMutableAttribute(Attributes.ATTACK_DAMAGE, 6.0D)
-                .createMutableAttribute(Attributes.ARMOR, 8.0D)
-                .createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 0.5D)
-                .createMutableAttribute(Attributes.MAX_HEALTH, 80.0D);
+        return MonsterEntity.createMonsterAttributes()
+                .add(Attributes.FOLLOW_RANGE, 30.0D)
+                .add(Attributes.MOVEMENT_SPEED, 0.25D)
+                .add(Attributes.ATTACK_DAMAGE, 6.0D)
+                .add(Attributes.ARMOR, 8.0D)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 0.5D)
+                .add(Attributes.MAX_HEALTH, 80.0D);
     }
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_VEX_AMBIENT;
+        return SoundEvents.VEX_AMBIENT;
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return SoundEvents.ENTITY_GHAST_SCREAM;
+        return SoundEvents.GHAST_SCREAM;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_GHAST_SCREAM;
+        return SoundEvents.GHAST_SCREAM;
     }
 
     @Override
     protected void playStepSound(BlockPos pos, BlockState blockIn) {
-        super.playSound(SoundEvents.ENTITY_VEX_AMBIENT, 0.15F, 1.0F);
+        super.playSound(SoundEvents.VEX_AMBIENT, 0.15F, 1.0F);
     }
 
     @Nonnull
     @Override
-    public CreatureAttribute getCreatureAttribute() {
+    public CreatureAttribute getMobType() {
         return CreatureAttribute.UNDEAD;
     }
 
@@ -139,31 +141,33 @@ public class HauntEntity extends MonsterEntity implements IEndimatedEntity {
         return 1.0F;
     }
 
-    public boolean isWaterSensitive() {
+    @Override
+    public boolean isSensitiveToWater() {
         return true;
     }
 
-    protected void updateAITasks() {
-        if (this.world.isDaytime()) {
+    @Override
+    protected void customServerAiStep() {
+        if (this.level.isDay()) {
             float f = this.getBrightness();
-            if (f > 0.5F && this.world.canSeeSky(this.getPosition()) && this.rand.nextFloat() * 30.0F < (f - 0.4F) * 2.0F) {
+            if (f > 0.5F && this.level.canSeeSky(this.blockPosition()) && this.random.nextFloat() * 30.0F < (f - 0.4F) * 2.0F) {
                 this.setAttackTarget(null);
                 this.teleportRandomly();
             }
         }
 
-        super.updateAITasks();
+        super.customServerAiStep();
     }
 
     @Override
-    public void livingTick() {
-        super.livingTick();
+    public void baseTick() {
+        super.baseTick();
         if (this.attackTimer > 0) {
             --this.attackTimer;
         }
     }
 
-    public boolean attackEntityFrom(DamageSource source, float amount) {
+    public boolean hurt(DamageSource source, float amount) {
         this.attackTimer = 10;
 
         if (this.isInvulnerableTo(source)) return false;
@@ -174,21 +178,22 @@ public class HauntEntity extends MonsterEntity implements IEndimatedEntity {
 
             return false;
         } else {
-            boolean flag = super.attackEntityFrom(source, amount);
-            if (!this.world.isRemote() && !(source.getTrueSource() instanceof LivingEntity) && this.rand.nextInt(10) != 0) {
+            boolean flag = super.hurt(source, amount);
+            if (!this.level.isClientSide() && !(source.getDirectEntity() instanceof LivingEntity) && this.random.nextInt(10) != 0) {
                 this.teleportRandomly();
             }
             return flag;
         }
     }
 
+    @Override
     @OnlyIn(Dist.CLIENT)
-    public void handleStatusUpdate(byte id) {
+    public void handleEntityEvent(byte id) {
         if (id == 4) {
             this.attackTimer = 10;
-            this.playSound(SoundEvents.ENTITY_IRON_GOLEM_ATTACK, 1.0F, 1.0F);
+            this.playSound(SoundEvents.IRON_GOLEM_ATTACK, 1.0F, 1.0F);
         } else {
-            super.handleStatusUpdate(id);
+            super.handleEntityEvent(id);
         }
     }
 
@@ -198,46 +203,46 @@ public class HauntEntity extends MonsterEntity implements IEndimatedEntity {
     }
 
     public boolean isScreaming() {
-        return this.dataManager.get(SCREAMING);
+        return this.entityData.get(SCREAMING);
     }
 
     public void setScreaming(boolean screaming) {
-        this.dataManager.set(SCREAMING, screaming);
+        this.entityData.set(SCREAMING, screaming);
     }
 
     protected boolean teleportRandomly() {
-        if (!this.world.isRemote() && this.isAlive()) {
-            double d0 = this.getPosX() + (this.rand.nextDouble() - 0.5D) * 64.0D;
-            double d1 = this.getPosY() + (double)(this.rand.nextInt(64) - 32);
-            double d2 = this.getPosZ() + (this.rand.nextDouble() - 0.5D) * 64.0D;
-            return this.teleportTo(d0, d1, d2);
+        if (!this.level.isClientSide() && this.isAlive()) {
+            double d0 = this.getX() + (this.random.nextDouble() - 0.5D) * 64.0D;
+            double d1 = this.getY() + (double)(this.random.nextInt(64) - 32);
+            double d2 = this.getZ() + (this.random.nextDouble() - 0.5D) * 64.0D;
+            return this.teleport(d0, d1, d2);
         } else return false;
     }
 
     private boolean teleportToEntity(Entity entity) {
-        Vector3d vector3d = new Vector3d(this.getPosX() - entity.getPosX(), this.getPosYHeight(0.5D) - entity.getPosYEye(), this.getPosZ() - entity.getPosZ());
+        Vector3d vector3d = new Vector3d(this.getX() - entity.getX(), this.getY(0.5D) - entity.getEyeY(), this.getZ() - entity.getZ());
         vector3d = vector3d.normalize();
-        double d1 = this.getPosX() + (this.rand.nextDouble() - 0.5D) * 8.0D - vector3d.x * 16.0D;
-        double d2 = this.getPosY() + (double)(this.rand.nextInt(16) - 8) - vector3d.y * 16.0D;
-        double d3 = this.getPosZ() + (this.rand.nextDouble() - 0.5D) * 8.0D - vector3d.z * 16.0D;
-        return this.teleportTo(d1, d2, d3);
+        double d1 = this.getX() + (this.random.nextDouble() - 0.5D) * 8.0D - vector3d.x * 16.0D;
+        double d2 = this.getY() + (double)(this.random.nextInt(16) - 8) - vector3d.y * 16.0D;
+        double d3 = this.getZ() + (this.random.nextDouble() - 0.5D) * 8.0D - vector3d.z * 16.0D;
+        return this.teleport(d1, d2, d3);
     }
 
-    private boolean teleportTo(double x, double y, double z) {
+    private boolean teleport(double x, double y, double z) {
         BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable(x, y, z);
 
-        while (blockpos$mutable.getY() > 0 && !this.world.getBlockState(blockpos$mutable).getMaterial().blocksMovement()) {
+        while (blockpos$mutable.getY() > 0 && !this.level.getBlockState(blockpos$mutable).getMaterial().blocksMotion()) {
             blockpos$mutable.move(Direction.DOWN);
         }
 
-        BlockState blockstate = this.world.getBlockState(blockpos$mutable);
-        boolean flag = blockstate.getMaterial().blocksMovement();
-        boolean flag1 = blockstate.getFluidState().isTagged(FluidTags.WATER);
+        BlockState blockstate = this.level.getBlockState(blockpos$mutable);
+        boolean flag = blockstate.getMaterial().blocksMotion();
+        boolean flag1 = blockstate.getFluidState().is(FluidTags.WATER);
 
         if (flag && !flag1) {
             if (!this.isSilent()) {
-                this.world.playSound(null, this.prevPosX, this.prevPosY, this.prevPosZ, SoundEvents.ENTITY_ENDERMAN_TELEPORT, this.getSoundCategory(), 1.0F, 1.0F);
-                this.playSound(SoundEvents.ENTITY_ENDERMAN_TELEPORT, 1.0F, 1.0F);
+                this.level.playSound(null, this.xOld, this.yOld, this.zOld, SoundEvents.ENDERMAN_TELEPORT, this.getSoundSource(), 1.0F, 1.0F);
+                this.playSound(SoundEvents.ENDERMAN_TELEPORT, 1.0F, 1.0F);
             } return true;
         } else return false;
     }
@@ -248,67 +253,67 @@ public class HauntEntity extends MonsterEntity implements IEndimatedEntity {
         private int aggroTime;
         private int teleportTime;
         private final EntityPredicate field_220791_m;
-        private final EntityPredicate field_220792_n = (new EntityPredicate()).setLineOfSiteRequired();
+        private final EntityPredicate field_220792_n = new EntityPredicate().allowUnseeable();
 
         public FindPlayerGoal(HauntEntity haunt) {
             super(haunt, PlayerEntity.class, false, false);
             this.haunt = haunt;
-            this.field_220791_m = new EntityPredicate().setDistance(this.getTargetDistance()).setCustomPredicate((target) -> {
-                return target.canEntityBeSeen(haunt);
+            this.field_220791_m = new EntityPredicate().range(this.getFollowDistance()).selector((target) -> {
+                return target.canSee(haunt);
             });
         }
 
-        public boolean shouldExecute() {
-            this.player = this.haunt.world.getClosestPlayer(this.field_220791_m, this.haunt);
+        public boolean canUse() {
+            this.player = this.haunt.level.getNearestPlayer(this.field_220791_m, this.haunt);
             return this.player != null;
         }
 
-        public void startExecuting() {
+        public void start() {
             this.aggroTime = 5;
             this.teleportTime = 0;
             this.haunt.setScreaming(true);
         }
 
-        public void resetTask() {
+        public void stop() {
             this.player = null;
             this.haunt.setScreaming(false);
-            super.resetTask();
+            super.stop();
         }
 
-        public boolean shouldContinueExecuting() {
+        public boolean canContinueToUse() {
             if (this.player != null) {
-                if (!this.player.canEntityBeSeen(haunt)) {
+                if (!this.player.canSee(haunt)) {
                     return false;
                 } else {
-                    this.haunt.faceEntity(this.player, 15.0F, 15.0F);
+                    this.haunt.lookAt(this.player, 15.0F, 15.0F);
                     return true;
                 }
             } else {
                 this.haunt.setScreaming(false);
-                return this.nearestTarget != null && this.field_220792_n.canTarget(this.haunt, this.nearestTarget) || super.shouldContinueExecuting();
+                return this.target != null && this.field_220792_n.test(this.haunt, this.target) || super.canUse();
             }
         }
 
         public void tick() {
-            if (this.haunt.getAttackTarget() == null) {
-                super.setNearestTarget(null);
+            if (this.haunt.getTarget() == null) {
+                super.setTarget(null);
             }
 
             if (this.player != null) {
                 if (--this.aggroTime <= 0) {
-                    this.nearestTarget = this.player;
+                    this.target = this.player;
                     this.player = null;
-                    super.startExecuting();
+                    super.start();
                 }
             } else {
-                if (this.nearestTarget != null && !this.haunt.isPassenger()) {
-                    if (this.nearestTarget.canEntityBeSeen(haunt)) {
-                        if (this.nearestTarget.getDistanceSq(this.haunt) < 16.0D) {
+                if (this.target != null && !this.haunt.isPassenger()) {
+                    if (this.target.canSee(haunt)) {
+                        if (this.target.distanceToSqr(this.haunt) < 16.0D) {
                             this.haunt.teleportRandomly();
                         }
 
                         this.teleportTime = 0;
-                    } else if (this.nearestTarget.getDistanceSq(this.haunt) > 256.0D && this.teleportTime++ >= 30 && this.haunt.teleportToEntity(this.nearestTarget)) {
+                    } else if (this.target.distanceToSqr(this.haunt) > 256.0D && this.teleportTime++ >= 30 && this.haunt.teleportToEntity(this.target)) {
                         this.teleportTime = 0;
                     }
                 }
@@ -323,26 +328,26 @@ public class HauntEntity extends MonsterEntity implements IEndimatedEntity {
 
         public StareGoal(HauntEntity haunt) {
             this.haunt = haunt;
-            this.setMutexFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE));
+            this.setFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE));
         }
 
-        public boolean shouldExecute() {
-            this.targetPlayer = this.haunt.getAttackTarget();
+        public boolean canUse() {
+            this.targetPlayer = this.haunt.getTarget();
             if (!(this.targetPlayer instanceof PlayerEntity)) {
                 return false;
             } else {
-                double d0 = this.targetPlayer.getDistanceSq(this.haunt);
-                return !(d0 > 256.0D) && this.targetPlayer.canEntityBeSeen(haunt);
+                double d0 = this.targetPlayer.distanceToSqr(this.haunt);
+                return !(d0 > 256.0D) && this.targetPlayer.canSee(haunt);
             }
         }
 
-        public void startExecuting() {
-            this.haunt.getNavigator().clearPath();
+        public void start() {
+            this.haunt.getNavigation().recomputePath();
         }
 
         public void tick() {
-            this.haunt.getLookController().setLookPosition(this.targetPlayer.getPosX(), this.targetPlayer.getPosYEye(), this.targetPlayer.getPosZ());
-            this.haunt.getNavigator().tryMoveToXYZ(this.targetPlayer.getPosX(), this.targetPlayer.getPosYEye(), this.targetPlayer.getPosZ(), 0.1F);
+            this.haunt.getLookControl().setLookAt(this.targetPlayer.getX(), this.targetPlayer.getEyeY(), this.targetPlayer.getZ());
+            this.haunt.getNavigation().moveTo(this.targetPlayer.getX(), this.targetPlayer.getEyeY(), this.targetPlayer.getZ(), 0.1F);
         }
     }
 }

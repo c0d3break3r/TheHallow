@@ -17,16 +17,16 @@ public class NecrofireBlock extends AbstractFireBlock {
     @Nonnull
     @SuppressWarnings("deprecation")
     public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-        return this.isValidPosition(stateIn, worldIn, currentPos) ? this.getDefaultState() : Blocks.AIR.getDefaultState();
+        return this.isValidPosition(stateIn, worldIn, currentPos) ? this.defaultBlockState() : Blocks.AIR.defaultBlockState();
     }
 
     @SuppressWarnings("deprecation")
     public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-        return isNecrofireBase(worldIn.getBlockState(pos.down()).getBlock());
+        return isNecrofireBase(worldIn.getBlockState(pos.below()).getBlock());
     }
 
     public static boolean isNecrofireBase(Block block) {
-        return block.isIn(HallowsTags.Blocks.NECROFIRE_BASE_BLOCKS);
+        return block.is(HallowsTags.Blocks.NECROFIRE_BASE_BLOCKS);
     }
 
     protected boolean canBurn(BlockState state) {

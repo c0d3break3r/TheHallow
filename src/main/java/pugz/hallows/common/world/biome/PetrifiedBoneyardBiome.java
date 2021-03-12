@@ -102,10 +102,10 @@ public class PetrifiedBoneyardBiome extends AbstractBiome {
     @Override
     BiomeGenerationSettings getGenerationSettings() {
         BiomeGenerationSettings.Builder builder = new BiomeGenerationSettings.Builder();
-        builder.withSurfaceBuilder(() -> SurfaceBuilder.DEFAULT.func_242929_a(HallowedSurfaceBuilder.PETRIFIED_SAND_CONFIG));
-        builder.withStructure(StructureFeatures.NETHER_FOSSIL);
-        DefaultBiomeFeatures.withFossils(builder);
-        builder.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Features.SPRING_LAVA);
+        builder.surfaceBuilder(() -> SurfaceBuilder.DEFAULT.configured(HallowedSurfaceBuilder.PETRIFIED_SAND_CONFIG));
+        builder.addStructureStart(StructureFeatures.NETHER_FOSSIL);
+        DefaultBiomeFeatures.addFossilDecoration(builder);
+        builder.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Features.SPRING_LAVA);
         return builder.build();
     }
 
@@ -113,10 +113,10 @@ public class PetrifiedBoneyardBiome extends AbstractBiome {
     @Override
     MobSpawnInfo getMobSpawns() {
         MobSpawnInfo.Builder builder = new MobSpawnInfo.Builder();
-        builder.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(EntityType.SPIDER, 100, 2, 3));
-        builder.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(EntityType.ZOMBIE, 95, 2, 3));
-        builder.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(EntityType.SKELETON, 100, 2, 3));
-        builder.withSpawner(EntityClassification.AMBIENT, new MobSpawnInfo.Spawners(EntityType.BAT, 10, 8, 8));
-        return builder.copy();
+        builder.addSpawn(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(EntityType.SPIDER, 100, 2, 3));
+        builder.addSpawn(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(EntityType.ZOMBIE, 95, 2, 3));
+        builder.addSpawn(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(EntityType.SKELETON, 100, 2, 3));
+        builder.addSpawn(EntityClassification.AMBIENT, new MobSpawnInfo.Spawners(EntityType.BAT, 10, 8, 8));
+        return builder.build();
     }
 }

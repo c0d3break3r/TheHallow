@@ -20,14 +20,14 @@ public class HauntRenderer extends MobRenderer<HauntEntity, EntityModel<HauntEnt
         super(manager, new HauntModel<>(), 0.8F);
     }
 
-    protected void preRenderCallback(HauntEntity haunt, MatrixStack matrixStackIn, float partialTickTime) {
+    protected void scale(HauntEntity haunt, MatrixStack matrixStackIn, float partialTickTime) {
         matrixStackIn.scale(1.2F, 1.2F, 1.2F);
     }
 
     @Nonnull
     public Vector3d getRenderOffset(HauntEntity haunt, float partialTicks) {
         if (haunt.isScreaming()) {
-            return new Vector3d(haunt.getRNG().nextGaussian() * 0.01D, 0.0D, haunt.getRNG().nextGaussian() * 0.01D);
+            return new Vector3d(haunt.getRandom().nextGaussian() * 0.01D, 0.0D, haunt.getRandom().nextGaussian() * 0.01D);
         } else {
             return super.getRenderOffset(haunt, partialTicks);
         }
@@ -35,7 +35,7 @@ public class HauntRenderer extends MobRenderer<HauntEntity, EntityModel<HauntEnt
 
     @Nonnull
     @Override
-    public ResourceLocation getEntityTexture(HauntEntity haunt) {
+    public ResourceLocation getTextureLocation(HauntEntity haunt) {
         return new ResourceLocation(Hallows.MOD_ID, "textures/entity/haunt.png");
     }
 }

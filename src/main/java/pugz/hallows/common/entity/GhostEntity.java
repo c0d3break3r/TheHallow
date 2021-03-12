@@ -30,19 +30,19 @@ import java.util.EnumSet;
 import java.util.Random;
 
 public class GhostEntity extends MonsterEntity {
-    protected static final DataParameter<Byte> GHOST_FLAGS = EntityDataManager.createKey(GhostEntity.class, DataSerializers.BYTE);
+    protected static final DataParameter<Byte> GHOST_FLAGS = EntityDataManager.defineId(GhostEntity.class, DataSerializers.BYTE);
 
     public GhostEntity(EntityType<? extends GhostEntity> entity, World world) {
         super(entity, world);
-        this.moveController = new GhostEntity.MoveHelperController(this);
-        this.experienceValue = 2;
-        this.setPathPriority(PathNodeType.WATER, -1.0F);
+        this.moveControl = new GhostEntity.MoveHelperController(this);
+        this.xpReward = 2;
+        this.setPathfindingMalus(PathNodeType.WATER, -1.0F);
     }
 
     @Override
     public void move(MoverType typeIn, Vector3d pos) {
         super.move(typeIn, pos);
-        this.doBlockCollisions();
+        this.checkInsideBlocks();
     }
 
     @Override
@@ -56,42 +56,43 @@ public class GhostEntity extends MonsterEntity {
         this.goalSelector.addGoal(9, new LookAtGoal(this, LivingEntity.class, 3.0F, 1.0F));
         this.goalSelector.addGoal(10, new GhostEntity.MoveRandomGoal());
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, true));
-        this.targetSelector.addGoal(2, new HurtByTargetGoal(this, PlayerEntity.class).setCallsForHelp(GhostEntity.class));
+        this.targetSelector.addGoal(2, new HurtByTargetGoal(this, PlayerEntity.class).setAlertOthers(GhostEntity.class));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
     }
 
     public static AttributeModifierMap.MutableAttribute registerAttributes() {
-        return MonsterEntity.func_234295_eP_()
-                .createMutableAttribute(Attributes.FOLLOW_RANGE, 30.0D)
-                .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.2D)
-                .createMutableAttribute(Attributes.ATTACK_DAMAGE, 4.0D)
-                .createMutableAttribute(Attributes.MAX_HEALTH, 15.0D);
+        return MonsterEntity.createMonsterAttributes()
+                .add(Attributes.FOLLOW_RANGE, 30.0D)
+                .add(Attributes.MOVEMENT_SPEED, 0.2D)
+                .add(Attributes.ATTACK_DAMAGE, 4.0D)
+                .add(Attributes.MAX_HEALTH, 15.0D);
     }
 
     @Override
-    protected void registerData() {
-        super.registerData();
-        this.dataManager.register(GHOST_FLAGS, (byte)0);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.set(GHOST_FLAGS, (byte)0);
     }
 
     @Nonnull
-    public EntitySize getSize(Pose poseIn) {
-        return super.getSize(poseIn).scale(1.2F);
+    @Override
+    public EntitySize getDimensions(Pose poseIn) {
+        return super.getDimensions(poseIn).scale(1.2F);
     }
 
     @Override
-    public boolean attackEntityAsMob(Entity entityIn) {
-        if (super.attackEntityAsMob(entityIn)) {
-            if (entityIn instanceof LivingEntity) ((LivingEntity) entityIn).addPotionEffect(new EffectInstance(Effects.BLINDNESS, 25, 0));
+    public boolean doHurtTarget(Entity entityIn) {
+        if (super.doHurtTarget(entityIn)) {
+            if (entityIn instanceof LivingEntity) ((LivingEntity) entityIn).addEffect(new EffectInstance(Effects.BLINDNESS, 25, 0));
             return true;
         } else return false;
     }
 
     @Override
     public void tick() {
-        this.noClip = true;
+        this.noPhysics = true;
         super.tick();
-        this.noClip = false;
+        this.noPhysics = false;
         this.setNoGravity(true);
     }
 
@@ -101,27 +102,27 @@ public class GhostEntity extends MonsterEntity {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_VEX_AMBIENT;
+        return SoundEvents.VEX_AMBIENT;
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return SoundEvents.ENTITY_GHAST_SCREAM;
+        return SoundEvents.GHAST_SCREAM;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_GHAST_SCREAM;
+        return SoundEvents.GHAST_SCREAM;
     }
 
     @Override
     protected void playStepSound(BlockPos pos, BlockState blockIn) {
-        super.playSound(SoundEvents.ENTITY_VEX_AMBIENT, 0.15F, 1.0F);
+        super.playSound(SoundEvents.VEX_AMBIENT, 0.15F, 1.0F);
     }
 
     @Nonnull
     @Override
-    public CreatureAttribute getCreatureAttribute() {
+    public CreatureAttribute getMobType() {
         return CreatureAttribute.UNDEAD;
     }
 
@@ -131,33 +132,34 @@ public class GhostEntity extends MonsterEntity {
     }
 
     @Override
-    public boolean onLivingFall(float distance, float damageMultiplier) {
+    public boolean causeFallDamage(float distance, float damageMultiplier) {
         return false;
     }
 
     @Override
-    public boolean canBePushed() {
+    public boolean isPushable() {
         return false;
     }
 
-    public boolean isWaterSensitive() {
+    @Override
+    public boolean isSensitiveToWater() {
         return true;
     }
 
     private boolean getGhostFlag(int mask) {
-        int i = this.dataManager.get(GHOST_FLAGS);
+        int i = this.entityData.get(GHOST_FLAGS);
         return (i & mask) != 0;
     }
 
     private void setGhostFlag(int mask, boolean value) {
-        int i = this.dataManager.get(GHOST_FLAGS);
+        int i = this.entityData.get(GHOST_FLAGS);
         if (value) {
             i = i | mask;
         } else {
             i = i & ~mask;
         }
 
-        this.dataManager.set(GHOST_FLAGS, (byte)(i & 255));
+        this.entityData.set(GHOST_FLAGS, (byte)(i & 255));
     }
 
     public boolean isCharging() {
@@ -170,47 +172,47 @@ public class GhostEntity extends MonsterEntity {
 
     protected class ChargeAttackGoal extends Goal {
         public ChargeAttackGoal() {
-            this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE));
+            this.setFlags(EnumSet.of(Goal.Flag.MOVE));
         }
 
         public boolean shouldExecute() {
-            if (GhostEntity.this.getAttackTarget() != null && !GhostEntity.this.getMoveHelper().isUpdating() && GhostEntity.this.rand.nextInt(7) == 0) {
-                return GhostEntity.this.getDistanceSq(GhostEntity.this.getAttackTarget()) > 4.0D;
+            if (GhostEntity.this.getTarget() != null && !GhostEntity.this.getMoveControl().hasWanted() && GhostEntity.this.random.nextInt(7) == 0) {
+                return GhostEntity.this.distanceToSqr(GhostEntity.this.getTarget()) > 4.0D;
             } else {
                 return false;
             }
         }
 
-        public boolean shouldContinueExecuting() {
-            return GhostEntity.this.getMoveHelper().isUpdating() && GhostEntity.this.isCharging() && GhostEntity.this.getAttackTarget() != null && GhostEntity.this.getAttackTarget().isAlive();
+        public boolean canUse() {
+            return GhostEntity.this.getMoveControl().hasWanted() && GhostEntity.this.isCharging() && GhostEntity.this.getTarget() != null && GhostEntity.this.getTarget().isAlive();
         }
 
-        public void startExecuting() {
-            LivingEntity livingentity = GhostEntity.this.getAttackTarget();
+        public void start() {
+            LivingEntity livingentity = GhostEntity.this.getTarget();
             Vector3d vector3d = livingentity.getEyePosition(1.0F);
-            GhostEntity.this.moveController.setMoveTo(vector3d.x, vector3d.y, vector3d.z, 1.0D);
+            GhostEntity.this.getMoveControl().setWantedPosition(vector3d.x, vector3d.y, vector3d.z, 1.0D);
             GhostEntity.this.setCharging(true);
-            GhostEntity.this.playSound(SoundEvents.ENTITY_GHAST_SCREAM, 1.0F, 1.0F);
+            GhostEntity.this.playSound(SoundEvents.GHAST_SCREAM, 1.0F, 1.0F);
         }
 
-        public void resetTask() {
+        public void stop() {
             GhostEntity.this.setCharging(false);
         }
 
         public void tick() {
-            LivingEntity livingentity = GhostEntity.this.getAttackTarget();
+            LivingEntity livingentity = GhostEntity.this.getTarget();
             if (GhostEntity.this.getBoundingBox().intersects(livingentity.getBoundingBox())) {
-                GhostEntity.this.attackEntityAsMob(livingentity);
+                GhostEntity.this.doHurtTarget(livingentity);
                 GhostEntity.this.setCharging(false);
             } else {
-                double d0 = GhostEntity.this.getDistanceSq(livingentity);
+                double d0 = GhostEntity.this.distanceToSqr(livingentity);
                 if (d0 < 9.0D) {
                     Vector3d vector3d = livingentity.getEyePosition(1.0F);
-                    GhostEntity.this.moveController.setMoveTo(vector3d.x, vector3d.y, vector3d.z, 1.0D);
+                    GhostEntity.this.getMoveControl().setWantedPosition(vector3d.x, vector3d.y, vector3d.z, 1.0D);
                 }
 
                 if (d0 < 6.0D) {
-                    GhostEntity.this.addPotionEffect(new EffectInstance(Effects.INVISIBILITY, 25, 0, true, false));
+                    GhostEntity.this.addEffect(new EffectInstance(Effects.INVISIBILITY, 25, 0, true, false));
                     // JUST ONCE
                     //spawnParticles(GhostEntity.this.world, GhostEntity.this.getPosition(), GhostEntity.this.rand);
                 }
@@ -236,23 +238,23 @@ public class GhostEntity extends MonsterEntity {
         }
 
         public void tick() {
-            if (this.action == MovementController.Action.MOVE_TO) {
-                Vector3d vector3d = new Vector3d(this.posX - GhostEntity.this.getPosX(), this.posY - GhostEntity.this.getPosY(), this.posZ - GhostEntity.this.getPosZ());
+            if (this.operation == MovementController.Action.MOVE_TO) {
+                Vector3d vector3d = new Vector3d(this.getWantedX() - GhostEntity.this.getX(), this.getWantedY() - GhostEntity.this.getY(), this.getWantedZ() - GhostEntity.this.getZ());
                 double d0 = vector3d.length();
-                if (d0 < GhostEntity.this.getBoundingBox().getAverageEdgeLength()) {
-                    this.action = MovementController.Action.WAIT;
-                    GhostEntity.this.setMotion(GhostEntity.this.getMotion().scale(0.5D));
+                if (d0 < GhostEntity.this.getBoundingBox().getSize()) {
+                    this.operation = MovementController.Action.WAIT;
+                    GhostEntity.this.setDeltaMovement(GhostEntity.this.getDeltaMovement().scale(0.5D));
                 } else {
-                    GhostEntity.this.setMotion(GhostEntity.this.getMotion().add(vector3d.scale(this.speed * 0.05D / d0)));
-                    if (GhostEntity.this.getAttackTarget() == null) {
-                        Vector3d vector3d1 = GhostEntity.this.getMotion();
-                        GhostEntity.this.rotationYaw = -((float) MathHelper.atan2(vector3d1.x, vector3d1.z)) * (180F / (float)Math.PI);
+                    GhostEntity.this.setDeltaMovement(GhostEntity.this.getDeltaMovement().add(vector3d.scale(this.speedModifier * 0.05D / d0)));
+                    if (GhostEntity.this.getTarget() == null) {
+                        Vector3d vector3d1 = GhostEntity.this.getDeltaMovement();
+                        GhostEntity.this.yRot = -((float) MathHelper.atan2(vector3d1.x, vector3d1.z)) * (180F / (float)Math.PI);
                     } else {
-                        double d2 = GhostEntity.this.getAttackTarget().getPosX() - GhostEntity.this.getPosX();
-                        double d1 = GhostEntity.this.getAttackTarget().getPosZ() - GhostEntity.this.getPosZ();
-                        GhostEntity.this.rotationYaw = -((float)MathHelper.atan2(d2, d1)) * (180F / (float)Math.PI);
+                        double d2 = GhostEntity.this.getTarget().getX() - GhostEntity.this.getX();
+                        double d1 = GhostEntity.this.getTarget().getZ() - GhostEntity.this.getZ();
+                        GhostEntity.this.yRot = -((float)MathHelper.atan2(d2, d1)) * (180F / (float)Math.PI);
                     }
-                    GhostEntity.this.renderYawOffset = GhostEntity.this.rotationYaw;
+                    GhostEntity.this.yo = GhostEntity.this.yRot;
                 }
             }
         }
@@ -260,25 +262,25 @@ public class GhostEntity extends MonsterEntity {
 
     protected class MoveRandomGoal extends Goal {
         public MoveRandomGoal() {
-            this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE));
+            this.setFlags(EnumSet.of(Goal.Flag.MOVE));
         }
 
-        public boolean shouldExecute() {
-            return !GhostEntity.this.getMoveHelper().isUpdating() && GhostEntity.this.rand.nextInt(7) == 0;
+        public boolean canUse() {
+            return !GhostEntity.this.getMoveControl().hasWanted() && GhostEntity.this.random.nextInt(7) == 0;
         }
 
-        public boolean shouldContinueExecuting() {
+        public boolean canContinueToUse() {
             return false;
         }
 
         public void tick() {
-            BlockPos blockpos = GhostEntity.this.getPosition();
+            BlockPos blockpos = GhostEntity.this.blockPosition();
             for (int i = 0; i < 3; ++i) {
-                BlockPos blockpos1 = blockpos.add(GhostEntity.this.rand.nextInt(15) - 7, GhostEntity.this.rand.nextInt(11) - 5, GhostEntity.this.rand.nextInt(15) - 7);
-                if (GhostEntity.this.world.isAirBlock(blockpos1)) {
-                    GhostEntity.this.moveController.setMoveTo((double) blockpos1.getX() + 0.5D, (double) blockpos1.getY() + 0.5D, (double) blockpos1.getZ() + 0.5D, 0.25D);
-                    if (GhostEntity.this.getAttackTarget() == null) {
-                        GhostEntity.this.getLookController().setLookPosition((double) blockpos1.getX() + 0.5D, (double) blockpos1.getY() + 0.5D, (double) blockpos1.getZ() + 0.5D, 180.0F, 20.0F);
+                BlockPos blockpos1 = blockpos.offset(GhostEntity.this.random.nextInt(15) - 7, GhostEntity.this.random.nextInt(11) - 5, GhostEntity.this.random.nextInt(15) - 7);
+                if (GhostEntity.this.level.isEmptyBlock(blockpos1)) {
+                    GhostEntity.this.getMoveControl().setWantedPosition((double) blockpos1.getX() + 0.5D, (double) blockpos1.getY() + 0.5D, (double) blockpos1.getZ() + 0.5D, 0.25D);
+                    if (GhostEntity.this.getTarget() == null) {
+                        GhostEntity.this.getLookControl().setLookAt((double) blockpos1.getX() + 0.5D, (double) blockpos1.getY() + 0.5D, (double) blockpos1.getZ() + 0.5D, 180.0F, 20.0F);
                     }
                     break;
                 }

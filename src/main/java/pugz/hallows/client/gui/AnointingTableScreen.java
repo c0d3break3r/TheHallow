@@ -17,12 +17,12 @@ public class AnointingTableScreen extends AbstractRepairScreen<AnointingTableCon
 
     public AnointingTableScreen(AnointingTableContainer container, PlayerInventory playerInventory, ITextComponent title) {
         super(container, playerInventory, title, GUI_TEXTURE);
-        this.titleX = 60;
-        this.titleY = 18;
+        this.titleLabelX = 60;
+        this.titleLabelY = 18;
     }
 
-    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) {
+    protected void renderLabels(MatrixStack matrixStack, int x, int y) {
         RenderSystem.disableBlend();
-        super.drawGuiContainerForegroundLayer(matrixStack, x, y);
+        super.renderLabels(matrixStack, x, y);
     }
 }

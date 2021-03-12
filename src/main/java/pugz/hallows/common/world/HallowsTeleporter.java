@@ -24,9 +24,8 @@ public class HallowsTeleporter implements ITeleporter {
         BlockPos teleporterPos = this.pos;
 
         if (teleporterPos == null) return e;
-
-        player.addExperienceLevel(0);
-        player.setPositionAndUpdate(teleporterPos.getX() + 0.5D, teleporterPos.getY() + 1D, teleporterPos.getZ() + 0.5D);
+        player.giveExperienceLevels(0);
+        player.setPos(teleporterPos.getX() + 0.5D, teleporterPos.getY() + 1D, teleporterPos.getZ() + 0.5D);
         return e;
     }
 }

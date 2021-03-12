@@ -16,24 +16,24 @@ public class HallowsLogBlock extends RotatedPillarBlock {
     private final RotatedPillarBlock stripped;
 
     public HallowsLogBlock(RotatedPillarBlock stripped) {
-        super(Properties.from(Blocks.OAK_LOG));
+        super(Properties.copy(Blocks.OAK_LOG));
         this.stripped = stripped;
     }
 
     @Nonnull
     @Override
     @SuppressWarnings("deprecation")
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        ItemStack held = player.getHeldItem(handIn);
+    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+        ItemStack held = player.getItemInHand(handIn);
 
         if (held.getItem() instanceof AxeItem) {
-            worldIn.setBlockState(pos, stripped.getDefaultState().with(RotatedPillarBlock.AXIS, state.get(RotatedPillarBlock.AXIS)), 2);
+            worldIn.setBlock(pos, stripped.defaultBlockState().setValue(RotatedPillarBlock.AXIS, state.getValue(RotatedPillarBlock.AXIS)), 2);
 
-            held.damageItem(1, player, (p) -> {
-                p.sendBreakAnimation(handIn);
+            held.hurtAndBreak(1, player, (p) -> {
+                p.broadcastBreakEvent(handIn);
             });
 
-            return ActionResultType.func_233537_a_(worldIn.isRemote);
+            return ActionResultType.sidedSuccess(worldIn.isClientSide);
         }
 
         return ActionResultType.PASS;

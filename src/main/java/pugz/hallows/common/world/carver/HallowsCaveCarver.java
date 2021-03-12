@@ -25,12 +25,12 @@ public class HallowsCaveCarver extends WorldCarver<ProbabilityConfig> {
 
     public HallowsCaveCarver(Codec<ProbabilityConfig> codec, int maxHeight) {
         super(codec, maxHeight);
-        this.carvableBlocks = ImmutableSet.of(Blocks.DIRT, Blocks.COARSE_DIRT, Blocks.GRASS_BLOCK, Blocks.BLACKSTONE, HallowsBlocks.HALLSTONE.get(), HallowsBlocks.HALLOWED_DIRT.get(), HallowsBlocks.DUSK_MORTIS.get(), HallowsBlocks.DAWN_MORTIS.get(), HallowsBlocks.NOON_MORTIS.get(), HallowsBlocks.MIDNIGHT_MORTIS.get());
-        this.carvableFluids = ImmutableSet.of(Fluids.WATER);
+        this.replaceableBlocks = ImmutableSet.of(Blocks.DIRT, Blocks.COARSE_DIRT, Blocks.GRASS_BLOCK, Blocks.BLACKSTONE, HallowsBlocks.HALLSTONE.get(), HallowsBlocks.HALLOWED_DIRT.get(), HallowsBlocks.DUSK_MORTIS.get(), HallowsBlocks.DAWN_MORTIS.get(), HallowsBlocks.NOON_MORTIS.get(), HallowsBlocks.MIDNIGHT_MORTIS.get());
+        this.liquids = ImmutableSet.of(Fluids.WATER);
     }
 
     @Override
-    public boolean shouldCarve(Random rand, int chunkX, int chunkZ, ProbabilityConfig config) {
+    public boolean isStartChunk(Random rand, int chunkX, int chunkZ, ProbabilityConfig config) {
         return rand.nextFloat() <= config.probability;
     }
 
@@ -50,11 +50,11 @@ public class HallowsCaveCarver extends WorldCarver<ProbabilityConfig> {
     protected void func_227205_a_(IChunk chunk, Function<BlockPos, Biome> biomePos, long seed, int seaLevel, int chunkX, int chunkZ, double randOffsetXCoord, double startY, double randOffsetZCoord, float p_227205_14_, double p_227205_15_, BitSet carvingMask) {
         double d0 = 1.5D + (double)(MathHelper.sin(((float)Math.PI / 2.0F)) * p_227205_14_);
         double d1 = d0 * p_227205_15_;
-        this.func_227208_a_(chunk, biomePos, seed, seaLevel, chunkX, chunkZ, randOffsetXCoord + 1.0D, startY, randOffsetZCoord, d0, d1, carvingMask);
+        this.carveSphere(chunk, biomePos, seed, seaLevel, chunkX, chunkZ, randOffsetXCoord + 1.0D, startY, randOffsetZCoord, d0, d1, carvingMask);
     }
 
-    public boolean carveRegion(IChunk chunk, Function<BlockPos, Biome> biomePos, Random rand, int seaLevel, int chunkXOffset, int chunkZOffset, int chunkX, int chunkZ, BitSet carvingMask, ProbabilityConfig config) {
-        int i = (this.func_222704_c() * 2 - 1) * 16;
+    public boolean carve(IChunk chunk, Function<BlockPos, Biome> biomePos, Random rand, int seaLevel, int chunkXOffset, int chunkZOffset, int chunkX, int chunkZ, BitSet carvingMask, ProbabilityConfig config) {
+        int i = (this.getRange() * 2 - 1) * 16;
         int j = rand.nextInt(rand.nextInt(rand.nextInt(15) + 1) + 1);
 
         for(int k = 0; k < j; ++k) {
@@ -85,24 +85,24 @@ public class HallowsCaveCarver extends WorldCarver<ProbabilityConfig> {
             return false;
         } else {
             carvingMask.set(i);
-            place.setPos(posX, posY, posZ);
+            place.set(posX, posY, posZ);
             BlockState blockstate = chunk.getBlockState(place);
-            BlockState blockstate1 = chunk.getBlockState(p_230358_6_.setAndMove(place, Direction.UP));
-            if (blockstate.isIn(Blocks.GRASS_BLOCK)) {
+            BlockState blockstate1 = chunk.getBlockState(p_230358_6_.setWithOffset(place, Direction.UP));
+            if (blockstate.is(Blocks.GRASS_BLOCK)) {
                 isSurface.setTrue();
             }
 
-            if (!this.canCarveBlock(blockstate, blockstate1) || blockstate.isIn(Blocks.EMERALD_BLOCK)) {
+            if (!this.canCarveBlock(blockstate, blockstate1) || blockstate.is(Blocks.EMERALD_BLOCK)) {
                 return false;
             } else {
                 if (posY < 8) {
-                    chunk.setBlockState(place, LAVA.getBlockState(), false);
+                    chunk.setBlockState(place, LAVA.createLegacyBlock(), false);
                 } else {
                     chunk.setBlockState(place, CAVE_AIR, false);
                     if (isSurface.isTrue()) {
-                        p_230358_7_.setAndMove(place, Direction.DOWN);
-                        if (chunk.getBlockState(p_230358_7_).isIn(Blocks.DIRT)) {
-                            chunk.setBlockState(p_230358_7_, biomePos.apply(place).getGenerationSettings().getSurfaceBuilderConfig().getTop(), false);
+                        p_230358_7_.setWithOffset(place, Direction.DOWN);
+                        if (chunk.getBlockState(p_230358_7_).is(Blocks.DIRT)) {
+                            chunk.setBlockState(p_230358_7_, biomePos.apply(place).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial(), false);
                         }
                     }
                 }
@@ -112,7 +112,7 @@ public class HallowsCaveCarver extends WorldCarver<ProbabilityConfig> {
     }
 
     protected boolean canCarveBlock(BlockState state, BlockState aboveState) {
-        return this.isCarvable(state) || (state.isIn(Blocks.SAND) || state.isIn(Blocks.GRAVEL)) && !aboveState.getFluidState().isTagged(FluidTags.WATER) && !state.isIn(Blocks.EMERALD_BLOCK);
+        return this.canReplaceBlock(state) || (state.is(Blocks.SAND) || state.is(Blocks.GRAVEL)) && !aboveState.getFluidState().is(FluidTags.WATER) && !state.is(Blocks.EMERALD_BLOCK);
     }
 
     protected void func_227206_a_(IChunk chunk, Function<BlockPos, Biome> biomePos, long seed, int seaLevel, int chunkX, int chunkZ, double randOffsetXCoord, double startY, double randOffsetZCoord, float caveRadius, float pitch, float p_227206_16_, int p_227206_17_, int p_227206_18_, double p_227206_19_, BitSet carvingMask) {
@@ -149,16 +149,16 @@ public class HallowsCaveCarver extends WorldCarver<ProbabilityConfig> {
             }
 
             if (random.nextInt(4) != 0) {
-                if (!this.func_222702_a(chunkX, chunkZ, randOffsetXCoord, randOffsetZCoord, j, p_227206_18_, caveRadius)) {
+                if (!this.canReach(chunkX, chunkZ, randOffsetXCoord, randOffsetZCoord, j, p_227206_18_, caveRadius)) {
                     return;
                 }
 
-                this.func_227208_a_(chunk, biomePos, seed, seaLevel, chunkX, chunkZ, randOffsetXCoord, startY, randOffsetZCoord, d0, d1, carvingMask);
+                this.carveSphere(chunk, biomePos, seed, seaLevel, chunkX, chunkZ, randOffsetXCoord, startY, randOffsetZCoord, d0, d1, carvingMask);
             }
         }
     }
 
-    protected boolean func_222708_a(double p_222708_1_, double p_222708_3_, double p_222708_5_, int p_222708_7_) {
+    protected boolean skip(double p_222708_1_, double p_222708_3_, double p_222708_5_, int p_222708_7_) {
         return (p_222708_1_ * p_222708_1_ + p_222708_5_ * p_222708_5_) * (double)this.field_202536_i[p_222708_7_ - 1] + p_222708_3_ * p_222708_3_ / 6.0D >= 1.0D;
     }
 }

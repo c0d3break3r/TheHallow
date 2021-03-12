@@ -90,12 +90,12 @@ public class Hallows {
             HallowsEntities.registerSpawns();
             HallowsData.registerData();
 
-            WorldGenRegistries.NOISE_SETTINGS.getEntries().forEach(settings -> {
-                Map<Structure<?>, StructureSeparationSettings> structureMap = settings.getValue().getStructures().func_236195_a_();
+            WorldGenRegistries.NOISE_GENERATOR_SETTINGS.stream().forEach(settings -> {
+                Map<Structure<?>, StructureSeparationSettings> structureMap = settings.structureSettings().structureConfig;
                 if (structureMap instanceof ImmutableMap) {
                     Map<Structure<?>, StructureSeparationSettings> temp = new HashMap<>(structureMap);
                     temp.putAll(HallowsStructures.HALLOWS_STRUCTURES);
-                    settings.getValue().getStructures().field_236193_d_ = temp;
+                    settings.structureSettings().structureConfig = temp;
                 }
                 else structureMap.putAll(HallowsStructures.HALLOWS_STRUCTURES);
             });
@@ -108,6 +108,6 @@ public class Hallows {
         HallowsEntities.registerRenderers();
         HallowsDimensions.registerEffects();
         MinecraftForge.EVENT_BUS.addListener(Events.Charge::onItemTooltip);
-        ScreenManager.registerFactory(HallowsContainers.ANOINTING.get(), AnointingTableScreen::new);
+        ScreenManager.register(HallowsContainers.ANOINTING.get(), AnointingTableScreen::new);
     }
 }

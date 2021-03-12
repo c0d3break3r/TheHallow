@@ -12,7 +12,7 @@ import net.minecraft.world.IBlockReader;
 import javax.annotation.Nonnull;
 
 public class LeafCarpetBlock extends Block {
-    private static final VoxelShape SHAPE = makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
+    private static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
 
     public LeafCarpetBlock(Block.Properties properties) {
         super(properties);
@@ -20,7 +20,7 @@ public class LeafCarpetBlock extends Block {
 
     @Override
     @SuppressWarnings("deprecation")
-    public boolean isReplaceable(BlockState state, BlockItemUseContext useContext) {
+    public boolean canBeReplaced(BlockState state, BlockItemUseContext context) {
         return true;
     }
 

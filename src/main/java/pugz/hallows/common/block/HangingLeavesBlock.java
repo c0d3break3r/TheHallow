@@ -22,49 +22,50 @@ import java.util.Random;
 
 public class HangingLeavesBlock extends Block implements IGrowable {
     public static final EnumProperty<Half> HALF = EnumProperty.create("half", Half.class);
-    protected static final VoxelShape LARGE_SHAPE = Block.makeCuboidShape(1, 0, 1, 15, 16, 15);
-    protected static final VoxelShape SMALL_SHAPE = Block.makeCuboidShape(4, 0, 4, 12, 16, 12);
+    protected static final VoxelShape LARGE_SHAPE = Block.box(1, 0, 1, 15, 16, 15);
+    protected static final VoxelShape SMALL_SHAPE = Block.box(4, 0, 4, 12, 16, 12);
 
     public HangingLeavesBlock(Properties properties) {
         super(properties);
-        this.setDefaultState(this.stateContainer.getBaseState().with(HALF, Half.SMALL));
+        this.registerDefaultState(this.defaultBlockState().setValue(HALF, Half.SMALL));
     }
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.getDefaultState();
+        return this.defaultBlockState();
     }
 
     @Override
     @SuppressWarnings("deprecation")
-    public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
-        return worldIn.getBlockState(pos.down()).isAir();
+    public boolean isValidBonemealTarget(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
+        return worldIn.getBlockState(pos.below()).isAir();
     }
 
     @Override
-    public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(World worldIn, Random rand, BlockPos pos, BlockState state) {
         return true;
     }
 
     @Override
-    public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
-        worldIn.setBlockState(pos.down(), this.getDefaultState());
+    public void performBonemeal(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
+        worldIn.setBlockAndUpdate(pos.below(), this.defaultBlockState());
     }
 
     @Override
     @SuppressWarnings("deprecation")
-    public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-        BlockState stateUp = worldIn.getBlockState(pos.up());
-        return stateUp.getBlock() == this || stateUp.isIn(BlockTags.LEAVES) || stateUp.isIn(BlockTags.LOGS);
+    public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) {
+        BlockState stateUp = worldIn.getBlockState(pos.above());
+        return stateUp.getBlock() == this || stateUp.is(BlockTags.LEAVES) || stateUp.is(BlockTags.LOGS);
     }
 
     @Nonnull
     @Override
-    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-        if (!stateIn.isValidPosition(worldIn, currentPos)) {
-            return Blocks.AIR.getDefaultState();
+    @SuppressWarnings("deprecation")
+    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+        if (!stateIn.canSurvive(worldIn, currentPos)) {
+            return Blocks.AIR.defaultBlockState();
         } else {
-            return super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+            return super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
         }
     }
 
@@ -72,7 +73,7 @@ public class HangingLeavesBlock extends Block implements IGrowable {
     @Override
     @SuppressWarnings("deprecation")
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return state.get(HALF) == Half.LARGE ? LARGE_SHAPE : SMALL_SHAPE;
+        return state.getValue(HALF) == Half.LARGE ? LARGE_SHAPE : SMALL_SHAPE;
     }
 
     @Nonnull
@@ -83,17 +84,17 @@ public class HangingLeavesBlock extends Block implements IGrowable {
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(HALF);
     }
 
     @Override
     @SuppressWarnings("deprecation")
     public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
-        if (worldIn.getBlockState(pos.down()).getBlock() == this) {
-            worldIn.setBlockState(pos, state.with(HALF, Half.LARGE));
+        if (worldIn.getBlockState(pos.below()).getBlock() == this) {
+            worldIn.setBlockAndUpdate(pos, state.setValue(HALF, Half.LARGE));
         } else {
-            worldIn.setBlockState(pos, state.with(HALF, Half.SMALL));
+            worldIn.setBlockAndUpdate(pos, state.setValue(HALF, Half.SMALL));
         }
     }
 
@@ -101,7 +102,7 @@ public class HangingLeavesBlock extends Block implements IGrowable {
         LARGE,
         SMALL;
 
-        public String getString() {
+        public String getSerializedName() {
             return this == LARGE ? "large" : "small";
         }
     }

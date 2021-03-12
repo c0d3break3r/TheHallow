@@ -25,20 +25,20 @@ public class NecromantleCrackCarver extends WorldCarver<ProbabilityConfig> {
 
     public NecromantleCrackCarver(Codec<ProbabilityConfig> codec) {
         super(codec, 128);
-        this.carvableBlocks = ImmutableSet.of(Blocks.DIRT, Blocks.COARSE_DIRT, Blocks.GRASS_BLOCK, Blocks.BLACKSTONE, HallowsBlocks.HALLSTONE.get(), HallowsBlocks.HALLOWED_DIRT.get(), HallowsBlocks.DUSK_MORTIS.get(), HallowsBlocks.DAWN_MORTIS.get(), HallowsBlocks.NOON_MORTIS.get(), HallowsBlocks.MIDNIGHT_MORTIS.get());
-        this.carvableFluids = ImmutableSet.of(Fluids.WATER, Fluids.LAVA);
+        this.replaceableBlocks = ImmutableSet.of(Blocks.DIRT, Blocks.COARSE_DIRT, Blocks.GRASS_BLOCK, Blocks.BLACKSTONE, HallowsBlocks.HALLSTONE.get(), HallowsBlocks.HALLOWED_DIRT.get(), HallowsBlocks.DUSK_MORTIS.get(), HallowsBlocks.DAWN_MORTIS.get(), HallowsBlocks.NOON_MORTIS.get(), HallowsBlocks.MIDNIGHT_MORTIS.get());
+        this.liquids = ImmutableSet.of(Fluids.WATER, Fluids.LAVA);
     }
 
-    public boolean shouldCarve(Random rand, int chunkX, int chunkZ, ProbabilityConfig config) {
+    public boolean isStartChunk(Random rand, int chunkX, int chunkZ, ProbabilityConfig config) {
         return rand.nextFloat() <= config.probability;
     }
 
-    public boolean carveRegion(IChunk chunk, Function<BlockPos, Biome> biomePos, Random rand, int seaLevel, int chunkXOffset, int chunkZOffset, int chunkX, int chunkZ, BitSet carvingMask, ProbabilityConfig config) {
-        int i = (this.func_222704_c() * 2 - 1) * 16;
+    public boolean carve(IChunk chunk, Function<BlockPos, Biome> biomePos, Random rand, int seaLevel, int chunkXOffset, int chunkZOffset, int chunkX, int chunkZ, BitSet carvingMask, ProbabilityConfig config) {
+        int i = (this.getRange() * 2 - 1) * 16;
         int mantleYOffset = rand.nextInt(3) + 1;
         double d0 = chunkXOffset * 16 + rand.nextInt(16);
         double d2 = chunkZOffset * 16 + rand.nextInt(16);
-        double d1 = rand.nextBoolean() ? rand.nextInt(rand.nextInt(40) + 8) + 20 : chunk.getTopBlockY(Heightmap.Type.WORLD_SURFACE_WG, (int) d0, (int) d2) - mantleYOffset;
+        double d1 = rand.nextBoolean() ? rand.nextInt(rand.nextInt(40) + 8) + 20 : chunk.getHeight(Heightmap.Type.WORLD_SURFACE_WG, (int) d0, (int) d2) - mantleYOffset;
         float f = rand.nextFloat() * ((float)Math.PI * 2F);
         float f1 = (rand.nextFloat() - 0.5F) * 2.0F / 8.0F;
         float f2 = (rand.nextFloat() * 2.0F + rand.nextFloat()) * 2.0F;
@@ -55,10 +55,10 @@ public class NecromantleCrackCarver extends WorldCarver<ProbabilityConfig> {
             int i = Math.max(MathHelper.floor(randOffsetXCoord - p_227208_14_) - chunkX * 16 - 1, 0);
             int j = Math.min(MathHelper.floor(randOffsetXCoord + p_227208_14_) - chunkX * 16 + 1, 16);
             int k = Math.max(MathHelper.floor(startY - p_227208_16_) - 1, 1);
-            int l = Math.min(MathHelper.floor(startY + p_227208_16_) + 1, this.maxHeight - 8);
+            int l = Math.min(MathHelper.floor(startY + p_227208_16_) + 1, this.genHeight - 8);
             int i1 = Math.max(MathHelper.floor(randOffsetZCoord - p_227208_14_) - chunkZ * 16 - 1, 0);
             int j1 = Math.min(MathHelper.floor(randOffsetZCoord + p_227208_14_) - chunkZ * 16 + 1, 16);
-            if (this.func_222700_a(chunk, chunkX, chunkZ, i, j, k, l, i1, j1)) {
+            if (this.hasWater(chunk, chunkX, chunkZ, i, j, k, l, i1, j1)) {
                 return false;
             } else {
                 boolean flag = false;
@@ -78,7 +78,7 @@ public class NecromantleCrackCarver extends WorldCarver<ProbabilityConfig> {
 
                             for(int k2 = l; k2 > k; --k2) {
                                 double d4 = ((double)k2 - 0.5D - startY) / p_227208_16_;
-                                if (!this.func_222708_a(d2, d4, d3, k2)) {
+                                if (!this.skip(d2, d4, d3, k2)) {
                                     flag |= this.carveBlock(chunk, biomePos, carvingMask, random, blockpos$mutable, blockpos$mutable1, blockpos$mutable2, seaLevel, chunkX, chunkZ, l1, j2, k1, k2, i2, mutableboolean, startY);
                                 }
                             }
@@ -98,13 +98,13 @@ public class NecromantleCrackCarver extends WorldCarver<ProbabilityConfig> {
             return false;
         } else {
             carvingMask.set(i);
-            p_230358_5_.setPos(posX, posY, posZ);
+            p_230358_5_.set(posX, posY, posZ);
             BlockState blockstate = chunk.getBlockState(p_230358_5_);
-            BlockState blockstate1 = chunk.getBlockState(p_230358_6_.setAndMove(p_230358_5_, Direction.UP));
-            if (!this.canCarveBlock(blockstate, blockstate1)) {
+            BlockState blockstate1 = chunk.getBlockState(p_230358_6_.setWithOffset(p_230358_5_, Direction.UP));
+            if (!this.canReplaceBlock(blockstate, blockstate1)) {
                 return false;
             } else {
-                chunk.setBlockState(p_230358_5_, Blocks.EMERALD_BLOCK.getDefaultState(), false);
+                chunk.setBlockState(p_230358_5_, Blocks.EMERALD_BLOCK.defaultBlockState(), false);
                 return true;
             }
         }
@@ -142,7 +142,7 @@ public class NecromantleCrackCarver extends WorldCarver<ProbabilityConfig> {
             f1 = f1 + (random.nextFloat() - random.nextFloat()) * random.nextFloat() * 2.0F;
             f4 = f4 + (random.nextFloat() - random.nextFloat()) * random.nextFloat() * 4.0F;
             if (random.nextInt(4) != 0) {
-                if (!this.func_222702_a(chunkX, chunkZ, randOffsetXCoord, randOffsetZCoord, j, p_227204_18_, caveRadius)) {
+                if (!this.canReach(chunkX, chunkZ, randOffsetXCoord, randOffsetZCoord, j, p_227204_18_, caveRadius)) {
                     return;
                 }
 
@@ -151,7 +151,7 @@ public class NecromantleCrackCarver extends WorldCarver<ProbabilityConfig> {
         }
     }
 
-    protected boolean func_222708_a(double p_222708_1_, double p_222708_3_, double p_222708_5_, int p_222708_7_) {
+    protected boolean skip(double p_222708_1_, double p_222708_3_, double p_222708_5_, int p_222708_7_) {
         return (p_222708_1_ * p_222708_1_ + p_222708_5_ * p_222708_5_) * (double)this.field_202536_i[p_222708_7_ - 1] + p_222708_3_ * p_222708_3_ / 6.0D >= 1.0D;
     }
 }

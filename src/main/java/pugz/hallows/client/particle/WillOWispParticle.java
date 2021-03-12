@@ -13,13 +13,13 @@ import javax.annotation.Nonnull;
 public class WillOWispParticle extends SpriteTexturedParticle {
     private WillOWispParticle(ClientWorld world, double x, double y, double z, double motionX, double motionY, double motionZ) {
         super(world, x, y, z, motionX, motionY, motionZ);
-        this.particleScale = 0.25F + (float)Math.random() + (float)Math.random();
-        this.setAlphaF(0.1F + (float)Math.random());
-        this.maxAge = (int)(8.0D / (Math.random() * 0.8D + 0.25D)) + 6;
-        this.canCollide = false;
-        this.motionX = motionX + (Math.random() / 2.0F);
-        this.motionY = motionY + (Math.random() / 2.0F);
-        this.motionZ = motionZ + (Math.random() / 2.0F);
+        this.scale(0.25F + (float)Math.random() + (float)Math.random());
+        this.setAlpha(0.1F + (float)Math.random());
+        this.age = (int)(8.0D / (Math.random() * 0.8D + 0.25D)) + 6;
+        this.hasPhysics = false;
+        this.xd = motionX + (Math.random() / 2.0F);
+        this.yd = motionY + (Math.random() / 2.0F);
+        this.zd = motionZ + (Math.random() / 2.0F);
     }
 
     @Nonnull
@@ -29,18 +29,18 @@ public class WillOWispParticle extends SpriteTexturedParticle {
     }
 
     public void tick() {
-        if (this.age++ >= this.maxAge) {
-            this.setExpired();
+        if (this.age++ >= this.age) {
+            this.remove();
         } else {
-            this.setAlphaF(this.particleAlpha - (this.particleAlpha / this.maxAge));
-            this.move(this.motionX, this.motionY, this.motionZ);
+            this.setAlpha(this.alpha - (this.alpha / this.age));
+            this.move(this.xd, this.yd, this.zd);
         }
     }
 
-    public int getBrightnessForRender(float partialTick) {
-        float f = ((float)this.age + partialTick) / (float)this.maxAge;
+    public int getLightColor(float partialTick) {
+        float f = ((float)this.age + partialTick) / (float)this.age;
         f = MathHelper.clamp(f, 0.0F, 1.0F);
-        int i = super.getBrightnessForRender(partialTick);
+        int i = super.getLightColor(partialTick);
         int j = i & 255;
         int k = i >> 16 & 255;
         j = j + (int)(f * 15.0F * 16.0F);
@@ -59,9 +59,9 @@ public class WillOWispParticle extends SpriteTexturedParticle {
             this.spriteSet = spriteSet;
         }
 
-        public Particle makeParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             WillOWispParticle willowispparticle = new WillOWispParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed);
-            willowispparticle.selectSpriteRandomly(this.spriteSet);
+            willowispparticle.pickSprite(this.spriteSet);
             return willowispparticle;
         }
     }
