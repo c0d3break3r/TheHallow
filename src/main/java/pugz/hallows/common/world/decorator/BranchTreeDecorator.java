@@ -54,7 +54,7 @@ public class BranchTreeDecorator extends TreeDecorator {
                 Direction direction = Direction.Plane.HORIZONTAL.random(random);
                 for (int length = random.nextInt(maxLength) + 1; length > 0; --length) {
                     blockpos$mutable.setAndMove(blockpos$mutable, direction);
-                    if (world.getBlockState(blockpos$mutable).isAir() && world.getBlockState(blockpos$mutable.down()).isAir() && random.nextFloat() <= branchDensity) {
+                    if (world.isAirBlock(blockpos$mutable) && world.isAirBlock(blockpos$mutable.down()) && random.nextFloat() <= branchDensity) {
                         world.setBlockState(blockpos$mutable, this.state.with(BlockStateProperties.AXIS, direction.getAxis()), 19);
                         changedBlocks.add(blockpos$mutable);
                         boundingBox.expandTo(new MutableBoundingBox(blockpos$mutable, blockpos$mutable));

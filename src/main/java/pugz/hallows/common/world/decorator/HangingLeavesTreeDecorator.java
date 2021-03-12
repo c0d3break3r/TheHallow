@@ -40,14 +40,14 @@ public class HangingLeavesTreeDecorator extends TreeDecorator {
     public void func_225576_a_(ISeedReader world, Random random, List<BlockPos> logPositions, List<BlockPos> leavesPositions, Set<BlockPos> changedBlocks, MutableBoundingBox boundingBox) {
         if (!(random.nextFloat() >= this.probability)) {
             for (BlockPos pos : leavesPositions) {
-                if (world.getBlockState(pos.down()).isAir() && state.getBlock() instanceof HangingLeavesBlock) {
+                if (world.isAirBlock(pos.down()) && state.getBlock() instanceof HangingLeavesBlock) {
                     BlockState blockstate = this.state.with(HangingLeavesBlock.HALF, HangingLeavesBlock.Half.LARGE);
-                    int length = random.nextInt(4) + 2;
+                    int length = random.nextInt(3) + 2;
                     for (int j = pos.down().getY(); j >= pos.down().getY() - length; --j) {
                         if (j == pos.down().getY() - length) blockstate = blockstate.with(HangingLeavesBlock.HALF, HangingLeavesBlock.Half.SMALL);
                         if (blockstate.isValidPosition(world, pos)) {
                             BlockPos place = new BlockPos(pos.getX(), j, pos.getZ());
-                            if (world.getBlockState(place).isAir()) {
+                            if (world.isAirBlock(place)) {
                                 world.setBlockState(place, blockstate, 19);
                                 changedBlocks.add(place);
                                 boundingBox.expandTo(new MutableBoundingBox(place, place));

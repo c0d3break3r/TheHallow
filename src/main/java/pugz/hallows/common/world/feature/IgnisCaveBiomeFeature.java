@@ -46,7 +46,7 @@ public class IgnisCaveBiomeFeature extends AbstractCaveBiomeFeature {
             if (config.fillerState != null) world.setBlockState(pos.offset(direction.getOpposite()), config.fillerState, 2);
 
             if (rand.nextFloat() <= config.featureChance * 1.5F) {
-                if (rand.nextBoolean()) generateColumn(world, rand, pos.up());
+                if (rand.nextFloat() <= 0.75F) generateColumn(world, rand, pos.up());
                 else world.setBlockState(pos.up(), HallowsBlocks.IGNIS_CRYSTAL_FLOWER.get().getDefaultState().with(IgnisCrystalBlock.HALF, DoubleBlockHalf.UPPER), 2);
             } else if (rand.nextFloat() <= config.featureChance) {
                 for (BlockPos p : BlockPos.getRandomPositions(rand, rand.nextInt(11) + 6, pos.getX() - 2, pos.getY(), pos.getZ() - 2, pos.getX() + 2, pos.getY() + 1, pos.getZ() + 2)) {

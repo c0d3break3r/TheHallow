@@ -43,7 +43,7 @@ public class SpreadOreFeature extends Feature<OreFeatureConfig> {
         BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable();
         for(Direction direction : Direction.values()) {
             blockpos$mutable.setAndMove(pos, direction);
-            if (world.getBlockState(blockpos$mutable).isAir()) {
+            if (world.isAirBlock(blockpos$mutable)) {
                 return true;
             }
         }
