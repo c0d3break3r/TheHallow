@@ -6,7 +6,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.feature.Features;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.common.world.MobSpawnInfoBuilder;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
@@ -48,6 +47,7 @@ public class HallowsBiomes {
             gen.withCarver(GenerationStage.Carving.AIR, HallowsCarvers.Configured.HALLOWS_CAVE);
             gen.withFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, HallowsFeatures.Configured.VERTICAL_PILLAR);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.PATCH_NECROFIRE);
+            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.IGNIS_CAVE_BIOME);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.OPAL_ORE);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_STYGIAN_RUIN);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_BLACKSTONE);
@@ -71,6 +71,7 @@ public class HallowsBiomes {
             gen.withCarver(GenerationStage.Carving.AIR, HallowsCarvers.Configured.NECROMANTLE_CRACK);
             gen.withFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, HallowsFeatures.Configured.VERTICAL_PILLAR);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.PATCH_NECROFIRE);
+            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.IGNIS_CAVE_BIOME);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.OPAL_ORE);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.HALLSTONE_EMERALD_ORE);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_STYGIAN_RUIN);
@@ -86,6 +87,7 @@ public class HallowsBiomes {
         if (name.getPath().equals("hanging_woods")) {
             gen.withCarver(GenerationStage.Carving.AIR, HallowsCarvers.Configured.HALLOWS_CAVE);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.PATCH_NECROFIRE);
+            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.IGNIS_CAVE_BIOME);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.OPAL_ORE);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_STYGIAN_RUIN);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_BLACKSTONE);
@@ -107,6 +109,7 @@ public class HallowsBiomes {
             gen.withFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, HallowsFeatures.Configured.WATER_DELTA);
             gen.withFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, HallowsFeatures.Configured.VERTICAL_PILLAR);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.PATCH_NECROFIRE);
+            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.IGNIS_CAVE_BIOME);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.OPAL_ORE);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_STYGIAN_RUIN);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_BLACKSTONE);
@@ -131,6 +134,7 @@ public class HallowsBiomes {
             gen.withFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, HallowsFeatures.Configured.VERTICAL_PILLAR);
             gen.withFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, HallowsFeatures.Configured.PETRIFIED_SANDSTONE_ROCK);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.PATCH_NECROFIRE);
+            gen.withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, HallowsFeatures.Configured.IGNIS_CAVE_BIOME);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.OPAL_ORE);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_STYGIAN_RUIN);
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, HallowsFeatures.Configured.ORE_BLACKSTONE);

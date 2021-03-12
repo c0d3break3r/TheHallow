@@ -161,7 +161,6 @@ public class HallowsBlocks {
     public static RegistryObject<Block> PETRIFIED_SANDSTONE_WALL;
 
     public static RegistryObject<Block> IGNIS_CRYSTAL_FLOWER;
-    public static RegistryObject<Block> IGNIS_CRYSTAL_STEM;
     public static RegistryObject<Block> IGNIS_CRYSTAL_BLOCK;
 
     public static RegistryObject<Block> HEMLOCK;
@@ -329,11 +328,8 @@ public class HallowsBlocks {
         PETRIFIED_SANDSTONE_STAIRS = HELPER.createBlock("petrified_sandstone_stairs", () -> new StairsBlock(() -> HallowsBlocks.PETRIFIED_SANDSTONE.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.SANDSTONE)), ItemGroup.BUILDING_BLOCKS);
         PETRIFIED_SANDSTONE_WALL = HELPER.createBlock("petrified_sandstone_wall", () -> new WallBlock(AbstractBlock.Properties.from(Blocks.SANDSTONE)), ItemGroup.DECORATIONS);
 
-        IGNIS_CRYSTAL_FLOWER = HELPER.createBlock("ignis_crystal_flower", () -> new IgnisCrystalFlowerBlock(AbstractBlock.Properties.from(Blocks.STONE).setLightLevel((s) -> {
+        IGNIS_CRYSTAL_FLOWER = HELPER.createBlock("ignis_crystal_flower", () -> new IgnisCrystalBlock(AbstractBlock.Properties.from(Blocks.STONE).setLightLevel((s) -> {
             return 8;
-        })), ItemGroup.DECORATIONS);
-        IGNIS_CRYSTAL_STEM = HELPER.createBlock("ignis_crystal_stem", () -> new IgnisCrystalBlock(AbstractBlock.Properties.from(Blocks.STONE).setLightLevel((s) -> {
-            return 9;
         })), ItemGroup.DECORATIONS);
         IGNIS_CRYSTAL_BLOCK = HELPER.createBlock("ignis_crystal_block", () -> new Block(AbstractBlock.Properties.from(Blocks.STONE).setLightLevel((s) -> {
             return 10;

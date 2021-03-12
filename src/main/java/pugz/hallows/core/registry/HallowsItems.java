@@ -13,7 +13,6 @@ import net.minecraftforge.fml.RegistryObject;
 import pugz.hallows.common.item.HallowsArmorMaterial;
 import pugz.hallows.common.item.HallowsItemTier;
 import pugz.hallows.core.Hallows;
-import pugz.hallows.core.util.RegistryHelper;
 
 public class HallowsItems {
     public static final ItemSubRegistryHelper HELPER = Hallows.REGISTRY_HELPER.getItemSubHelper();

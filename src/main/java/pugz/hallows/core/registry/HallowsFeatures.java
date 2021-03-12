@@ -328,7 +328,7 @@ public class HallowsFeatures {
         Configured.IGNIS_CAVE_BIOME = RegistryHelper.createConfiguredFeature("ignis_cave_biome", CAVE_BIOME.get().withConfiguration(
                 new CaveBiomeFeatureConfig(
                         HallowsBlocks.TENEBRITE.get().getDefaultState(), HallowsBlocks.TENEBRITE.get().getDefaultState(), HallowsBlocks.TENEBRITE.get().getDefaultState(), HallowsBlocks.TENEBRITE.get().getDefaultState(),
-                        128, 0.01F, new TagMatchRuleTest(HallowsTags.Blocks.BASE_STONE_HALLOWS), false)
+                        128, 0.0005F, new TagMatchRuleTest(HallowsTags.Blocks.BASE_STONE_HALLOWS), false)
         ).withPlacement(Placements.Configured.CAVE_BIOME_PLACEMENT));
     }
 }
