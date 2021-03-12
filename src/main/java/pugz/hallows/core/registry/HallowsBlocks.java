@@ -387,8 +387,13 @@ public class HallowsBlocks {
 
         RenderTypeLookup.setRenderLayer(DEADROOT.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(ASPHODEL_SAPLING.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(EBONY_DOOR.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(EBONY_SAPLING.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(BLOOD_EBONY_SAPLING.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(EBONY_LEAF_CARPET.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BLOOD_EBONY_LEAF_CARPET.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(EBONY_HEDGE.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(BLOOD_EBONY_HEDGE.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(IGNIS_CRYSTAL_FLOWER.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(HEMLOCK.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(NECROFIRE_TORCH.get(), RenderType.getCutout());

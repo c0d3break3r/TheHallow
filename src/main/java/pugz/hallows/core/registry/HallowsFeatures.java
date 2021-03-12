@@ -40,6 +40,7 @@ public class HallowsFeatures {
     public static RegistryObject<Feature<OreFeatureConfig>> SPREAD_ORE;
     public static RegistryObject<Feature<CaveBiomeFeatureConfig>> CAVE_BIOME;
     public static RegistryObject<Feature<NoFeatureConfig>> SPREAD_PLANT;
+    public static RegistryObject<Feature<NoFeatureConfig>> WILL_O_WISP_VINES;
 
     public static class Configured {
         public static ConfiguredFeature<?, ?> PATCH_NECROFIRE;
@@ -84,6 +85,8 @@ public class HallowsFeatures {
         public static ConfiguredFeature<?, ?> DISK_PETRIFIED_SAND;
 
         public static ConfiguredFeature<?, ?> IGNIS_CAVE_BIOME;
+
+        public static ConfiguredFeature<?, ?> WILL_O_WISP_VINES;
     }
 
     public static class Decorators {
@@ -108,6 +111,7 @@ public class HallowsFeatures {
         SPREAD_ORE = RegistryHelper.createFeature("spread_ore", SpreadOreFeature::new);
         CAVE_BIOME = RegistryHelper.createFeature("cave_biome", IgnisCaveBiomeFeature::new);
         //SPREAD_PLANT = RegistryHelper.createFeature("spread_plant", SpreadPlantFeature::new);
+        WILL_O_WISP_VINES = RegistryHelper.createFeature("will_o_wisp_vines", WillOWispVinesFeature::new);
     }
 
     public static void registerDecorators() {
@@ -330,5 +334,10 @@ public class HallowsFeatures {
                         HallowsBlocks.TENEBRITE.get().getDefaultState(), HallowsBlocks.TENEBRITE.get().getDefaultState(), HallowsBlocks.TENEBRITE.get().getDefaultState(), HallowsBlocks.TENEBRITE.get().getDefaultState(),
                         128, 0.0005F, new TagMatchRuleTest(HallowsTags.Blocks.BASE_STONE_HALLOWS), false)
         ).withPlacement(Placements.Configured.CAVE_BIOME_PLACEMENT));
+
+        Configured.WILL_O_WISP_VINES = RegistryHelper.createConfiguredFeature("will_o_wisp_vines", WILL_O_WISP_VINES.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG)
+                .range(128)
+                .square()
+                .func_242731_b(10));
     }
 }

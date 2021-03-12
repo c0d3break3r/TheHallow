@@ -56,12 +56,7 @@ public class IgnisCaveBiomeFeature extends AbstractCaveBiomeFeature {
                             if (world.isAirBlock(p.offset(d))) flag.set(false);
                         });
 
-                        if (flag.get()) {
-                            world.setBlockState(p, Blocks.LAVA.getDefaultState(), 2);
-                            Direction.Plane.HORIZONTAL.getDirectionValues().forEach((d) -> {
-                                if (world.getBlockState(p.offset(d)).getBlock() == HallowsBlocks.TENEBRITE.get()) world.setBlockState(p.offset(d), Blocks.BLACKSTONE.getDefaultState(), 2);
-                            });
-                        }
+                        if (flag.get()) world.setBlockState(p, Blocks.LAVA.getDefaultState(), 2);
                     }
                 }
             }

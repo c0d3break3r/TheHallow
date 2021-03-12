@@ -17,7 +17,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import pugz.hallows.client.gui.AnointingTableScreen;
-import pugz.hallows.common.block.NecrofireBlock;
 import pugz.hallows.core.registry.*;
 import pugz.hallows.core.registry.other.HallowsContainers;
 import pugz.hallows.core.registry.other.HallowsData;
